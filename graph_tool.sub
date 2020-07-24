@@ -1,0 +1,44 @@
+#!/bin/bash
+
+#SBATCH --qos pq_rcparent
+#SBATCH --account=iacc_rcparent
+#SBATCH --partition centos7
+#SBATCH -w n058
+#-SBATCH --partition IB_16C_96G
+#-SBATCH --partition investor
+
+# Number of nodes
+#SBATCH -N 1
+
+# Number of CPU cores
+#-SBATCH -n 4
+
+#Total memory requested
+#-SBATCH --mem=16000
+#SBATCH --mem=24000
+#-SBATCH --mem=32000
+#-SBATCH --mem=48000
+
+#SBATCH --output=log
+
+export OMP_NUM_THREADS=$SLURM_CPUS_ON_NODE
+
+. $MODULESHOME/../global/profile.modules
+#module load anaconda/3.5
+#alias activate="~/.conda/envs/m-env/bin/activate"
+module load miniconda3-4.5.11-gcc-8.2.0-oqs2mbg
+pwd; hostname; date
+ 
+echo "Running program on $SLURM_CPUS_ON_NODE CPU cores"
+#source activate m-env
+#source /home/applications/anaconda3/4.2.0/etc/profile.d/conda.sh
+#conda activate m-env
+#source activate graph-tool
+conda init bash
+conda activate graph-tool
+
+#python -v graph_tool-v2.py
+python graph_tool-v2.py
+
+date
+
