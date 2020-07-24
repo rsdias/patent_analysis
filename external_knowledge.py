@@ -50,7 +50,11 @@ def append_output(df):
     with open(str(__file__.replace(".py","")+'_output.txt'), 'a') as f:
         #today = date.today()
         #f.write("\n")
+<<<<<<< HEAD
         #f.write()
+=======
+        #f.write(str(today))
+>>>>>>> 0bc29c35abf3491f30a726ba9bd875a4a1cd915e
         f.write("\n")
         f.writelines((str(i) for i in s))
         f.write("\n")
@@ -63,6 +67,7 @@ def test_set_index(df):
     except:
         print('error set index')
 
+<<<<<<< HEAD
 def export_results(s, label):
     with open(str(__file__.replace(".py","")+'_results.tex'), 'a') as f:
         f.write("\n")
@@ -110,10 +115,39 @@ dtypes={'id':object,'cit_received':float, 'cit_received_delay':float, 'parent_ci
 file='data/dataset.csv.gz'
 unzipped=gzip.open(file, 'r')
 
+=======
+def export_results(s):
+    with open(str(__file__.replace(".py","")+'_results.tex'), 'w') as f:
+        #today = datetime.date.today()
+        time= datetime.now()
+        f.write("\n")
+        #f.write(str(today))
+        #f.write("\n")
+        f.write(str(time))
+        f.write("\n")
+        f.writelines((str(i) for i in s))
+        f.write("\n")
+
+#load variables
+usecols=['id', 'date', 'eigen','cit_received','cit_received_delay','parent_citation', 'pagerank', 'katz', 'originality', 'generality', 'eigen', 'num_claims']
+#define types decreases reading time and errors
+dtypes={'id':object,'cit_received':float, 'cit_received_delay':float, 'parent_citation':float, 'eigen':float, 'pagerank':float, 'katz':float, 'originality':float, 'generality':float, 'eigen':float, 'wipo_sector_id':object, 'num_claims':float}
+file='data/dataset.csv.gz'
+unzipped=gzip.open(file, 'r')
+#df=pd.read_csv(unzipped, dtype=object)
+>>>>>>> 0bc29c35abf3491f30a726ba9bd875a4a1cd915e
 df=pd.read_csv(unzipped, usecols=usecols, dtype=dtypes, parse_dates=['date'], index_col='id')
 #new_list basic reading test
 append_output(df)
 
+<<<<<<< HEAD
+=======
+#creating year and decade
+df['year']=df.date.dt.year
+df['decade']=df.date.dt.year//10*10
+#replace string nan with np.nan
+df['decade'] =df['decade'].apply(lambda x: int(x) if str(x) != 'nan' else np.nan)
+>>>>>>> 0bc29c35abf3491f30a726ba9bd875a4a1cd915e
 
 #data description
 obj_cols=list(df.select_dtypes(include=[object]).columns.values)
@@ -125,6 +159,7 @@ descriptive.apply(lambda x: x.apply('{:,.2f}'.format)).transpose()
 df=normalize(df.dropna())
 
 #separate dv from iv
+<<<<<<< HEAD
 ivs=['cit_received','cit_received_delay','originality', 'generality', 'num_claims', 'parent_citation']
 dvs=['katz', 'eigen', 'pagerank']
 
@@ -162,6 +197,22 @@ for dv in dvs:
         continue
 """
 
+=======
+chosenColumns=df.columns.values.tolist()
+dvs=['cit_received', 'parent_citation', 'katz', 'eigen', 'pagerank', 'date', 'decade']
+chosenColumns= [x for x in chosenColumns if x not in dvs]
+
+myX = df.as_matrix(columns=chosenColumns)
+myY = df.as_matrix(columns=['cit_received'])
+x = sm.add_constant(myX)
+model = sm.OLS(myY, x)
+results = model.fit()
+print(results.summary())
+export_results(results.summary().as_latex())
+#load iv - 1 when different classification, 0 when same
+#test done for many class systems - we can begin with one before running all of them
+#usecols=['uuid', 'wipo_sector_ext', 'wipo_field_ext', 'ipcr_section_ext', 'ipcr_ipc_class_ext', 'cpc_section_ext', 'cpc_subsection_ext', 'nber_category_ext', 'nber_subcategory_ext']
+>>>>>>> 0bc29c35abf3491f30a726ba9bd875a4a1cd915e
 # usecols=['uuid', 'wipo_sector_ext', 'wipo_field_ext'] #choice for wipo is arbitrary
 #file='data/centrality.csv.gz'
 #unzipped=gzip.open(file, 'r')
@@ -189,6 +240,9 @@ for dv in dvs:
 
 
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 0bc29c35abf3491f30a726ba9bd875a4a1cd915e
