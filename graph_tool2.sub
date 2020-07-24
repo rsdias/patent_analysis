@@ -2,7 +2,8 @@
 
 #SBATCH --qos pq_rcparent
 #SBATCH --account=iacc_rcparent
-#SBATCH --partition IB_16C_96G
+#SBATCH --partition centos7
+#-SBATCH --partition IB_16C_96G
 #-SBATCH --partition investor
 
 # Number of nodes
@@ -17,21 +18,16 @@
 #-SBATCH --mem=32000
 #-SBATCH --mem=48000
 
+#SBATCH --output=log
+
 export OMP_NUM_THREADS=$SLURM_CPUS_ON_NODE
 
 . $MODULESHOME/../global/profile.modules
-module load anaconda/3.5   
-#module load anaconda/2.7.13   
+module load singularity-3
 pwd; hostname; date
  
 echo "Running program on $SLURM_CPUS_ON_NODE CPU cores"
-
-#mv slurm* .out
-#jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 cit_received.ipynb
-#jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 cit_made.ipynb
-
-jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=300001 alpha_centrality.ipynb
-
+singularity exec ~/graph-tool_latest.sif python ./graph_tool-v2.py
 
 date
 
