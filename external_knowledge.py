@@ -15,9 +15,10 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+plt.switch_backend('agg')
 import datetime
 import gzip 
-#import seaborn as sns
+import seaborn as sns
 
 import sys
 sys.path.append('/home/rkogeyam/scripts/')
@@ -50,29 +51,15 @@ def append_output(df):
     with open(str(__file__.replace(".py","")+'_output.txt'), 'a') as f:
         #today = date.today()
         #f.write("\n")
-<<<<<<< HEAD
-<<<<<<< HEAD
         #f.write()
-=======
         #f.write(str(today))
->>>>>>> 0bc29c35abf3491f30a726ba9bd875a4a1cd915e
-=======
         #f.write(str(today))
->>>>>>> 0bc29c35abf3491f30a726ba9bd875a4a1cd915e
         f.write("\n")
         f.writelines((str(i) for i in s))
         f.write("\n")
 
     return None
 
-def test_set_index(df):
-    try:
-        df.set_index('uuid', inplace=True)
-    except:
-        print('error set index')
-
-<<<<<<< HEAD
-<<<<<<< HEAD
 def export_results(s, label):
     with open(str(__file__.replace(".py","")+'_results.tex'), 'a') as f:
         f.write("\n")
@@ -93,8 +80,9 @@ def run_ols(df, chosenColumns, dv, sample=None):
     else:
         title="OLS on " + dv
 
-    print(results.summary(yname=dv, xname=replace_underline(chosenColumns), title=title))
+    #print(results.summary(yname=dv, xname=replace_underline(chosenColumns), title=title))
     export_results(results.summary(yname=dv, xname=replace_underline(chosenColumns), title=title).as_latex(), label=title)
+    return results    
 
 def replace_underline(list):
     output=[]
@@ -110,164 +98,102 @@ def gen_decade(df):
     df['decade'] =df['decade'].apply(lambda x: int(x) if str(x) != 'nan' else np.nan)
     return df
 
+def histog(variables):
+    # #histograms
+    #could improve cutting off outliers
+    #plt.figure(figsize=(10,7))
+    fig, axs=plt.subplots(len(variables))
+    fig.suptitle('DVs Histograms')
+    for i, variable in enumerate(variables):
+        axs[i].hist(df[variable])
+        axs[i].set_title(variable.title())
+    plt.legend();
+    plt.savefig('histograms.png')
+
 #load variables
-usecols=['id', 'date', 'eigen','cit_received','cit_received_delay','parent_citation', 'pagerank', 'katz', 'originality', 'generality', 'eigen', 'num_claims']
+usecols=['id', 'date', 'eigen','cit_received','cit_received_delay','parent_citation', 'pagerank', 'katz', 'originality', 'generality', 'eigen', 'num_claims', 'wipo_sector_id']
 #usecols=['uuid', 'wipo_sector_ext', 'wipo_field_ext', 'ipcr_section_ext', 'ipcr_ipc_class_ext', 'cpc_section_ext', 'cpc_subsection_ext', 'nber_category_ext', 'nber_subcategory_ext']
 
-#define types decreases reading time and errors
+#to define types decreases reading time and errors
 dtypes={'id':object,'cit_received':float, 'cit_received_delay':float, 'parent_citation':float, 'eigen':float, 'pagerank':float, 'katz':float, 'originality':float, 'generality':float, 'eigen':float, 'wipo_sector_id':object, 'num_claims':float}
 
 file='data/dataset.csv.gz'
 unzipped=gzip.open(file, 'r')
-
-=======
-=======
->>>>>>> 0bc29c35abf3491f30a726ba9bd875a4a1cd915e
-def export_results(s):
-    with open(str(__file__.replace(".py","")+'_results.tex'), 'w') as f:
-        #today = datetime.date.today()
-        time= datetime.now()
-        f.write("\n")
-        #f.write(str(today))
-        #f.write("\n")
-        f.write(str(time))
-        f.write("\n")
-        f.writelines((str(i) for i in s))
-        f.write("\n")
-
-#load variables
-usecols=['id', 'date', 'eigen','cit_received','cit_received_delay','parent_citation', 'pagerank', 'katz', 'originality', 'generality', 'eigen', 'num_claims']
-#define types decreases reading time and errors
-dtypes={'id':object,'cit_received':float, 'cit_received_delay':float, 'parent_citation':float, 'eigen':float, 'pagerank':float, 'katz':float, 'originality':float, 'generality':float, 'eigen':float, 'wipo_sector_id':object, 'num_claims':float}
-file='data/dataset.csv.gz'
-unzipped=gzip.open(file, 'r')
-#df=pd.read_csv(unzipped, dtype=object)
-<<<<<<< HEAD
->>>>>>> 0bc29c35abf3491f30a726ba9bd875a4a1cd915e
-=======
->>>>>>> 0bc29c35abf3491f30a726ba9bd875a4a1cd915e
 df=pd.read_csv(unzipped, usecols=usecols, dtype=dtypes, parse_dates=['date'], index_col='id')
-#new_list basic reading test
-append_output(df)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 0bc29c35abf3491f30a726ba9bd875a4a1cd915e
-#creating year and decade
-df['year']=df.date.dt.year
-df['decade']=df.date.dt.year//10*10
+
 #replace string nan with np.nan
-df['decade'] =df['decade'].apply(lambda x: int(x) if str(x) != 'nan' else np.nan)
-<<<<<<< HEAD
->>>>>>> 0bc29c35abf3491f30a726ba9bd875a4a1cd915e
-=======
->>>>>>> 0bc29c35abf3491f30a726ba9bd875a4a1cd915e
-
 #data description
 obj_cols=list(df.select_dtypes(include=[object]).columns.values)
 num_cols=list(df.select_dtypes(include=[np.number]).columns.values)
 descriptive=df.describe(include=[np.number]).loc[['count','mean','std','min','max']].append(df[num_cols].isnull().sum().rename('isnull'))
 descriptive.apply(lambda x: x.apply('{:,.2f}'.format)).transpose()
 #df.describe(include=[np.object])#.append(df[np.object].isnull().sum().rename('isnull')).transpose()
-
+df=df[df.cit_received>0]
 df=normalize(df.dropna())
+gen_decade(df)
+
+#basic data
+append_output(df)
 
 #separate dv from iv
-<<<<<<< HEAD
-<<<<<<< HEAD
-ivs=['cit_received','cit_received_delay','originality', 'generality', 'num_claims', 'parent_citation']
+ivs=['cit_received','cit_received_delay','originality', 'generality', 'num_claims', 'parent_citation', 'decade']
 dvs=['katz', 'eigen', 'pagerank']
+
+sns.set_style("white")
+histog(dvs)
+
 
 #test multiple dvs
 for dv in dvs:
     try:
-        run_ols(df, ivs, dv)
+        model_results=run_ols(df, ivs, dv)
     except:
-        print('Error in ' + dv.columns.values) 
+        print('Error in ' + dv)
         continue
+
 samples=[0.1,0.01, 0.001]
 
 #test samples
 for sample in samples:
     for dv in dvs:
         try:
-            run_ols(df.sample(frac=sample), ivs, dv, sample="{:.0%}".format(sample))
+            run_ols(df.sample(frac=sample), ivs, dv, sample=str(sample*100)+"\%")
         except:
-            print('Error in ' + dv.columns.values) 
+            print('Error in ' + dv) 
             continue
+
+#test by decade
+decades=pd.unique(df.decade)
+classifications=pd.unique(df.wipo_sector_id)
+for classification in classifications:
+    for decade in decades:
+        model=run_ols(df[(df.decade == decade) & (df.classification == classification)], ivs, dv, sample="Decade: " + str(decade) + " Classification: " + classification)
+        fig = plt.figure(figsize=(12,8))
+        fig = sm.graphics.plot_partregress_grid(model, fig=fig)
+        plt.savefig("img/partial_plot_"+ str(decade) + "_" + classification +".png")
+            
 """
-#test sample 1%
-for dv in dvs:
-    try:
-        run_ols(df.sample(frac=0.01), ivs, dv, sample="1\%")
-    except:
-        print('Error in ' + dv.columns.values) 
-        continue
-#test sample 0.1%
-for dv in dvs:
-    try:
-        run_ols(df.sample(frac=0.001), ivs, dv, sample="0.1\%")
-    except:
-        print('Error in ' + dv.columns.values) 
-        continue
+#test by classification
+classifications=pd.unique(df.wipo_sector_id)
+for classification in classifications:
+    for sample in samples:
+        model=run_ols(df[df.wipo_sector_id == classification].sample(frac=sample), ivs, dv, sample="WIPO Class " + classification + " Sample: "+ str(sample*100)+"%")
+        fig = plt.figure(figsize=(12,8))
+        fig = sm.graphics.plot_partregress_grid(model, fig=fig)
+        plt.savefig("img/partial_plot_"+classification+"_sample_"+str(sample).replace(".","_")+".png")
 """
-
-=======
-=======
->>>>>>> 0bc29c35abf3491f30a726ba9bd875a4a1cd915e
-chosenColumns=df.columns.values.tolist()
-dvs=['cit_received', 'parent_citation', 'katz', 'eigen', 'pagerank', 'date', 'decade']
-chosenColumns= [x for x in chosenColumns if x not in dvs]
-
-myX = df.as_matrix(columns=chosenColumns)
-myY = df.as_matrix(columns=['cit_received'])
-x = sm.add_constant(myX)
-model = sm.OLS(myY, x)
-results = model.fit()
-print(results.summary())
-export_results(results.summary().as_latex())
-#load iv - 1 when different classification, 0 when same
-#test done for many class systems - we can begin with one before running all of them
-#usecols=['uuid', 'wipo_sector_ext', 'wipo_field_ext', 'ipcr_section_ext', 'ipcr_ipc_class_ext', 'cpc_section_ext', 'cpc_subsection_ext', 'nber_category_ext', 'nber_subcategory_ext']
-<<<<<<< HEAD
->>>>>>> 0bc29c35abf3491f30a726ba9bd875a4a1cd915e
-=======
->>>>>>> 0bc29c35abf3491f30a726ba9bd875a4a1cd915e
-# usecols=['uuid', 'wipo_sector_ext', 'wipo_field_ext'] #choice for wipo is arbitrary
-#file='data/centrality.csv.gz'
-#unzipped=gzip.open(file, 'r')
-
-#df2=pd.read_csv(unzipped, dtype=object)
-#df2=pd.read_csv(unzipped, usecols=usecols, dtype=object)
-#test_set_index(df2)
-#append_output(df2)
-
-#an outer join would lead to the same result as a left
-#since there should not have a classification without a citation
-#df=df.join(df2, how='outer', lsuffix='_left', rsuffix='_right')
-#append_output(df)
-
-# In[ ]:
-#df.info()
-
-# In[ ]:
-#df.describe()
-
-# In[ ]:
-#df.head()
-
-# In[ ]:
+"""
+I tried to put variable names in the axes but its getting too complicated.
+it seems that plot_partregress_grid puts names in the axes when the model fit is run by formula
+this way of doing it generated some kind of problem - i'm not sure that sm.OLS understands the concatenated string. 
 
 
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> 0bc29c35abf3491f30a726ba9bd875a4a1cd915e
-=======
->>>>>>> 0bc29c35abf3491f30a726ba9bd875a4a1cd915e
+for dv in dvs:
+    model = dv + " ~ "+ " + ".join(ivs)
+    print(model)
+    influence_model=sm.OLS(model, data=df).fit() 
+    fig = plt.figure(figsize=(12,8))
+    fig = sm.graphics.plot_partregress_grid(model, fig=fig)
+    plt.savefig("partial_plot_"+dv+".png")
+"""
