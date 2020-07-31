@@ -61,10 +61,12 @@ echo "Running program on $SLURM_CPUS_ON_NODE CPU cores"
 
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 --Application.log_level='DEBUG' int_ext_cit_v2.ipynb
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 --Application.log_level='DEBUG' int_ext_cit_graphs.ipynb
-jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 --Application.log_level='DEBUG' graph_tool-v2.ipynb
+#jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 --Application.log_level='DEBUG' graph_tool-v2.ipynb
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 graph_tool-v2.ipynb
 #python graph_script.py
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 centrality_analysis.ipynb
+
+python3 external_knowledge.py
 
 date
 

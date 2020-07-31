@@ -143,7 +143,7 @@ dvs=['katz', 'eigen', 'pagerank']
 sns.set_style("white")
 histog(dvs)
 
-
+"""
 #test multiple dvs
 for dv in dvs:
     try:
@@ -163,16 +163,31 @@ for sample in samples:
             print('Error in ' + dv) 
             continue
 
+            
+classifications=pd.unique(df.wipo_sector_id)
+decades=pd.unique(df.decade)
+for decade in decades:
+    for dv in dvs:
+        model=run_ols(df[df.decade == decade], ivs, dv, sample="Decade " + str(decade) + " dv: " + dv)
+        fig = plt.figure(figsize=(12,8))
+        fig = sm.graphics.plot_partregress_grid(model, fig=fig)
+        plt.savefig("img/partial_plot_"+str(decade)+"_dv_"+dv+".png")
+            
+"""
+
+            
+
 #test by decade
 decades=pd.unique(df.decade)
 classifications=pd.unique(df.wipo_sector_id)
+dv='pagerank'
 for classification in classifications:
     for decade in decades:
-        model=run_ols(df[(df.decade == decade) & (df.classification == classification)], ivs, dv, sample="Decade: " + str(decade) + " Classification: " + classification)
+        model=run_ols(df[(df.decade == decade) & (df.wipo_sector_id == classification)], ivs, dv, sample="Decade: " + str(decade) + " Classification: " + classification)
         fig = plt.figure(figsize=(12,8))
         fig = sm.graphics.plot_partregress_grid(model, fig=fig)
-        plt.savefig("img/partial_plot_"+ str(decade) + "_" + classification +".png")
-            
+        plt.savefig("img/partial_plot_"+ str(decade) + "_" + classification +"_pagerank.png")
+           
 """
 #test by classification
 classifications=pd.unique(df.wipo_sector_id)
