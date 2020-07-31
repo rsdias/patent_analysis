@@ -28,7 +28,9 @@ import io
 import statsmodels.api as sm
 
 from normalize import normalize
+from append_output import append_output
 
+"""
 def append_output(df):
 
     buffer = io.StringIO()
@@ -59,6 +61,7 @@ def append_output(df):
         f.write("\n")
 
     return None
+"""
 
 def export_results(s, label):
     with open(str(__file__.replace(".py","")+'_results.tex'), 'a') as f:
@@ -137,8 +140,9 @@ gen_decade(df)
 append_output(df)
 
 #separate dv from iv
-ivs=['cit_received','cit_received_delay','originality', 'generality', 'num_claims', 'parent_citation', 'decade']
-dvs=['katz', 'eigen', 'pagerank']
+ivs=['cit_received','cit_received_delay','originality', 'generality', 'num_claims', 'parent_citation', 'year']
+#dvs=['katz', 'eigen', 'pagerank']
+dvs=['pagerank']
 
 sns.set_style("white")
 histog(dvs)
