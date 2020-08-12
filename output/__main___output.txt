@@ -1,0 +1,18 @@
+
+<class 'pandas.core.frame.DataFrame'>
+Index: 94964697 entries, eeggwd3pnsfcara1i60o42hdu to mtzgpity5seicqklmhzxd3z9f
+Data columns (total 1 columns):
+self_cit    object
+dtypes: object(1)
+memory usage: 1.4+ GB
+        self_cit
+count   94964697
+unique         2
+top            0
+freq    87866296                          self_cit
+uuid                              
+eeggwd3pnsfcara1i60o42hdu        0
+xjdvdj2y0lgdas51rewjzn405        0
+e89bsa3x0yen50dcp9yogj3wp        0
+a6crepaxejht8e16czfm0kytd        0
+olkyv8qnteatjed767vodhmlz        0

@@ -13,9 +13,10 @@
 
 #Total memory requested
 #-SBATCH --mem=16000
-#SBATCH --mem=24000
+#-SBATCH --mem=24000
 #-SBATCH --mem=32000
 #-SBATCH --mem=48000
+#SBATCH --mem=60000
 
 export OMP_NUM_THREADS=$SLURM_CPUS_ON_NODE
 
@@ -66,7 +67,12 @@ echo "Running program on $SLURM_CPUS_ON_NODE CPU cores"
 #python graph_script.py
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 centrality_analysis.ipynb
 
-python3 external_knowledge.py
+#python3 external_knowledge.py
+python3 uspatclean_joinselfcit.py
 
+#jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=300001 clean_uspatentcitation_update.ipynb
+
+#jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 --Application.log_level=50 only_cit_pat.ipynb
+#python3 uscleanpat_exclude_name_field.py 
 date
 

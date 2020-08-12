@@ -1,6 +1,9 @@
 #Sao Paulo, July 31st, 2020
 #Script to join CLEAN USPATENT CITATION AND SELF CITATION
 #As this file will be use to calculate centrality, the output will be in the format used by the graphtool script (similar to patcitonly)
+#using cleanpatentcitation has been increasingly burdensome.
+#nbconvert freezes at a tcp call, direct python script is killed for some reason and dask finds an EOF error.
+#to try to use dask, I am cleaning the name field previously with this script, so then I can process it with dask.
 
 import gzip
 import pandas as pd
@@ -8,15 +11,12 @@ import sys
 sys.path.append('/home/rkogeyam/scripts/')
 from append_output import append_output
 
-pat='data/only_uuid_pat_cit.csv'
-self_cit='data/self_cit.csv'
+pat='data/cleanuspatentcitation2.csv'
+usecols=['uuid','patent_id', 'citation_id']
 
-#file=gzip.open(pat, 'r')
-#file2=gzip.open(self_cit, 'r')
-
-df=pd.read_csv(pat, dtype=object)
+df=pd.read_csv(pat, usecols=usecols, dtype=object)
 df.set_index('uuid', inplace=True)
-
+"""
 df.head()
 
 #this function append basic df data to an output file
@@ -29,8 +29,7 @@ append_output(df2, __file__.replace(".py",""))
 
 df=df.join(df2, how='outer')
 append_output(df, __file__.replace(".py",""))
-
-df=df[df.self_cit=="0"]
+"""
 """
 import dask.dataframe as dd
 
@@ -52,5 +51,5 @@ df = dd.merge(df1, df2, left_index=True)
 """
 
 # Write the output.
-df.to_csv('data/uspatclean_joinselfcit.csv')
+df.to_csv('only_uuid_pat_cit.csv')
 
