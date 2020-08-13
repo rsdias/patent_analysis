@@ -36,8 +36,8 @@ import gzip
 
 
 
-# src='data/sample.csv'
-src='data/patcitonly2.csv.gz'
+dst='data/centralit_noselfcit.csv'
+src='data/uspatclean_joinselfcit.csv'
 #src=gzip.open('data/patcitonly2.csv.gz','rt')
 #src=zipsrc.open()
 
@@ -55,7 +55,7 @@ g=gt.Graph()
 
 #get_ipython().magic(u'time')
 
-with gzip.open(src, 'rt') as csvfile:
+with open(src, 'rt') as csvfile:
     
     list_of_edges = csv.reader(csvfile, delimiter=',')
 
@@ -167,7 +167,7 @@ pagerank=gt.graph_tool.centrality.pagerank(g, prop=g.vp.pagerank)
 
 
 #get_ipython().magic(u'time')
-with open('data/eigen333.csv', 'w') as myfile:
+with open(dst, 'w') as myfile:
     wr = csv.writer(myfile, quoting=csv.QUOTE_ALL, lineterminator='\n')
     data=zip(vertices.keys(), g.vp.pagerank)
     wr.writerow(['id', 'pagerank'])
