@@ -17,7 +17,7 @@ self_cit='data/self_cit.csv'
 df=pd.read_csv(pat, dtype=object)
 df.set_index('uuid', inplace=True)
 
-df.head()
+df.info()
 
 #this function append basic df data to an output file
 append_output(df, __file__.replace(".py",""))
@@ -31,6 +31,7 @@ df=df.join(df2, how='outer')
 append_output(df, __file__.replace(".py",""))
 
 df=df[df.self_cit=="0"]
+df.info()
 """
 import dask.dataframe as dd
 
@@ -52,6 +53,6 @@ df = dd.merge(df1, df2, left_index=True)
 """
 
 # Write the output.
-df = df[['patent_id', 'citation_id']]
-df.to_csv('data/uspatclean_selfcit.csv')
+#df = df[['patent_id', 'citation_id']]
+#df.to_csv('data/uspatclean_selfcit.csv')
 
