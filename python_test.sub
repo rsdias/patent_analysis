@@ -68,7 +68,8 @@ echo "Running program on $SLURM_CPUS_ON_NODE CPU cores"
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 centrality_analysis.ipynb
 
 #python3 external_knowledge.py
-python3 uspatclean_joinselfcit.py
+#python3 uspatclean_joinselfcit.py
+jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 check_uscleanpat_exclude_selfcit.ipynb
 
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=300001 clean_uspatentcitation_update.ipynb
 

@@ -1,0 +1,11 @@
+/bin/bash: error importing function definition for `BASH_FUNC_module()'
+/bin/bash: error importing function definition for `BASH_FUNC_switchml()'
+/bin/bash: error importing function definition for `BASH_FUNC__moduleraw()'
+/home/rkogeyam/PATENT_CITATION
+n071
+Fri Aug 14 16:22:57 EDT 2020
+Running program on 10 CPU cores
+[NbConvertApp] Converting notebook check_uscleanpat_exclude_selfcit.ipynb to notebook
+[NbConvertApp] Executing notebook with kernel: python3
+[NbConvertApp] Writing 12154 bytes to check_uscleanpat_exclude_selfcit.ipynb
+Fri Aug 14 16:25:04 EDT 2020
