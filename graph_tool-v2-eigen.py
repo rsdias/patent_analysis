@@ -1,4 +1,12 @@
+"""
+DO NOT USE - ONLY FOR DOCUMENTATION
+
 # Script to calculate centrality of patent citation
+# August 17th, 2020
+This script was created to test the script graph_tool-v2.py with a different network centrality measure (eigen)
+However, before I effectively ran the tests, I verified that the error in the original script was the missing edge creation (in this script there is no correction to that issue, so it would not work).
+
+
 # February 25th, 2020
 # Networkx proved too slow
 # Graph-tool is much faster
@@ -12,7 +20,7 @@
 # Number of nodes: 8527465
 # Number of edges: 91336922
 # Average degree:  21.4218
-
+"""
 
 
 import matplotlib
@@ -54,7 +62,7 @@ print "Numero de edges " + str(g.num_edges()) + "\n"
         
 eigen=g.new_vertex_property('float')
 g.vertex_properties["eigen"]=eigen
-eigen=gt.graph_tool.centrality.eigen(g, vprop=g.vp.eigen)
+max_eigenvalue, eigen_matrix = gt.graph_tool.centrality.eigenvector(g, vprop=g.vp.eigen)
 
 
 with open(dst, 'w') as myfile:

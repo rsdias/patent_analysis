@@ -1,8 +1,9 @@
 """
-# Script to calculate centrality of patent citation
+# Script to calculate centrality of patent citation (WORKING)
 
 # August 17th, 2020
 This script runs in python 2.7 - 'm-env' is the corresponding environment working in FIU's HPC
+This is the preferred script for calculating network centrality.
 
 # February 25th, 2020
 # Networkx proved too slow

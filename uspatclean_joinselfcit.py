@@ -1,7 +1,10 @@
+"""
 #Sao Paulo, July 31st, 2020
 #Script to join CLEAN USPATENT CITATION AND SELF CITATION
-#As this file will be use to calculate centrality, the output will be in the format used by the graphtool script (similar to patcitonly)
+#As this file will be use to calculate centrality, the output will be in the format used by the graph_tool script (similar to patcitonly)
+The file cleanuspatent.csv cannot be directly joined to self_cit.csv because the field 'name' presents some EOF within double quotes. To solve the issue, I first created only_uuid_pat_cit.csv, which is a version of cleanpatent.csv with only the relevant fields - namely uuid, citation_id and patent_id. This is done by the uscleanpat_exclude_name_field.py script.
 
+"""
 import gzip
 import pandas as pd
 import sys
