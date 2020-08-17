@@ -1,9 +1,4 @@
-"""
 # Script to calculate centrality of patent citation
-
-# August 17th, 2020
-This script runs in python 2.7 - 'm-env' is the corresponding environment working in FIU's HPC
-
 # February 25th, 2020
 # Networkx proved too slow
 # Graph-tool is much faster
@@ -17,7 +12,7 @@ This script runs in python 2.7 - 'm-env' is the corresponding environment workin
 # Number of nodes: 8527465
 # Number of edges: 91336922
 # Average degree:  21.4218
-"""
+
 
 
 import matplotlib
@@ -29,8 +24,9 @@ import csv
 #src='data/uspatclean_selfcit.csv'
 #dst='data/centralit_noselfcit.csv'
 
-src='data/uspatclean_selfcit.csv'
-dst='data/centrality_pagerank_selfcit.csv'
+src='data/patcitonly2.csv'
+dst='data/centrality_eigen.csv'
+
 
 
 g=gt.Graph()
@@ -52,23 +48,19 @@ with open(src, 'rt') as csvfile:
     for d in vertices:
         vertices[d] = g.add_vertex()
 
-with open(src, 'r') as csvfile:
-    
-    list_of_edges = csv.reader(csvfile, delimiter=',')
-
-    for edge in list_of_edges:
-        g.add_edge(vertices[edge[0]], vertices[edge[1]])
+print "Numero de vertices " + str(g.num_vertices()) + "\n"
+print "Numero de edges " + str(g.num_edges()) + "\n"
 
         
-pagerank=g.new_vertex_property('float')
-g.vertex_properties["pagerank"]=pagerank
-pagerank=gt.graph_tool.centrality.pagerank(g, prop=g.vp.pagerank)
+eigen=g.new_vertex_property('float')
+g.vertex_properties["eigen"]=eigen
+eigen=gt.graph_tool.centrality.eigen(g, vprop=g.vp.eigen)
 
 
 with open(dst, 'w') as myfile:
     wr = csv.writer(myfile, quoting=csv.QUOTE_ALL, lineterminator='\n')
-    data=zip(vertices.keys(), g.vp.pagerank)
-    wr.writerow(['id', 'pagerank'])
+    data=zip(vertices.keys(), g.vp.eigen)
+    wr.writerow(['id', 'eigen'])
     for vertice in data:
         wr.writerow(vertice)
 

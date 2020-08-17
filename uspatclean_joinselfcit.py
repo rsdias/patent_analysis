@@ -53,6 +53,7 @@ df = dd.merge(df1, df2, left_index=True)
 """
 
 # Write the output.
-#df = df[['patent_id', 'citation_id']]
-#df.to_csv('data/uspatclean_selfcit.csv')
+#df = df[['patent_id', 'citation_id']] 
+#the intention here is to keep only these columns, but this does not work because uuid is the index. so in the export command to_csv, I added 'index_col=False', but at this point I did not tested it)
+df.to_csv('data/uspatclean_selfcit.csv', columns=['patent_id','citation_id'], index=False)
 

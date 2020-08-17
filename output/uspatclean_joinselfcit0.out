@@ -115,3 +115,177 @@ uuid
 00000i5npptvejzc1gqwlza7c       NaN         NaN        0
 00000jd7thmiucpaol1hm1835   5354551     4875247        0
 00000oohcwply47niwhm5i42l   D786922     D718330        1
+
+uspatclean_joinselfcit
+
+2020-08-15 12:46:05.253574
+
+
+-- INFO --
+<class 'pandas.core.frame.DataFrame'>
+Index: 14325755 entries, 000007b7c0x3n9iy1othb9hz7 to 5s9g2jyh425qaf
+Data columns (total 2 columns):
+patent_id      object
+citation_id    object
+dtypes: object(2)
+memory usage: 327.9+ MB
+
+-- DESCRIPTION --
+       patent_id citation_id
+count   14325754    14325753
+unique   4068055     4064337
+top      8892495     4683202
+freq         960         605
+-- HEAD --
+                          patent_id citation_id
+uuid                                           
+000007b7c0x3n9iy1othb9hz7   9009250     8127342
+000007obbnxmqc6v43t1c00dw   9643605     5471515
+00000jd7thmiucpaol1hm1835   5354551     4875247
+00000oohcwply47niwhm5i42l   D786922     D718330
+00002ghv7v87txbmryocp9i60   D490798     D190749
+
+uspatclean_joinselfcit
+
+2020-08-15 12:47:43.245824
+
+
+-- INFO --
+<class 'pandas.core.frame.DataFrame'>
+Index: 94964697 entries, eeggwd3pnsfcara1i60o42hdu to mtzgpity5seicqklmhzxd3z9f
+Data columns (total 1 columns):
+self_cit    object
+dtypes: object(1)
+memory usage: 1.4+ GB
+
+-- DESCRIPTION --
+        self_cit
+count   94964697
+unique         2
+top            0
+freq    87866296
+-- HEAD --
+                          self_cit
+uuid                              
+eeggwd3pnsfcara1i60o42hdu        0
+xjdvdj2y0lgdas51rewjzn405        0
+e89bsa3x0yen50dcp9yogj3wp        0
+a6crepaxejht8e16czfm0kytd        0
+olkyv8qnteatjed767vodhmlz        0
+
+uspatclean_joinselfcit
+
+2020-08-15 12:58:56.014913
+
+
+-- INFO --
+<class 'pandas.core.frame.DataFrame'>
+Index: 94964698 entries, 000007b7c0x3n9iy1othb9hz7 to zzzzxgmcf8om7k40a9frasijo
+Data columns (total 3 columns):
+patent_id      object
+citation_id    object
+self_cit       object
+dtypes: object(3)
+memory usage: 2.8+ GB
+
+-- DESCRIPTION --
+       patent_id citation_id  self_cit
+count   14877431    14877430  94964697
+unique   4068055     4064337         2
+top      8892495     6563174         0
+freq         978        1158  87866296
+-- HEAD --
+                          patent_id citation_id self_cit
+uuid                                                    
+000007b7c0x3n9iy1othb9hz7   9009250     8127342        1
+000007obbnxmqc6v43t1c00dw   9643605     5471515        0
+00000i5npptvejzc1gqwlza7c       NaN         NaN        0
+00000jd7thmiucpaol1hm1835   5354551     4875247        0
+00000oohcwply47niwhm5i42l   D786922     D718330        1
+
+uspatclean_joinselfcit
+
+2020-08-15 14:34:43.375681
+
+
+-- INFO --
+<class 'pandas.core.frame.DataFrame'>
+Index: 14325755 entries, 000007b7c0x3n9iy1othb9hz7 to 5s9g2jyh425qaf
+Data columns (total 2 columns):
+patent_id      object
+citation_id    object
+dtypes: object(2)
+memory usage: 327.9+ MB
+
+-- DESCRIPTION --
+       patent_id citation_id
+count   14325754    14325753
+unique   4068055     4064337
+top      8892495     4683202
+freq         960         605
+-- HEAD --
+                          patent_id citation_id
+uuid                                           
+000007b7c0x3n9iy1othb9hz7   9009250     8127342
+000007obbnxmqc6v43t1c00dw   9643605     5471515
+00000jd7thmiucpaol1hm1835   5354551     4875247
+00000oohcwply47niwhm5i42l   D786922     D718330
+00002ghv7v87txbmryocp9i60   D490798     D190749
+
+uspatclean_joinselfcit
+
+2020-08-15 14:36:19.467469
+
+
+-- INFO --
+<class 'pandas.core.frame.DataFrame'>
+Index: 94964697 entries, eeggwd3pnsfcara1i60o42hdu to mtzgpity5seicqklmhzxd3z9f
+Data columns (total 1 columns):
+self_cit    object
+dtypes: object(1)
+memory usage: 1.4+ GB
+
+-- DESCRIPTION --
+        self_cit
+count   94964697
+unique         2
+top            0
+freq    87866296
+-- HEAD --
+                          self_cit
+uuid                              
+eeggwd3pnsfcara1i60o42hdu        0
+xjdvdj2y0lgdas51rewjzn405        0
+e89bsa3x0yen50dcp9yogj3wp        0
+a6crepaxejht8e16czfm0kytd        0
+olkyv8qnteatjed767vodhmlz        0
+
+uspatclean_joinselfcit
+
+2020-08-15 14:46:51.000204
+
+
+-- INFO --
+<class 'pandas.core.frame.DataFrame'>
+Index: 94964698 entries, 000007b7c0x3n9iy1othb9hz7 to zzzzxgmcf8om7k40a9frasijo
+Data columns (total 3 columns):
+patent_id      object
+citation_id    object
+self_cit       object
+dtypes: object(3)
+memory usage: 2.8+ GB
+
+-- DESCRIPTION --
+       patent_id citation_id  self_cit
+count   14877431    14877430  94964697
+unique   4068055     4064337         2
+top      8892495     6563174         0
+freq         978        1158  87866296
+-- HEAD --
+                          patent_id citation_id self_cit
+uuid                                                    
+000007b7c0x3n9iy1othb9hz7   9009250     8127342        1
+000007obbnxmqc6v43t1c00dw   9643605     5471515        0
+00000i5npptvejzc1gqwlza7c       NaN         NaN        0
+00000jd7thmiucpaol1hm1835   5354551     4875247        0
+00000oohcwply47niwhm5i42l   D786922     D718330        1
