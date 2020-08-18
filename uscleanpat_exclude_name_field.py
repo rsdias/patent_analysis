@@ -16,12 +16,26 @@ import sys
 sys.path.append('/home/rkogeyam/scripts/')
 from append_output import append_output
 
-pat='data/cleanuspatentcitation2.csv'
+pat='data/cleanuspatentcitation.csv.gz'
 usecols=['uuid','patent_id', 'citation_id']
 
-df=pd.read_csv(pat, usecols=usecols, dtype=object)
+file_pat=gzip.open(pat, 'r')
+df=pd.read_csv(file_pat, usecols=usecols, dtype=object)
 df.set_index('uuid', inplace=True)
+df.info()
+
+"""
+this is to clean from NANs
+print "NANs in patent_id"
+len(df['patent_id']) - df['patent_id'].count() #number of NANs
+print "NANs in citation_id"
+len(df['citation_id']) - df['citation_id'].count() #number of NANs
+
+df.dropna()
+
+len(df.index) #to calculate the difference
+"""
 
 # Write the output.
-df.to_csv('only_uuid_pat_cit.csv')
+df.to_csv('data/only_uuid_pat_cit.csv.gz', compression='gzip')
 

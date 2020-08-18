@@ -11,30 +11,42 @@ import sys
 sys.path.append('/home/rkogeyam/scripts/')
 from append_output import append_output
 
-pat='data/only_uuid_pat_cit.csv'
-self_cit='data/self_cit.csv'
+pat='data/only_uuid_pat_cit.csv.gz'
+self_cit='data/self_cit.csv.gz'
 
-#file=gzip.open(pat, 'r')
-#file2=gzip.open(self_cit, 'r')
+file_pat=gzip.open(pat, 'r')
+file_self=gzip.open(self_cit, 'r')
 
-df=pd.read_csv(pat, dtype=object)
+df=pd.read_csv(file_pat, dtype=object)
 df.set_index('uuid', inplace=True)
-
+print("only_uuid_pat_cit")
 df.info()
 
 #this function append basic df data to an output file
 append_output(df, __file__.replace(".py",""))
 
 
-df2=pd.read_csv(self_cit, dtype=object)
+df2=pd.read_csv(file_self, dtype=object)
 df2.set_index('uuid', inplace=True)
-append_output(df2, __file__.replace(".py",""))
+print("self_cit")
+df.info()
+
+#append_output(df2, __file__.replace(".py",""))
 
 df=df.join(df2, how='outer')
-append_output(df, __file__.replace(".py",""))
+print("joint tables")
+df.info()
+#append_output(df, __file__.replace(".py",""))
 
+print("excluding self citations")
 df=df[df.self_cit=="0"]
 df.info()
+
+print("NANs in patent_id")
+len(df['patent_id']) - df['patent_id'].count() #number of NANs
+
+print("NANs in citation_id")
+len(df['citation_id']) - df['citation_id'].count() #number of NANs
 """
 import dask.dataframe as dd
 
@@ -58,5 +70,5 @@ df = dd.merge(df1, df2, left_index=True)
 # Write the output.
 #df = df[['patent_id', 'citation_id']] 
 #the intention here is to keep only these columns, but this does not work because uuid is the index. so in the export command to_csv, I added 'index_col=False', but at this point I did not tested it)
-df.to_csv('data/uspatclean_selfcit.csv', columns=['patent_id','citation_id'], index=False)
+#df.to_csv('data/uspatclean_selfcit.csv', columns=['patent_id','citation_id'], index=False, compression='gzip')
 

@@ -289,3 +289,32 @@ uuid
 00000i5npptvejzc1gqwlza7c       NaN         NaN        0
 00000jd7thmiucpaol1hm1835   5354551     4875247        0
 00000oohcwply47niwhm5i42l   D786922     D718330        1
+
+uspatclean_joinselfcit
+
+2020-08-17 14:54:38.333638
+
+
+-- INFO --
+<class 'pandas.core.frame.DataFrame'>
+Index: 14325755 entries, 000007b7c0x3n9iy1othb9hz7 to 5s9g2jyh425qaf
+Data columns (total 2 columns):
+patent_id      object
+citation_id    object
+dtypes: object(2)
+memory usage: 327.9+ MB
+
+-- DESCRIPTION --
+       patent_id citation_id
+count   14325754    14325753
+unique   4068055     4064337
+top      8892495     4683202
+freq         960         605
+-- HEAD --
+                          patent_id citation_id
+uuid                                           
+000007b7c0x3n9iy1othb9hz7   9009250     8127342
+000007obbnxmqc6v43t1c00dw   9643605     5471515
+00000jd7thmiucpaol1hm1835   5354551     4875247
+00000oohcwply47niwhm5i42l   D786922     D718330
+00002ghv7v87txbmryocp9i60   D490798     D190749
