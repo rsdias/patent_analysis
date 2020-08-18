@@ -25,13 +25,15 @@ import matplotlib
 import graph_tool.all as gt
 from random import randint
 import csv
-
+import gzip
 
 #src='data/uspatclean_selfcit.csv'
 #dst='data/centralit_noselfcit.csv'
 
 src='data/uspatclean_selfcit.csv'
 dst='data/centrality_pagerank_selfcit.csv'
+
+#file_pat=gzip.open(src, 'r')
 
 
 g=gt.Graph()

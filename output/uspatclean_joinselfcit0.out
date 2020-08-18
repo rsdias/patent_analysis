@@ -318,3 +318,61 @@ uuid
 00000jd7thmiucpaol1hm1835   5354551     4875247
 00000oohcwply47niwhm5i42l   D786922     D718330
 00002ghv7v87txbmryocp9i60   D490798     D190749
+
+uspatclean_joinselfcit
+
+2020-08-18 15:23:07.664344
+
+
+-- INFO --
+<class 'pandas.core.frame.DataFrame'>
+Index: 108913836 entries, 00000jd7thmiucpaol1hm1835 to zzzzzm8wuh09bvu6b069vlv8x
+Data columns (total 2 columns):
+patent_id      object
+citation_id    object
+dtypes: object(2)
+memory usage: 2.4+ GB
+
+-- DESCRIPTION --
+        patent_id citation_id
+count   108913836   108913815
+unique    6907107     7635409
+top       9535563     4683202
+freq         5841        4609
+-- HEAD --
+                          patent_id citation_id
+uuid                                           
+00000jd7thmiucpaol1hm1835   5354551     4875247
+00000l0ooxrvfv6jkenobhwis   D674253     D519335
+00000nv59m7vgyvfxehud4477   D809697     1963218
+00001jxaxme3a89hidjtdkoi4   D808172     7207426
+00001nlwuimui60vu3k1yzjqd   8683318     6642945
+
+uspatclean_joinselfcit
+
+2020-08-18 17:10:43.279989
+
+
+-- INFO --
+<class 'pandas.core.frame.DataFrame'>
+Index: 108913836 entries, 00000jd7thmiucpaol1hm1835 to zzzzzm8wuh09bvu6b069vlv8x
+Data columns (total 2 columns):
+patent_id      object
+citation_id    object
+dtypes: object(2)
+memory usage: 2.4+ GB
+
+-- DESCRIPTION --
+        patent_id citation_id
+count   108913836   108913815
+unique    6907107     7635409
+top       9535563     4683202
+freq         5841        4609
+-- HEAD --
+                          patent_id citation_id
+uuid                                           
+00000jd7thmiucpaol1hm1835   5354551     4875247
+00000l0ooxrvfv6jkenobhwis   D674253     D519335
+00000nv59m7vgyvfxehud4477   D809697     1963218
+00001jxaxme3a89hidjtdkoi4   D808172     7207426
+00001nlwuimui60vu3k1yzjqd   8683318     6642945
