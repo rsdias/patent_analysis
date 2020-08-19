@@ -1,0 +1,9 @@
+/bin/bash: error importing function definition for `BASH_FUNC_module()'
+/bin/bash: error importing function definition for `BASH_FUNC_switchml()'
+/bin/bash: error importing function definition for `BASH_FUNC__moduleraw()'
+/home/rkogeyam/PATENT_CITATION
+n056
+Wed Aug 19 11:47:04 EDT 2020
+Running program on 3 CPU cores
+[NbConvertApp] Converting notebook cit_delay.ipynb to notebook
+[NbConvertApp] Executing notebook with kernel: python3

@@ -12,9 +12,9 @@
 #-SBATCH -n 4
 
 #Total memory requested
-#-SBATCH --mem=16000
+#SBATCH --mem=16000
 #-SBATCH --mem=24000
-#SBATCH --mem=32000
+#-SBATCH --mem=32000
 #-SBATCH --mem=48000
 #-SBATCH --mem=60000
 
@@ -28,12 +28,13 @@ pwd; hostname; date
 echo "Running program on $SLURM_CPUS_ON_NODE CPU cores"
 #mv slurm* .out
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 citation_reader.ipynb
-jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 clean_patent.ipynb
+#jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 clean_patent.ipynb
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=300001 clean_uspatentcitation.ipynb
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 var_builder.ipynb
 
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 cit_received.ipynb
-#jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 cit_made.ipynb
+#jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 --Application.log_level=50 cit_made.ipynb
+#jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 --Application.log_level=50 only_cit_pat_2.ipynb
 
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 wipo.ipynb
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 nber.ipynb
@@ -41,7 +42,7 @@ jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 clean_
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 ipcr.ipynb
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 uspc.ipynb
 
-#jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 cit_delay.ipynb
+jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 cit_delay.ipynb
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 cit_tree.ipynb
 
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 originality.ipynb
