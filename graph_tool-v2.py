@@ -40,7 +40,7 @@ g=gt.Graph()
 
 
 
-with open(src, 'rt') as csvfile:
+with open(src, 'rb') as csvfile:
     
     list_of_edges = csv.reader(csvfile, delimiter=',')
 
