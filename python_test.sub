@@ -28,7 +28,7 @@ pwd; hostname; date
 echo "Running program on $SLURM_CPUS_ON_NODE CPU cores"
 #mv slurm* .out
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 citation_reader.ipynb
-#jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 clean_patent.ipynb
+jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 clean_patent.ipynb
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=300001 clean_uspatentcitation.ipynb
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 var_builder.ipynb
 
@@ -63,24 +63,25 @@ echo "Running program on $SLURM_CPUS_ON_NODE CPU cores"
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 --Application.log_level='DEBUG' int_ext_cit_v2.ipynb
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 --Application.log_level='DEBUG' int_ext_cit_graphs.ipynb
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 --Application.log_level='DEBUG' graph_tool-v2.ipynb
-#python graph_script.py
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 centrality_analysis.ipynb
 
+#python graph_script.py
 #python3 external_knowledge.py
 #python3 uspatclean_joinselfcit.py
-#jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 check_uscleanpat_exclude_selfcit.ipynb
+#python graph_tool-v2-eigen.py
+#python graph_tool-v2.py
+#python3 uscleanpat_exclude_name_field.py 
 
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=300001 clean_uspatentcitation_update.ipynb
-
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 --Application.log_level=50 only_cit_pat_2.ipynb
-#python3 uscleanpat_exclude_name_field.py 
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 graph_tool-v3.ipynb
-#python graph_tool-v2.py
+
+#jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 check_uscleanpat_exclude_selfcit.ipynb
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 check_uscleanpat_exclude_selfcit.ipynb
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 check_patcitonly2.ipynb
-jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 check_centrality_pagerank.ipynb
-#python graph_tool-v2-eigen.py
+#jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 check_centrality_pagerank.ipynb
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 check_selfcit.ipynb
+
 
 date
 
