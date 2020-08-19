@@ -42,7 +42,7 @@ echo "Running program on $SLURM_CPUS_ON_NODE CPU cores"
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 ipcr.ipynb
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 uspc.ipynb
 
-jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 cit_delay.ipynb
+#jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 cit_delay.ipynb
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 cit_tree.ipynb
 
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 originality.ipynb
@@ -53,7 +53,7 @@ jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 cit_de
 
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 sampler.ipynb
 #
-#jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 dataset.ipynb
+jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 dataset.ipynb
 
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 alpha_centrality.ipynb
 
