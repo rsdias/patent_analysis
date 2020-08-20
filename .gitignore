@@ -1,5 +1,4 @@
 alpha.sub
-aux
 backup
 data
 examples
@@ -11,7 +10,6 @@ graph_script.pyc
 graph-tool_latest.sif
 img
 __pycache__
-scripts
 slurm-1516137.out
 .out
 .zip
