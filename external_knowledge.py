@@ -105,16 +105,16 @@ def histog(variables):
     # #histograms
     #could improve cutting off outliers
     #plt.figure(figsize=(10,7))
-    fig, axs=plt.subplots(len(variables))
+    fig, axs=plt.subplots(len(variables), squeeze=False) #subplot generates error "AxesSubplot object does not support indexing" when len(channels)=1. Squeeze=False avoids this behavior.
     fig.suptitle('DVs Histograms')
     for i, variable in enumerate(variables):
-        axs[i].hist(df[variable])
-        axs[i].set_title(variable.title())
+        axs[i]=df[variable].plot.hist()
+        #axs[i].set_title(variable.title())
     plt.legend();
     plt.savefig('histograms.png')
 
 #load variables
-usecols=['id', 'date', 'eigen','cit_received','cit_received_delay','parent_citation', 'pagerank', 'katz', 'originality', 'generality', 'eigen', 'num_claims', 'wipo_sector_id']
+#usecols=['id', 'date', 'eigen','cit_received','cit_received_delay','parent_citation', 'pagerank', 'katz', 'originality', 'generality', 'eigen', 'num_claims', 'wipo_sector_id']
 #usecols=['uuid', 'wipo_sector_ext', 'wipo_field_ext', 'ipcr_section_ext', 'ipcr_ipc_class_ext', 'cpc_section_ext', 'cpc_subsection_ext', 'nber_category_ext', 'nber_subcategory_ext']
 
 #to define types decreases reading time and errors
@@ -122,7 +122,7 @@ dtypes={'id':object,'cit_received':float, 'cit_received_delay':float, 'parent_ci
 
 file='data/dataset.csv.gz'
 unzipped=gzip.open(file, 'r')
-df=pd.read_csv(unzipped, usecols=usecols, dtype=dtypes, parse_dates=['date'], index_col='id')
+df=pd.read_csv(unzipped, dtype=dtypes, parse_dates=['date'], index_col='id')
 
 
 #replace string nan with np.nan
@@ -137,10 +137,10 @@ df=normalize(df.dropna())
 gen_decade(df)
 
 #basic data
-append_output(df)
+append_output(df, 'external_knowledge.py')
 
 #separate dv from iv
-ivs=['cit_received','cit_received_delay','originality', 'generality', 'num_claims', 'parent_citation', 'year']
+ivs=['cit_received','cit_received_delay','originality', 'generality', 'num_claims', 'year']
 #dvs=['katz', 'eigen', 'pagerank']
 dvs=['pagerank']
 

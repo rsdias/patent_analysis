@@ -53,7 +53,7 @@ echo "Running program on $SLURM_CPUS_ON_NODE CPU cores"
 
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 sampler.ipynb
 #
-jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 dataset.ipynb
+#jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 dataset.ipynb
 
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 alpha_centrality.ipynb
 
@@ -81,7 +81,7 @@ jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 datase
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 check_uscleanpat_exclude_selfcit.ipynb
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 check_patcitonly2.ipynb
 #jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 check_centrality_pagerank.ipynb
-#jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=30001 check_selfcit.ipynb
+jupyter nbconvert --inplace --execute --ExecutePreprocessor.timeout=300001 external_knowledge.ipynb
 
 
 date

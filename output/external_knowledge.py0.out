@@ -1,0 +1,456 @@
+
+external_knowledge.py
+
+2020-08-19 17:34:31.373455
+
+
+-- INFO --
+<class 'pandas.core.frame.DataFrame'>
+Index: 3890411 entries, 3931349 to 9854083
+Data columns (total 21 columns):
+type                  object
+number                object
+country               object
+date                  datetime64[ns]
+abstract              object
+title                 object
+kind                  object
+num_claims            float64
+filename              object
+withdrawn             float64
+cit_received          float64
+cit_made              float64
+cit_received_delay    float64
+cit_made_delay        float64
+originality           float64
+generality            float64
+wipo_sector_id        object
+wipo_field_id         float64
+pagerank              float64
+year                  int64
+decade                int64
+dtypes: datetime64[ns](1), float64(10), int64(2), object(8)
+memory usage: 653.0+ MB
+
+-- DESCRIPTION --
+         num_claims     withdrawn  cit_received      cit_made  \
+count  3.890411e+06  3.890411e+06  3.890411e+06  3.890411e+06   
+mean   1.699114e-02  6.657394e-05  4.939219e-03  2.493544e-03   
+std    1.441909e-02  8.159015e-03  1.196627e-02  7.235848e-03   
+min    0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00   
+25%    7.900677e-03  0.000000e+00  4.985045e-04  5.163511e-04   
+50%    1.467269e-02  0.000000e+00  1.744766e-03  1.032702e-03   
+75%    2.144470e-02  0.000000e+00  4.735793e-03  2.237522e-03   
+max    1.000000e+00  1.000000e+00  1.000000e+00  1.000000e+00   
+
+       cit_received_delay  cit_made_delay   originality    generality  \
+count        3.890411e+06    3.890411e+06  3.890411e+06  3.890411e+06   
+mean         1.491846e-01    6.639718e-01  1.913762e-01  1.992918e-01   
+std          5.107559e-02    2.930290e-02  2.634231e-01  2.663039e-01   
+min          0.000000e+00    0.000000e+00  0.000000e+00  0.000000e+00   
+25%          1.107662e-01    6.443148e-01  0.000000e+00  0.000000e+00   
+50%          1.400581e-01    6.559991e-01  0.000000e+00  0.000000e+00   
+75%          1.770650e-01    6.744249e-01  4.000000e-01  4.320988e-01   
+max          1.000000e+00    1.000000e+00  1.000000e+00  1.000000e+00   
+
+       wipo_field_id      pagerank          year        decade  
+count   3.890411e+06  3.890411e+06  3.890411e+06  3.890411e+06  
+mean    4.284017e-01  1.461989e-03  2.000487e+03  1.996215e+03  
+std     3.236438e-01  4.647273e-03  9.627520e+00  1.026242e+01  
+min     0.000000e+00  0.000000e+00  1.976000e+03  1.970000e+03  
+25%     1.470588e-01  1.577007e-04  1.994000e+03  1.990000e+03  
+50%     3.529412e-01  4.752620e-04  2.002000e+03  2.000000e+03  
+75%     7.352941e-01  1.293320e-03  2.009000e+03  2.000000e+03  
+max     1.000000e+00  1.000000e+00  2.017000e+03  2.010000e+03  
+-- HEAD --
+            type       number country       date  \
+id                                                 
+3931349  utility  3.93135e+06      US 1976-01-06   
+3935991  utility  3.93599e+06      US 1976-02-03   
+3943789  utility  3.94379e+06      US 1976-03-16   
+3944004  utility    3.944e+06      US 1976-03-16   
+3945191  utility  3.94519e+06      US 1976-03-23   
+
+                                                  abstract  \
+id                                                           
+3931349   A process is described for the production of ...   
+3935991   A reinforced paperboard produce container hav...   
+3943789   A horizontal load shaft, projecting from a ge...   
+3944004   An improved two feeder tray bulk weighment co...   
+3945191   This disclosure depicts an electronic timepie...   
+
+                                                     title kind  num_claims  \
+id                                                                            
+3931349      Conversion of methanol to gasoline components    A    0.009029   
+3935991               Plastic reinforced produce container    A    0.002257   
+3943789      Drive mechanism for cement mixer and the like    A    0.005643   
+3944004                              Batch weighing system    A    0.012415   
+3945191  Electronic timepiece having complementary elec...    A    0.003386   
+
+                        filename  withdrawn   ...    cit_made  \
+id                                            ...               
+3931349  pftaps19760106_wk01.zip        0.0   ...    0.001033   
+3935991  pftaps19760203_wk05.zip        0.0   ...    0.001205   
+3943789  pftaps19760316_wk11.zip        0.0   ...    0.001205   
+3944004  pftaps19760316_wk11.zip        0.0   ...    0.001377   
+3945191  pftaps19760323_wk12.zip        0.0   ...    0.000688   
+
+         cit_received_delay  cit_made_delay  originality  generality  \
+id                                                                     
+3931349            0.353835        0.641222          0.0    0.000000   
+3935991            0.270670        0.642102          0.0    0.138408   
+3943789            0.316234        0.683412          0.0    0.000000   
+3944004            0.277968        0.639338          0.0    0.625000   
+3945191            0.131093        0.630650          0.0    0.000000   
+
+         wipo_sector_id wipo_field_id  pagerank  year  decade  
+id                                                             
+3931349               0      0.529412  0.011216  1976    1970  
+3935991               3      0.705882  0.001409  1976    1970  
+3943789               3      0.882353  0.000505  1976    1970  
+3944004               2      0.264706  0.000662  1976    1970  
+3945191               2      0.264706  0.010436  1976    1970  
+
+[5 rows x 21 columns]
+
+external_knowledge.py
+
+2020-08-19 17:40:53.746281
+
+
+-- INFO --
+<class 'pandas.core.frame.DataFrame'>
+Index: 3890411 entries, 3931349 to 9854083
+Data columns (total 21 columns):
+type                  object
+number                object
+country               object
+date                  datetime64[ns]
+abstract              object
+title                 object
+kind                  object
+num_claims            float64
+filename              object
+withdrawn             float64
+cit_received          float64
+cit_made              float64
+cit_received_delay    float64
+cit_made_delay        float64
+originality           float64
+generality            float64
+wipo_sector_id        object
+wipo_field_id         float64
+pagerank              float64
+year                  int64
+decade                int64
+dtypes: datetime64[ns](1), float64(10), int64(2), object(8)
+memory usage: 653.0+ MB
+
+-- DESCRIPTION --
+         num_claims     withdrawn  cit_received      cit_made  \
+count  3.890411e+06  3.890411e+06  3.890411e+06  3.890411e+06   
+mean   1.699114e-02  6.657394e-05  4.939219e-03  2.493544e-03   
+std    1.441909e-02  8.159015e-03  1.196627e-02  7.235848e-03   
+min    0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00   
+25%    7.900677e-03  0.000000e+00  4.985045e-04  5.163511e-04   
+50%    1.467269e-02  0.000000e+00  1.744766e-03  1.032702e-03   
+75%    2.144470e-02  0.000000e+00  4.735793e-03  2.237522e-03   
+max    1.000000e+00  1.000000e+00  1.000000e+00  1.000000e+00   
+
+       cit_received_delay  cit_made_delay   originality    generality  \
+count        3.890411e+06    3.890411e+06  3.890411e+06  3.890411e+06   
+mean         1.491846e-01    6.639718e-01  1.913762e-01  1.992918e-01   
+std          5.107559e-02    2.930290e-02  2.634231e-01  2.663039e-01   
+min          0.000000e+00    0.000000e+00  0.000000e+00  0.000000e+00   
+25%          1.107662e-01    6.443148e-01  0.000000e+00  0.000000e+00   
+50%          1.400581e-01    6.559991e-01  0.000000e+00  0.000000e+00   
+75%          1.770650e-01    6.744249e-01  4.000000e-01  4.320988e-01   
+max          1.000000e+00    1.000000e+00  1.000000e+00  1.000000e+00   
+
+       wipo_field_id      pagerank          year        decade  
+count   3.890411e+06  3.890411e+06  3.890411e+06  3.890411e+06  
+mean    4.284017e-01  1.461989e-03  2.000487e+03  1.996215e+03  
+std     3.236438e-01  4.647273e-03  9.627520e+00  1.026242e+01  
+min     0.000000e+00  0.000000e+00  1.976000e+03  1.970000e+03  
+25%     1.470588e-01  1.577007e-04  1.994000e+03  1.990000e+03  
+50%     3.529412e-01  4.752620e-04  2.002000e+03  2.000000e+03  
+75%     7.352941e-01  1.293320e-03  2.009000e+03  2.000000e+03  
+max     1.000000e+00  1.000000e+00  2.017000e+03  2.010000e+03  
+-- HEAD --
+            type       number country       date  \
+id                                                 
+3931349  utility  3.93135e+06      US 1976-01-06   
+3935991  utility  3.93599e+06      US 1976-02-03   
+3943789  utility  3.94379e+06      US 1976-03-16   
+3944004  utility    3.944e+06      US 1976-03-16   
+3945191  utility  3.94519e+06      US 1976-03-23   
+
+                                                  abstract  \
+id                                                           
+3931349   A process is described for the production of ...   
+3935991   A reinforced paperboard produce container hav...   
+3943789   A horizontal load shaft, projecting from a ge...   
+3944004   An improved two feeder tray bulk weighment co...   
+3945191   This disclosure depicts an electronic timepie...   
+
+                                                     title kind  num_claims  \
+id                                                                            
+3931349      Conversion of methanol to gasoline components    A    0.009029   
+3935991               Plastic reinforced produce container    A    0.002257   
+3943789      Drive mechanism for cement mixer and the like    A    0.005643   
+3944004                              Batch weighing system    A    0.012415   
+3945191  Electronic timepiece having complementary elec...    A    0.003386   
+
+                        filename  withdrawn   ...    cit_made  \
+id                                            ...               
+3931349  pftaps19760106_wk01.zip        0.0   ...    0.001033   
+3935991  pftaps19760203_wk05.zip        0.0   ...    0.001205   
+3943789  pftaps19760316_wk11.zip        0.0   ...    0.001205   
+3944004  pftaps19760316_wk11.zip        0.0   ...    0.001377   
+3945191  pftaps19760323_wk12.zip        0.0   ...    0.000688   
+
+         cit_received_delay  cit_made_delay  originality  generality  \
+id                                                                     
+3931349            0.353835        0.641222          0.0    0.000000   
+3935991            0.270670        0.642102          0.0    0.138408   
+3943789            0.316234        0.683412          0.0    0.000000   
+3944004            0.277968        0.639338          0.0    0.625000   
+3945191            0.131093        0.630650          0.0    0.000000   
+
+         wipo_sector_id wipo_field_id  pagerank  year  decade  
+id                                                             
+3931349               0      0.529412  0.011216  1976    1970  
+3935991               3      0.705882  0.001409  1976    1970  
+3943789               3      0.882353  0.000505  1976    1970  
+3944004               2      0.264706  0.000662  1976    1970  
+3945191               2      0.264706  0.010436  1976    1970  
+
+[5 rows x 21 columns]
+
+external_knowledge.py
+
+2020-08-19 18:14:53.192276
+
+
+-- INFO --
+<class 'pandas.core.frame.DataFrame'>
+Index: 3890411 entries, 3931349 to 9854083
+Data columns (total 21 columns):
+type                  object
+number                object
+country               object
+date                  datetime64[ns]
+abstract              object
+title                 object
+kind                  object
+num_claims            float64
+filename              object
+withdrawn             float64
+cit_received          float64
+cit_made              float64
+cit_received_delay    float64
+cit_made_delay        float64
+originality           float64
+generality            float64
+wipo_sector_id        object
+wipo_field_id         float64
+pagerank              float64
+year                  int64
+decade                int64
+dtypes: datetime64[ns](1), float64(10), int64(2), object(8)
+memory usage: 653.0+ MB
+
+-- DESCRIPTION --
+         num_claims     withdrawn  cit_received      cit_made  \
+count  3.890411e+06  3.890411e+06  3.890411e+06  3.890411e+06   
+mean   1.699114e-02  6.657394e-05  4.939219e-03  2.493544e-03   
+std    1.441909e-02  8.159015e-03  1.196627e-02  7.235848e-03   
+min    0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00   
+25%    7.900677e-03  0.000000e+00  4.985045e-04  5.163511e-04   
+50%    1.467269e-02  0.000000e+00  1.744766e-03  1.032702e-03   
+75%    2.144470e-02  0.000000e+00  4.735793e-03  2.237522e-03   
+max    1.000000e+00  1.000000e+00  1.000000e+00  1.000000e+00   
+
+       cit_received_delay  cit_made_delay   originality    generality  \
+count        3.890411e+06    3.890411e+06  3.890411e+06  3.890411e+06   
+mean         1.491846e-01    6.639718e-01  1.913762e-01  1.992918e-01   
+std          5.107559e-02    2.930290e-02  2.634231e-01  2.663039e-01   
+min          0.000000e+00    0.000000e+00  0.000000e+00  0.000000e+00   
+25%          1.107662e-01    6.443148e-01  0.000000e+00  0.000000e+00   
+50%          1.400581e-01    6.559991e-01  0.000000e+00  0.000000e+00   
+75%          1.770650e-01    6.744249e-01  4.000000e-01  4.320988e-01   
+max          1.000000e+00    1.000000e+00  1.000000e+00  1.000000e+00   
+
+       wipo_field_id      pagerank          year        decade  
+count   3.890411e+06  3.890411e+06  3.890411e+06  3.890411e+06  
+mean    4.284017e-01  1.461989e-03  2.000487e+03  1.996215e+03  
+std     3.236438e-01  4.647273e-03  9.627520e+00  1.026242e+01  
+min     0.000000e+00  0.000000e+00  1.976000e+03  1.970000e+03  
+25%     1.470588e-01  1.577007e-04  1.994000e+03  1.990000e+03  
+50%     3.529412e-01  4.752620e-04  2.002000e+03  2.000000e+03  
+75%     7.352941e-01  1.293320e-03  2.009000e+03  2.000000e+03  
+max     1.000000e+00  1.000000e+00  2.017000e+03  2.010000e+03  
+-- HEAD --
+            type       number country       date  \
+id                                                 
+3931349  utility  3.93135e+06      US 1976-01-06   
+3935991  utility  3.93599e+06      US 1976-02-03   
+3943789  utility  3.94379e+06      US 1976-03-16   
+3944004  utility    3.944e+06      US 1976-03-16   
+3945191  utility  3.94519e+06      US 1976-03-23   
+
+                                                  abstract  \
+id                                                           
+3931349   A process is described for the production of ...   
+3935991   A reinforced paperboard produce container hav...   
+3943789   A horizontal load shaft, projecting from a ge...   
+3944004   An improved two feeder tray bulk weighment co...   
+3945191   This disclosure depicts an electronic timepie...   
+
+                                                     title kind  num_claims  \
+id                                                                            
+3931349      Conversion of methanol to gasoline components    A    0.009029   
+3935991               Plastic reinforced produce container    A    0.002257   
+3943789      Drive mechanism for cement mixer and the like    A    0.005643   
+3944004                              Batch weighing system    A    0.012415   
+3945191  Electronic timepiece having complementary elec...    A    0.003386   
+
+                        filename  withdrawn   ...    cit_made  \
+id                                            ...               
+3931349  pftaps19760106_wk01.zip        0.0   ...    0.001033   
+3935991  pftaps19760203_wk05.zip        0.0   ...    0.001205   
+3943789  pftaps19760316_wk11.zip        0.0   ...    0.001205   
+3944004  pftaps19760316_wk11.zip        0.0   ...    0.001377   
+3945191  pftaps19760323_wk12.zip        0.0   ...    0.000688   
+
+         cit_received_delay  cit_made_delay  originality  generality  \
+id                                                                     
+3931349            0.353835        0.641222          0.0    0.000000   
+3935991            0.270670        0.642102          0.0    0.138408   
+3943789            0.316234        0.683412          0.0    0.000000   
+3944004            0.277968        0.639338          0.0    0.625000   
+3945191            0.131093        0.630650          0.0    0.000000   
+
+         wipo_sector_id wipo_field_id  pagerank  year  decade  
+id                                                             
+3931349               0      0.529412  0.011216  1976    1970  
+3935991               3      0.705882  0.001409  1976    1970  
+3943789               3      0.882353  0.000505  1976    1970  
+3944004               2      0.264706  0.000662  1976    1970  
+3945191               2      0.264706  0.010436  1976    1970  
+
+[5 rows x 21 columns]
+
+external_knowledge.py
+
+2020-08-19 18:21:16.193263
+
+
+-- INFO --
+<class 'pandas.core.frame.DataFrame'>
+Index: 3890411 entries, 3931349 to 9854083
+Data columns (total 21 columns):
+type                  object
+number                object
+country               object
+date                  datetime64[ns]
+abstract              object
+title                 object
+kind                  object
+num_claims            float64
+filename              object
+withdrawn             float64
+cit_received          float64
+cit_made              float64
+cit_received_delay    float64
+cit_made_delay        float64
+originality           float64
+generality            float64
+wipo_sector_id        object
+wipo_field_id         float64
+pagerank              float64
+year                  int64
+decade                int64
+dtypes: datetime64[ns](1), float64(10), int64(2), object(8)
+memory usage: 653.0+ MB
+
+-- DESCRIPTION --
+         num_claims     withdrawn  cit_received      cit_made  \
+count  3.890411e+06  3.890411e+06  3.890411e+06  3.890411e+06   
+mean   1.699114e-02  6.657394e-05  4.939219e-03  2.493544e-03   
+std    1.441909e-02  8.159015e-03  1.196627e-02  7.235848e-03   
+min    0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00   
+25%    7.900677e-03  0.000000e+00  4.985045e-04  5.163511e-04   
+50%    1.467269e-02  0.000000e+00  1.744766e-03  1.032702e-03   
+75%    2.144470e-02  0.000000e+00  4.735793e-03  2.237522e-03   
+max    1.000000e+00  1.000000e+00  1.000000e+00  1.000000e+00   
+
+       cit_received_delay  cit_made_delay   originality    generality  \
+count        3.890411e+06    3.890411e+06  3.890411e+06  3.890411e+06   
+mean         1.491846e-01    6.639718e-01  1.913762e-01  1.992918e-01   
+std          5.107559e-02    2.930290e-02  2.634231e-01  2.663039e-01   
+min          0.000000e+00    0.000000e+00  0.000000e+00  0.000000e+00   
+25%          1.107662e-01    6.443148e-01  0.000000e+00  0.000000e+00   
+50%          1.400581e-01    6.559991e-01  0.000000e+00  0.000000e+00   
+75%          1.770650e-01    6.744249e-01  4.000000e-01  4.320988e-01   
+max          1.000000e+00    1.000000e+00  1.000000e+00  1.000000e+00   
+
+       wipo_field_id      pagerank          year        decade  
+count   3.890411e+06  3.890411e+06  3.890411e+06  3.890411e+06  
+mean    4.284017e-01  1.461989e-03  2.000487e+03  1.996215e+03  
+std     3.236438e-01  4.647273e-03  9.627520e+00  1.026242e+01  
+min     0.000000e+00  0.000000e+00  1.976000e+03  1.970000e+03  
+25%     1.470588e-01  1.577007e-04  1.994000e+03  1.990000e+03  
+50%     3.529412e-01  4.752620e-04  2.002000e+03  2.000000e+03  
+75%     7.352941e-01  1.293320e-03  2.009000e+03  2.000000e+03  
+max     1.000000e+00  1.000000e+00  2.017000e+03  2.010000e+03  
+-- HEAD --
+            type       number country       date  \
+id                                                 
+3931349  utility  3.93135e+06      US 1976-01-06   
+3935991  utility  3.93599e+06      US 1976-02-03   
+3943789  utility  3.94379e+06      US 1976-03-16   
+3944004  utility    3.944e+06      US 1976-03-16   
+3945191  utility  3.94519e+06      US 1976-03-23   
+
+                                                  abstract  \
+id                                                           
+3931349   A process is described for the production of ...   
+3935991   A reinforced paperboard produce container hav...   
+3943789   A horizontal load shaft, projecting from a ge...   
+3944004   An improved two feeder tray bulk weighment co...   
+3945191   This disclosure depicts an electronic timepie...   
+
+                                                     title kind  num_claims  \
+id                                                                            
+3931349      Conversion of methanol to gasoline components    A    0.009029   
+3935991               Plastic reinforced produce container    A    0.002257   
+3943789      Drive mechanism for cement mixer and the like    A    0.005643   
+3944004                              Batch weighing system    A    0.012415   
+3945191  Electronic timepiece having complementary elec...    A    0.003386   
+
+                        filename  withdrawn   ...    cit_made  \
+id                                            ...               
+3931349  pftaps19760106_wk01.zip        0.0   ...    0.001033   
+3935991  pftaps19760203_wk05.zip        0.0   ...    0.001205   
+3943789  pftaps19760316_wk11.zip        0.0   ...    0.001205   
+3944004  pftaps19760316_wk11.zip        0.0   ...    0.001377   
+3945191  pftaps19760323_wk12.zip        0.0   ...    0.000688   
+
+         cit_received_delay  cit_made_delay  originality  generality  \
+id                                                                     
+3931349            0.353835        0.641222          0.0    0.000000   
+3935991            0.270670        0.642102          0.0    0.138408   
+3943789            0.316234        0.683412          0.0    0.000000   
+3944004            0.277968        0.639338          0.0    0.625000   
+3945191            0.131093        0.630650          0.0    0.000000   
+
+         wipo_sector_id wipo_field_id  pagerank  year  decade  
+id                                                             
+3931349               0      0.529412  0.011216  1976    1970  
+3935991               3      0.705882  0.001409  1976    1970  
+3943789               3      0.882353  0.000505  1976    1970  
+3944004               2      0.264706  0.000662  1976    1970  
+3945191               2      0.264706  0.010436  1976    1970  
+
+[5 rows x 21 columns]
