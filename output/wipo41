@@ -1,0 +1,37 @@
+\begin{center}
+\begin{tabular}{lclc}
+\toprule
+\textbf{Dep. Variable:}    &        y         & \textbf{  R-squared:         } &        0.339     \\
+\textbf{Model:}            &       OLS        & \textbf{  Adj. R-squared:    } &        0.339     \\
+\textbf{Method:}           &  Least Squares   & \textbf{  F-statistic:       } &    1.718e+04     \\
+\textbf{Date:}             & Sun, 23 Aug 2020 & \textbf{  Prob (F-statistic):} &        0.00      \\
+\textbf{Time:}             &     20:07:17     & \textbf{  Log-Likelihood:    } &    1.5725e+06    \\
+\textbf{No. Observations:} &      302188      & \textbf{  AIC:               } &    -3.145e+06    \\
+\textbf{Df Residuals:}     &      302178      & \textbf{  BIC:               } &    -3.145e+06    \\
+\textbf{Df Model:}         &           9      & \textbf{                     } &                  \\
+\bottomrule
+\end{tabular}
+\begin{tabular}{lccccc}
+               & \textbf{coef} & \textbf{std err} & \textbf{t} & \textbf{P$>$$|$t$|$} & \textbf{[95.0\% Conf. Int.]}  \\
+\midrule
+\textbf{const} &       0.0040  &     4.65e-05     &    86.713  &         0.000        &         0.004     0.004       \\
+\textbf{x1}    &      -0.0003  &        0.000     &    -1.500  &         0.134        &        -0.001  8.92e-05       \\
+\textbf{x2}    &       0.1099  &        0.000     &   301.188  &         0.000        &         0.109     0.111       \\
+\textbf{x3}    &      -0.0123  &        0.000     &   -32.512  &         0.000        &        -0.013    -0.012       \\
+\textbf{x4}    &      -0.0059  &     7.54e-05     &   -78.082  &         0.000        &        -0.006    -0.006       \\
+\textbf{x5}    &      -0.0016  &     6.15e-05     &   -26.265  &         0.000        &        -0.002    -0.001       \\
+\textbf{x6}    &    5.431e-05  &     9.19e-06     &     5.910  &         0.000        &      3.63e-05  7.23e-05       \\
+\textbf{x7}    &       0.0002  &     9.17e-06     &    22.422  &         0.000        &         0.000     0.000       \\
+\textbf{x8}    &      -0.0029  &     3.94e-05     &   -72.441  &         0.000        &        -0.003    -0.003       \\
+\textbf{x9}    &   -1.864e-05  &     3.34e-05     &    -0.557  &         0.577        &     -8.42e-05  4.69e-05       \\
+\bottomrule
+\end{tabular}
+\begin{tabular}{lclc}
+\textbf{Omnibus:}       & 719592.300 & \textbf{  Durbin-Watson:     } &        1.867     \\
+\textbf{Prob(Omnibus):} &    0.000   & \textbf{  Jarque-Bera (JB):  } & 36343911318.244  \\
+\textbf{Skew:}          &   23.662   & \textbf{  Prob(JB):          } &         0.00     \\
+\textbf{Kurtosis:}      &  1701.300  & \textbf{  Cond. No.          } &         252.     \\
+\bottomrule
+\end{tabular}
+%\caption{OLS Regression Results}
+\end{center}
