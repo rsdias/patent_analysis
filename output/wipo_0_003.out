@@ -1,0 +1,38 @@
+\begin{center}
+\begin{tabular}{lclc}
+\toprule
+\textbf{Dep. Variable:}     &     PageRank     & \textbf{  R-squared:         } &         0.297      \\
+\textbf{Model:}             &       OLS        & \textbf{  Adj. R-squared:    } &         0.297      \\
+\textbf{Method:}            &  Least Squares   & \textbf{  F-statistic:       } &     2.550e+04      \\
+\textbf{Date:}              & Mon, 24 Aug 2020 & \textbf{  Prob (F-statistic):} &         0.00       \\
+\textbf{Time:}              &     00:14:22     & \textbf{  Log-Likelihood:    } &     2.9903e+06     \\
+\textbf{No. Observations:}  &      665093      & \textbf{  AIC:               } &     -5.981e+06     \\
+\textbf{Df Residuals:}      &      665081      & \textbf{  BIC:               } &     -5.980e+06     \\
+\textbf{Df Model:}          &          11      & \textbf{                     } &                    \\
+\bottomrule
+\end{tabular}
+\begin{tabular}{lccccc}
+                            & \textbf{coef} & \textbf{std err} & \textbf{t} & \textbf{P$>$$|$t$|$} & \textbf{[95.0\% Conf. Int.]}  \\
+\midrule
+\textbf{num_claims}         &       0.0055  &        9e-05     &    61.060  &         0.000        &         0.005     0.006       \\
+\textbf{cit_received}       &      -0.0006  &        0.000     &    -2.815  &         0.005        &        -0.001    -0.000       \\
+\textbf{cit_made}           &       0.3043  &        0.001     &   343.185  &         0.000        &         0.303     0.306       \\
+\textbf{cit_received_delay} &      -0.0227  &        0.001     &   -31.163  &         0.000        &        -0.024    -0.021       \\
+\textbf{cit_made_delay}     &      -0.0071  &     8.29e-05     &   -85.221  &         0.000        &        -0.007    -0.007       \\
+\textbf{originality}        &      -0.0039  &        0.000     &   -28.330  &         0.000        &        -0.004    -0.004       \\
+\textbf{generality}         &       0.0002  &     1.42e-05     &    11.934  &         0.000        &         0.000     0.000       \\
+\textbf{wipo_far_ext}       &       0.0005  &     1.37e-05     &    33.612  &         0.000        &         0.000     0.000       \\
+\textbf{wipo_ext}           &      -0.0895  &        0.001     &   -69.013  &         0.000        &        -0.092    -0.087       \\
+\textbf{year}               &      -0.0918  &        0.001     &   -61.518  &         0.000        &        -0.095    -0.089       \\
+\textbf{decade}             &      -0.0032  &     5.11e-05     &   -61.709  &         0.000        &        -0.003    -0.003       \\
+\bottomrule
+\end{tabular}
+\begin{tabular}{lclc}
+\textbf{Omnibus:}       & 2498534.234 & \textbf{  Durbin-Watson:     } &         1.890      \\
+\textbf{Prob(Omnibus):} &     0.000   & \textbf{  Jarque-Bera (JB):  } & 8926088351441.201  \\
+\textbf{Skew:}          &    83.433   & \textbf{  Prob(JB):          } &          0.00      \\
+\textbf{Kurtosis:}      &  17949.355  & \textbf{  Cond. No.          } &          868.      \\
+\bottomrule
+\end{tabular}
+%\caption{OLS of WIPO: 0}
+\end{center}
