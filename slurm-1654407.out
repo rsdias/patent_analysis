@@ -1,0 +1,22 @@
+/bin/bash: error importing function definition for `BASH_FUNC_module()'
+/bin/bash: error importing function definition for `BASH_FUNC_switchml()'
+/bin/bash: error importing function definition for `BASH_FUNC__moduleraw()'
+/home/rkogeyam/PATENT_CITATION
+n056
+Wed Aug 26 08:30:10 EDT 2020
+Running program on 3 CPU cores
+[NbConvertApp] Searching ['/home/rkogeyam/PATENT_CITATION', '/home/rkogeyam/.jupyter', '/home/applications/anaconda3/4.2.0/etc/jupyter', '/usr/local/etc/jupyter', '/etc/jupyter'] for config files
+[NbConvertApp] Looking for jupyter_config in /etc/jupyter
+[NbConvertApp] Looking for jupyter_config in /usr/local/etc/jupyter
+[NbConvertApp] Looking for jupyter_config in /home/applications/anaconda3/4.2.0/etc/jupyter
+[NbConvertApp] Looking for jupyter_config in /home/rkogeyam/.jupyter
+[NbConvertApp] Looking for jupyter_config in /home/rkogeyam/PATENT_CITATION
+[NbConvertApp] Looking for jupyter_nbconvert_config in /etc/jupyter
+[NbConvertApp] Looking for jupyter_nbconvert_config in /usr/local/etc/jupyter
+[NbConvertApp] Looking for jupyter_nbconvert_config in /home/applications/anaconda3/4.2.0/etc/jupyter
+[NbConvertApp] Looking for jupyter_nbconvert_config in /home/rkogeyam/.jupyter
+[NbConvertApp] Looking for jupyter_nbconvert_config in /home/rkogeyam/PATENT_CITATION
+[NbConvertApp] Converting notebook external_knowledge.ipynb to notebook
+[NbConvertApp] Notebook name is 'external_knowledge'
+[NbConvertApp] Applying preprocessor: ExecutePreprocessor
+[NbConvertApp] Executing notebook with kernel: python3
