@@ -1,0 +1,33 @@
+/bin/bash: error importing function definition for `BASH_FUNC_module()'
+/bin/bash: error importing function definition for `BASH_FUNC_switchml()'
+/bin/bash: error importing function definition for `BASH_FUNC__moduleraw()'
+/home/rkogeyam/PATENT_CITATION
+n056
+Wed Aug 26 10:16:48 EDT 2020
+Running program on 3 CPU cores
+[NbConvertApp] Searching ['/home/rkogeyam/PATENT_CITATION', '/home/rkogeyam/.jupyter', '/home/applications/anaconda3/4.2.0/etc/jupyter', '/usr/local/etc/jupyter', '/etc/jupyter'] for config files
+[NbConvertApp] Looking for jupyter_config in /etc/jupyter
+[NbConvertApp] Looking for jupyter_config in /usr/local/etc/jupyter
+[NbConvertApp] Looking for jupyter_config in /home/applications/anaconda3/4.2.0/etc/jupyter
+[NbConvertApp] Looking for jupyter_config in /home/rkogeyam/.jupyter
+[NbConvertApp] Looking for jupyter_config in /home/rkogeyam/PATENT_CITATION
+[NbConvertApp] Looking for jupyter_nbconvert_config in /etc/jupyter
+[NbConvertApp] Looking for jupyter_nbconvert_config in /usr/local/etc/jupyter
+[NbConvertApp] Looking for jupyter_nbconvert_config in /home/applications/anaconda3/4.2.0/etc/jupyter
+[NbConvertApp] Looking for jupyter_nbconvert_config in /home/rkogeyam/.jupyter
+[NbConvertApp] Looking for jupyter_nbconvert_config in /home/rkogeyam/PATENT_CITATION
+[NbConvertApp] Converting notebook external_knowledge.ipynb to notebook
+[NbConvertApp] Notebook name is 'external_knowledge'
+[NbConvertApp] Applying preprocessor: ExecutePreprocessor
+[NbConvertApp] Executing notebook with kernel: python3
+[NbConvertApp] Found kernel m-env in /home/rkogeyam/.local/share/jupyter/kernels
+[NbConvertApp] Native kernel (python3) available from /home/applications/anaconda3/4.2.0/lib/python3.5/site-packages/ipykernel/resources
+[NbConvertApp] Starting kernel: ['/home/applications/anaconda3/4.2.0/bin/python', '-m', 'ipykernel', '-f', '/tmp/tmp8j5uly34.json']
+[NbConvertApp] Connecting to: tcp://127.0.0.1:34374
+[NbConvertApp] connecting shell channel to tcp://127.0.0.1:49357
+[NbConvertApp] Connecting to: tcp://127.0.0.1:49357
+[NbConvertApp] connecting iopub channel to tcp://127.0.0.1:46516
+[NbConvertApp] Connecting to: tcp://127.0.0.1:46516
+[NbConvertApp] connecting stdin channel to tcp://127.0.0.1:45883
+[NbConvertApp] Connecting to: tcp://127.0.0.1:45883
+[NbConvertApp] connecting heartbeat channel to tcp://127.0.0.1:54355
