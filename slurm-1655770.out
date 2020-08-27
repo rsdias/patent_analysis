@@ -1,0 +1,265 @@
+/bin/bash: error importing function definition for `BASH_FUNC_module()'
+/bin/bash: error importing function definition for `BASH_FUNC_switchml()'
+/bin/bash: error importing function definition for `BASH_FUNC__moduleraw()'
+/home/rkogeyam/PATENT_CITATION
+n056
+Thu Aug 27 10:39:15 EDT 2020
+Running program on 3 CPU cores
+[NbConvertApp] Searching ['/home/rkogeyam/PATENT_CITATION', '/home/rkogeyam/.jupyter', '/home/applications/anaconda3/4.2.0/etc/jupyter', '/usr/local/etc/jupyter', '/etc/jupyter'] for config files
+[NbConvertApp] Looking for jupyter_config in /etc/jupyter
+[NbConvertApp] Looking for jupyter_config in /usr/local/etc/jupyter
+[NbConvertApp] Looking for jupyter_config in /home/applications/anaconda3/4.2.0/etc/jupyter
+[NbConvertApp] Looking for jupyter_config in /home/rkogeyam/.jupyter
+[NbConvertApp] Looking for jupyter_config in /home/rkogeyam/PATENT_CITATION
+[NbConvertApp] Looking for jupyter_nbconvert_config in /etc/jupyter
+[NbConvertApp] Looking for jupyter_nbconvert_config in /usr/local/etc/jupyter
+[NbConvertApp] Looking for jupyter_nbconvert_config in /home/applications/anaconda3/4.2.0/etc/jupyter
+[NbConvertApp] Looking for jupyter_nbconvert_config in /home/rkogeyam/.jupyter
+[NbConvertApp] Looking for jupyter_nbconvert_config in /home/rkogeyam/PATENT_CITATION
+[NbConvertApp] Converting notebook external_knowledge.ipynb to notebook
+[NbConvertApp] Notebook name is 'external_knowledge'
+[NbConvertApp] Applying preprocessor: ExecutePreprocessor
+[NbConvertApp] Executing notebook with kernel: python3
+[NbConvertApp] Found kernel m-env in /home/rkogeyam/.local/share/jupyter/kernels
+[NbConvertApp] Native kernel (python3) available from /home/applications/anaconda3/4.2.0/lib/python3.5/site-packages/ipykernel/resources
+[NbConvertApp] Starting kernel: ['/home/applications/anaconda3/4.2.0/bin/python', '-m', 'ipykernel', '-f', '/tmp/tmp4u89xol3.json']
+[NbConvertApp] Connecting to: tcp://127.0.0.1:47122
+[NbConvertApp] connecting shell channel to tcp://127.0.0.1:39247
+[NbConvertApp] Connecting to: tcp://127.0.0.1:39247
+[NbConvertApp] connecting iopub channel to tcp://127.0.0.1:48635
+[NbConvertApp] Connecting to: tcp://127.0.0.1:48635
+[NbConvertApp] connecting stdin channel to tcp://127.0.0.1:39201
+[NbConvertApp] Connecting to: tcp://127.0.0.1:39201
+[NbConvertApp] connecting heartbeat channel to tcp://127.0.0.1:48296
+[NbConvertApp] Executing cell:
+#Script to evaluate the determinants of patent citation 
+#Renato Kogeyama
+
+# August 19, 2020
+# Updated all files to latest data available in PatentsView (Jun/2020)
+# Excluded self citations from the dataset
+
+# July 13, 2020
+# I am changing the script to test Nemet and Johnson 2012, but with centrality measures as DV
+
+# Apr 27, 2020
+# Separe most central patents, classify them as disruptive and calculate dvs from extant literature
+
+# Mar 16, 2020
+# Introducing centrality measures as dv
+
+# Feb 04, 2020
+# to set labels in heatmap keyword:xticklabels
+# for ex.
+# sns.heatmap(globalWarming_df, xticklabels = np.arange(0,15))
+# to be implemented later
+# another alternative is to substitute the values in the dataset and convert columns to categories
+# to understand the impact, i should run some test
+# however i am focusing now in calculate Corredoira's 2015 and Nemet & Johnson 2012
+
+# Feb 03, 2020
+# version backed up as _old
+
+# Feb 02, 2020
+# the best way to deal with the classification names is to use a dictionary
+# this avoid charging memory with the strings
+# However, WIPO is organized differently than the other systems
+# I'll update the wipo code to uniformize the behavior in this script
+# I am creating a code that reflects the first level of classification 
+
+# Feb 01, 2020
+# Introduction of categorical graphs: barplot and heatmap
+# heatmap is not the real deal, its a simplification
+# the real deal would be the correlation table - there is a suggestion based on cramer, 
+    # but implementation was not ready
+# graphs exported and google docs updated
+# next step: update cit_tree to reflect Corredoira's 205 Influence measure
+# plot a network graph: https://plot.ly/python/network-graphs/
+# reproduce 2012 Nemet and Johnson with other class systems
+# correct bias in generality and originality (multiply for N/N-1)
+
+# Jan 21, 2020
+# Classifications added
+# Code reorganized - much faster now
+# Still missing the update of applications to the grant number
+# I should provide now descriptive statistics on all variables
+
+# Jan 21, 2020
+# The current data does not have Class
+# I should go back and get this info - but there are too many scripts now and
+#   I should reorganize them before moving forward
+# I should also include the patent publication date - to control for the policy changes
+# In the citation file, I should change application number for grant when possible 
+#   This will improve realiability of all measures related to citation
+# Introduce classifications
+
+# Jan 18, 2020
+# Variables calculated
+# Generality, average delay, forward and backward citations, cumulative citation (cit_tree)
+# Still missing originality
+# the file with variables that are used in this script should get a name independent from the date
+
+
+#Miami, December 24th, 2019
+# Prof. Rafael Corredoira suggested:
+# - Inclusion of a tree of citations
+#   To track back the source of citations. This is information is not given by direct count of citations.
+# - Consider policy changes in the way patents are cited
+#   Policy changes in 2000 changed the time frame of citation, and 2010 partially moved citation to applications
+# - Track classification changes 
+#   The original classification system in USPTO changed from a technical based to a market based classification system
+#   See if there is an impact
+# - Consider a text analysis of the claims
+#   Classification is based on the claims but it is not clear how many claims are related to each classification category
+# - Include moderation effect from classification
+#   Citations patterns may change across industries, so some effects may disappear if industry is not accounted for.
+
+# In summary, his ideas help increase structure of the current work
+
+
+#Syracuse, December 3rd, 2019
+
+#The original script is getting too complex
+#There was many tentative scripts to play with data
+#Here I am writing a script to show the relevance of variables to patent citation
+
+#11-12-2019
+#Introducing normalization
+
+#10-11-2019
+#I introduced log backward citation, what corrects for very dispersed results
+#but the major problem is that few patents receive citations
+#bring back binary output
+
+#10-10-2019
+#Added graphics and new distributions
+
+#10-03-2019
+#I rewrote the citation data to clean the strings
+
+#09-15-2019
+#O naive bayes tem algum problema com distribuicoes desbalanceadas
+#o scikit learn tem um modulo que corrige count distributions com muitos zeros, o complementNB
+#porem este nao esta disponivel na atual versao disponibilizada no HPC da FIU
+
+#09-10-2019
+#o trabalho pede uma abordagem mais sistematica e cuidadosa
+#estou agrupando o codigo antigo comentado e vou comecar um novo codigo
+
+#09-27-2019
+#I am renaming citation as forward citation and backward citation
+
+#09-17-2018
+
+#Alto uso de memoria - rodar no Amazon AWS 
+
+
+[NbConvertApp] output: status
+[NbConvertApp] output: execute_input
+[NbConvertApp] output: status
+[NbConvertApp] Executing cell:
+import pandas as pd
+import numpy as np
+import IPython.display as display
+import seaborn as sns
+          
+import itertools
+
+from sklearn import preprocessing
+from sklearn import linear_model, datasets
+from sklearn.model_selection import train_test_split
+from sklearn.feature_selection import SelectKBest, f_classif
+from sklearn import naive_bayes
+from sklearn.metrics import roc_curve, auc
+from sklearn.feature_selection import VarianceThreshold
+from sklearn.linear_model import LinearRegression
+
+import scipy.stats as ss
+import datetime
+import matplotlib.pyplot as plt
+
+from math import sqrt
+
+import sys
+sys.path.append('/home/rkogeyam/scripts/')
+sys.path.append('scripts/')
+
+from determinants_scripts import classes
+
+from plotbar import plotbar
+from plot_heat import heatmap
+
+
+from best_num_attr import best_num_attr
+from xattrSelect import xattrSelect
+from sampler import sampler
+from normalize import normalize
+from nbayes import nbayes
+
+import gzip
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+
+import os
+import math
+[NbConvertApp] output: status
+[NbConvertApp] output: execute_input
+[NbConvertApp] output: status
+[NbConvertApp] Executing cell:
+#function to write results to a latex file 
+def export_table(content, name):
+    basename='output/'+ name
+    i=1
+    while os.path.exists(basename+"_"+"{:03d}".format(i)+'.out'):
+        i += 1
+    with open(basename+"_"+"{:03d}".format(i)+'.out','w') as fh:
+        for element in content:
+            fh.write( element )
+ 
+[NbConvertApp] output: status
+[NbConvertApp] output: execute_input
+[NbConvertApp] output: status
+[NbConvertApp] Executing cell:
+%matplotlib inline
+sns.set()
+sns.set_palette(sns.cubehelix_palette(8))
+# pd.options.display.float_format = '{:,.2f}'.format
+[NbConvertApp] output: status
+[NbConvertApp] output: execute_input
+[NbConvertApp] output: status
+[NbConvertApp] Executing cell:
+latex='data/results.tex'
+# dataset='data/dataset.csv'
+dataset=gzip.open('data/dataset.csv.gz', 'rt')
+[NbConvertApp] output: status
+[NbConvertApp] output: execute_input
+[NbConvertApp] output: status
+[NbConvertApp] Executing cell:
+dtypes={'id':object,'title':object, 'num_claims':float, 'cit_received':float, 'cit_made':float,
+       'cit_received_delay':float, 'cit_made_delay':float, 'parent_citation':float,
+       'originality':float, 'generality':float, 'wipo_sector_id':object,'wipo_far_ext':float, 'wipo_ext':float,  'pagerank':float}
+[NbConvertApp] output: status
+[NbConvertApp] output: execute_input
+[NbConvertApp] output: status
+[NbConvertApp] Executing cell:
+# only main classes (exclude uspc)
+
+usecols=['id', 'title', 'date', 'num_claims', 'cit_received', 'cit_made',
+         'cit_received_delay', 'cit_made_delay',
+         'originality', 'generality', 'wipo_sector_id', 'wipo_far_ext', 'wipo_ext', 'pagerank']
+[NbConvertApp] output: status
+[NbConvertApp] output: execute_input
+[NbConvertApp] output: status
+[NbConvertApp] Executing cell:
+# only WIPO class system, exclude type and kind
+
+# usecols=['id', 'date', 'num_claims', 'cit_received', 'cit_made',
+#         'cit_received_delay', 'cit_made_delay', 'parent_citation',
+#         'originality', 'generality', 'wipo_sector_id', 'eigen', 'pagerank', 'katz']
+[NbConvertApp] output: status
+[NbConvertApp] output: execute_input
+[NbConvertApp] output: status
+[NbConvertApp] Executing cell:
+df=pd.read_csv(dataset, usecols=usecols, dtype=dtypes, parse_dates=['date'], index_col='id')
+
+df.info()
