@@ -70,72 +70,40 @@
 
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import gzip
 
 
-# In[3]:
-
-
-get_ipython().run_line_magic('matplotlib', 'inline')
-
-
-# In[4]:
-
-
-citation_df = '/home/rkogeyam/PATENT_CITATION/data/cleanuspatentcitation.csv.gz'
-# cit_tree = '/home/rkogeyam/PATENT_CITATION/data/cit_tree.csv'
-
+citation_df = 'data/cleanuspatentcitation.csv.gz'
 patent= 'data/cleanpatent.csv.gz'
 dst='data/var_builder.csv.gz'
 
-# citation_df = r'/home/rkogeyam/PATENT_CITATION/data/uspatentcitation.tsv'
-# dst = '/home/rkogeyam/PATENT_CITATION/data/back_cit_delay.csv'
-# dst_forw = '/home/rkogeyam/PATENT_CITATION/data/forw_cit_delay.csv'
+file_citation=gzip.open(citation_df, 'r')
+df = pd.read_csv(file_citation, usecols=['patent_id', 'citation_id', 'date'], dtype=object)
 
-
-# In[5]:
-
-
-get_ipython().run_cell_magic('time', '', "file_citation=gzip.open(citation_df, 'r')\ndf = pd.read_csv(file_citation, usecols=['patent_id', 'citation_id', 'date'], dtype=object)")
-
-
-# In[6]:
-
-
-get_ipython().run_cell_magic('time', '', "file_patent=gzip.open(patent, 'r')\npt_df = pd.read_csv(file_patent, usecols=['id', 'date'],index_col=0, dtype=object)")
+file_patent=gzip.open(patent, 'r')
+pt_df = pd.read_csv(file_patent, usecols=['id', 'date'],index_col=0, dtype=object)
 
 
 # In[7]:
-
-
-# df=df.iloc[:,1:]
-
-
-# In[8]:
-
-
 df.head()
-# df.get_chunk().head()
-
 
 # In[9]:
-
-
 pt_df.head()
-# pt_df.get_chunk().head()
-
 
 # In[10]:
-
-
-get_ipython().run_cell_magic('time', '', 'df=df.rename(columns = {\'date\':\'citation_date\'})\ndf[\'citation_date\']=pd.to_datetime(df[\'citation_date\'], format="%Y-%m-%d", errors=\'coerce\') \n# df[\'citation_date\'].apply[lambda x: np.datetime64(x)]')
+df=df.rename(columns = {'date':'citation_date'})
+df['citation_date']=pd.to_datetime(df['citation_date'], format="%Y-%m-%d", errors='coerce')
+df['citation_date'].apply[lambda x: np.datetime64(x)]
 
 
 # In[11]:
+# merge between patent data and citations on patent_id (citing)
+# merging on the citation dataset drops patents without citing
+# later i could standardize to make patent_id index and use join instead of merge
+df=pd.merge(df, pt_df, how='inner', left_on='patent_id', right_index=True)
 
 
-get_ipython().run_cell_magic('time', '', "# merge between patent data and citations on patent_id (citing)\n# merging on the citation dataset drops patents without citing\n# later i could standardize to make patent_id index and use join instead of merge\n\ndf=pd.merge(df, pt_df, how='inner', left_on='patent_id', right_index=True)")
 
 
 # In[12]:
@@ -147,7 +115,11 @@ df.info()
 # In[13]:
 
 
-get_ipython().run_cell_magic('time', '', '# date format to allow calculations\ndf=df.rename(columns = {\'date\':\'patent_date\'})\ndf[\'patent_date\']=pd.to_datetime(df[\'patent_date\'], format="%Y-%m-%d", errors=\'coerce\') #conversao de string para data\n# df[\'patent_date\'].apply[lambda x: np.datetime64(x)]')
+# date format to allow calculations
+df=df.rename(columns = {'date':'patent_date'})
+df['patent_date']=pd.to_datetime(df['patent_date'], format="%Y-%m-%d", errors='coerce') 
+#conversao de string para data
+# df['patent_date'].apply[lambda x: np.datetime64(x)]')
 
 
 # In[14]:
@@ -176,7 +148,10 @@ get_ipython().run_cell_magic('time', '', '# date format to allow calculations\nd
 # In[17]:
 
 
-get_ipython().run_cell_magic('time', '', "# delay is the time interval between grant and citation\ndf['cit_delay']=df['patent_date'].sub(df['citation_date'], axis=0)\n\n# convert to date format\ndf['cit_delay']=pd.to_timedelta(df['cit_delay'])")
+# delay is the time interval between grant and citation
+df['cit_delay']=df['patent_date'].sub(df['citation_date'], axis=0)
+# convert to date format
+df['cit_delay']=pd.to_timedelta(df['cit_delay'])
 
 
 # In[18]:
@@ -204,7 +179,16 @@ df.sort_values('cit_delay').tail()
 # In[21]:
 
 
-get_ipython().run_cell_magic('time', '', "# convert to interval in years\n# df['cit_delay']=df['cit_delay'].dt.days/360\n\n# this is the may offensor of performance\n# change to numpy\n# https://stackoverflow.com/questions/52274356/conversion-of-a-timedelta-to-int-very-slow-in-python\n\n# this takes 40min\ndf['cit_delay']=pd.to_timedelta(df['cit_delay']).dt.components.days/365\n\n# lets try this alternative\n# df['cit_delay']=df['cit_delay'].apply(lambda x: convert_to_delta(x))\n# does not work")
+# convert to interval in years
+# df['cit_delay']=df['cit_delay'].dt.days/360
+# this is the may offensor of performance
+# change to numpy
+# https://stackoverflow.com/questions/52274356/conversion-of-a-timedelta-to-int-very-slow-in-python
+# this takes 40min
+df['cit_delay']=pd.to_timedelta(df['cit_delay']).dt.components.days/365
+# lets try this alternativE
+# df['cit_delay']=df['cit_delay'].apply(lambda x: convert_to_delta(x)
+# does not work")
 
 
 # In[22]:

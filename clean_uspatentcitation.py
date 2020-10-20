@@ -25,13 +25,15 @@
 
 import sys
 sys.path.append('/home/rkogeyam/scripts/')
-from sampler import sampler
+#from sampler import sampler
 
 import pandas as pd
 import numpy as np
 import re
 import datetime
-
+import csv
+import gzip
+import zipfile as zip
 
 # In[3]:
 
@@ -51,9 +53,8 @@ import datetime
 
 # In[4]:
 
-
-src= r'/home/rkogeyam/PATENT_CITATION/data/uspatentcitation.tsv'
-dst= '/home/rkogeyam/PATENT_CITATION/data/cleanuspatentcitation.csv'
+src= r'data/uspatentcitation.tsv.zip'
+dst= 'data/cleanuspatentcitation.csv'
 
 
 # In[5]:

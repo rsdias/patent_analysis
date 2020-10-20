@@ -18,7 +18,6 @@
 
 import sys
 sys.path.append('/home/rkogeyam/scripts/')
-from sampler import sampler
 
 import pandas as pd
 import numpy as np
