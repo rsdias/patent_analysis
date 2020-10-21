@@ -50,145 +50,31 @@ import zipfile as zip
 # num_claims:number of claims
 # filename: name of the raw data file where patent information is parsed from
 
-
-# In[4]:
-
-
-# get_ipython().run_line_magic('matplotlib', 'inline')
-
-
-# In[5]:
-
-
 src= 'data/patent.tsv.zip'
 dst= 'data/cleanpatent.csv.gz'
 
-
-# In[6]:
-
-
 cols=['id', 'num_claims', 'date', 'type', 'kind']
 
-
-# In[7]:
-
-
 file_name = "data/patent.tsv.zip"
-f_name = "patent.tsv"
-# Selecting the zip file.
-zf = zip.ZipFile(file_name)
-# Reading the selected file in the zip.
-df = pd.read_csv(zf.open(f_name), delimiter="\t", quoting = csv.QUOTE_NONNUMERIC, dtype=object)
-
-
-# In[8]:
-
-
-# file_src=gzip.open(src, 'r')
+df = pd.read_csv(file_name, compression='zip', usecols=cols, delimiter="\t", quoting = csv.QUOTE_NONNUMERIC, dtype=object, chunksize=10000)
 # df = pd.read_csv(file_src, sep='\t', usecols=cols, error_bad_lines=False, dtype=object, quoting = csv.QUOTE_NONNUMERIC)
 
-
-# In[9]:
-
-
-df.info()
-
-
-# In[10]:
-
-
-df=df.astype(object)
-
-
-# In[11]:
-
-
-df.dtypes
-
-
-# In[12]:
-
-
+#df.info()
+#df.dtypes
 # get_ipython().run_cell_magic('time', '', '# Keep this for reference!\n# As of Dec 31st, 2019, I compared the clean to the raw version of citation and patent ids\n\n# stripping non-desired characters but keeping the originals for later check - only three changes in citation_id\n# df[\'id\']=df[\'id\'].astype(object)\ncleaning_patent=lambda x:re.sub(\'([^a-zA-Z0-9]+)\', "", x)\ndf[\'id\']=df[\'id\'].astype(object).apply(cleaning_patent)')
+for chunk in df:
+    
+    #df=df.astype(object)
+    chunk.date.replace({'-00':'-01'}, regex=True, inplace=True)
+    #ideally, I would control the modification here
 
+    #df.id.str.len().value_counts()
+    #df[df['id'].apply(lambda x: len(x)>13)]
 
-# In[13]:
-
-
-df.date.replace({'-00':'-01'}, regex=True, inplace=True)
-#ideally, I would control the modification here
-
-
-# In[14]:
-
-
-df.id.str.len().value_counts()
-
-
-# In[15]:
-
-
-df[df['id'].apply(lambda x: len(x)>13)]
-
-
-# In[16]:
-
-
-# drop five rows with error
-df=df[df['id'].apply(lambda x: len(x)<13)]
-
-
-# In[17]:
-
-
-df['num_claims']=pd.to_numeric(df['num_claims'], errors='coerce')
-
-
-# In[18]:
-
-
-df[df['kind'].apply(lambda x: len(str(x))>13)]
-
-
-# In[19]:
-
-
-df=df[df['kind'].apply(lambda x: len(str(x))<13)]
-
-
-# In[20]:
-
-
-df.groupby('kind').count()
-
-
-# In[21]:
-
-
-df.groupby('type').count()
-
-
-# In[22]:
-
-
-df.describe(include='all')
-# df.describe()
-
-
-# In[23]:
-
-
-df['num_claims'].hist()
-
-
-# In[24]:
-
-
-df.dtypes
-
-
-# In[25]:
-
-
-df.set_index('id').to_csv(dst, compression='gzip')
-
+    # drop five rows with error
+    chunk=chunk[chunk['id'].apply(lambda x: len(x)<13)]
+    chunk['num_claims']=pd.to_numeric(chunk['num_claims'], errors='coerce')
+    chunk.describe(include='all')
+    #df['num_claims'].hist()
+    #df.dtypes
+    chunk.set_index('id').to_csv(dst, mode='a', compression='gzip')
