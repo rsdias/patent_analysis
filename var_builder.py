@@ -82,10 +82,10 @@ dst='data/var_builder.csv.gz'
 report=[] #file to export report
 
 #file_citation=gzip.open(citation_df, 'r')
-df = dd.read_csv(citation_df, compression='gzip', usecols=['patent_id', 'citation_id', 'date'], dtype=object)
+df = dd.read_csv(citation_df, compression='gzip', usecols=['patent_id', 'citation_id', 'date'], dtype=object).set_index('patent_id')
 
 #file_patent=gzip.open(patent, 'r')
-pt_df = dd.read_csv(patent, compression='gzip', usecols=['id', 'date'],dtype=object)
+pt_df = dd.read_csv(patent, compression='gzip', usecols=['id', 'date'],dtype=object).set_index('id')
 
 report.append("file citation head \n")
 report.append(df.head().to_latex())
@@ -99,7 +99,7 @@ df['citation_date'].apply([lambda x: np.datetime64(x)])
 # merge between patent data and citations on patent_id (citing)
 # merging on the citation dataset drops patents without citing
 # later i could standardize to make patent_id index and use join instead of merge
-df=dd.merge(df, pt_df, how='inner', left_on='patent_id', right_index=True)
+df=dd.merge(df, pt_df, how='inner')
 
 report.append("Info after merging\n")
 report.append(df.info().to_latex())
