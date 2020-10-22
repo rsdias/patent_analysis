@@ -94,7 +94,7 @@ report.append("pt_df.head()")
 
 df=df.rename(columns = {'date':'citation_date'})
 df['citation_date']=dd.to_datetime(df['citation_date'], format="%Y-%m-%d", errors='coerce')
-df['citation_date'].apply[lambda x: np.datetime64(x)]
+df['citation_date'].apply([lambda x: np.datetime64(x)])
 
 # merge between patent data and citations on patent_id (citing)
 # merging on the citation dataset drops patents without citing
