@@ -101,8 +101,8 @@ df['citation_date'].apply([lambda x: np.datetime64(x)])
 # later i could standardize to make patent_id index and use join instead of merge
 df=dd.merge(df, pt_df, how='inner')
 
-report.append("Info after merging\n")
-report.append(df.info().to_latex())
+#report.append("Info after merging\n")
+#report.append(df.info().to_latex())
 
 # date format to allow calculations
 df=df.rename(columns = {'date':'patent_date'})
