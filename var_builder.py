@@ -85,7 +85,7 @@ report=[] #file to export report
 df = dd.read_csv(citation_df, compression='gzip', usecols=['patent_id', 'citation_id', 'date'], dtype=object)
 
 file_patent=gzip.open(patent, 'r')
-pt_df = dd.read_csv(file_patent, usecols=['id', 'date'],index_col=0, dtype=object)
+pt_df = dd.read_csv(file_patent, usecols=['id', 'date'],dtype=object)
 
 report.apppend("file citation head \n")
 report.apppend(df.head().to_latex())
