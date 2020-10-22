@@ -81,8 +81,8 @@ patent= 'data/cleanpatent.csv.gz'
 dst='data/var_builder.csv.gz'
 report=[] #file to export report
 
-file_citation=gzip.open(citation_df, 'r')
-df = dd.read_csv(file_citation, usecols=['patent_id', 'citation_id', 'date'], dtype=object)
+#file_citation=gzip.open(citation_df, 'r')
+df = dd.read_csv(citation_df, compression='gzip', usecols=['patent_id', 'citation_id', 'date'], dtype=object)
 
 file_patent=gzip.open(patent, 'r')
 pt_df = dd.read_csv(file_patent, usecols=['id', 'date'],index_col=0, dtype=object)
