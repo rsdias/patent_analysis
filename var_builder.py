@@ -87,9 +87,9 @@ df = dd.read_csv(citation_df, compression='gzip', usecols=['patent_id', 'citatio
 #file_patent=gzip.open(patent, 'r')
 pt_df = dd.read_csv(patent, compression='gzip', usecols=['id', 'date'],dtype=object)
 
-report.apppend("file citation head \n")
-report.apppend(df.head().to_latex())
-report.apppend("patent file head \n")
+report.append("file citation head \n")
+report.append(df.head().to_latex())
+report.append("patent file head \n")
 report.append("pt_df.head()")
 
 df=df.rename(columns = {'date':'citation_date'})
@@ -101,7 +101,7 @@ df['citation_date'].apply[lambda x: np.datetime64(x)]
 # later i could standardize to make patent_id index and use join instead of merge
 df=dd.merge(df, pt_df, how='inner', left_on='patent_id', right_index=True)
 
-report.apppend("Info after merging\n")
+report.append("Info after merging\n")
 report.append(df.info().to_latex())
 
 # date format to allow calculations
@@ -123,10 +123,10 @@ df['cit_delay']=df['patent_date'].sub(df['citation_date'], axis=0)
 # convert to date format
 df['cit_delay']=pd.to_timedelta(df['cit_delay'])
 
-report.apppend("head\n")
-report.apppend(df.sort_values('cit_delay').head())
-report.apppend("tail \n")
-report.apppend(df.sort_values('cit_delay').tail())
+report.append("head\n")
+report.append(df.sort_values('cit_delay').head())
+report.append("tail \n")
+report.append(df.sort_values('cit_delay').tail())
 
 # def convert_to_delta(x):
 #     try:
@@ -148,20 +148,20 @@ df['cit_delay']=pd.to_timedelta(df['cit_delay']).dt.components.days/365
 # does not work")
 
 
-report.apppend("describe\n")
-report.apppend(df.describe())
+report.append("describe\n")
+report.append(df.describe())
 
-report.apppend("head\n")
-report.apppend(df.head())
+report.append("head\n")
+report.append(df.head())
 
 #get_ipython().run_cell_magic('time', '', 'df.hist()')
 
 #Check outliers
-report.apppend("Check cit delay outliers - 0.15 quantile")
-report.apppend(df[df["cit_delay"]>df["cit_delay"].quantile(0.15)].sort_values(by=['cit_delay'], ascending=True))
+report.append("Check cit delay outliers - 0.15 quantile")
+report.append(df[df["cit_delay"]>df["cit_delay"].quantile(0.15)].sort_values(by=['cit_delay'], ascending=True))
 
-report.apppend("Check cit delay outliers -0.85 quantile")
-report.apppend(df[df["cit_delay"]<df["cit_delay"].quantile(0.85)].sort_values(by=['cit_delay'], ascending=False))
+report.append("Check cit delay outliers -0.85 quantile")
+report.append(df[df["cit_delay"]<df["cit_delay"].quantile(0.85)].sort_values(by=['cit_delay'], ascending=False))
 
 df.to_csv(dst, compression='gzip')
 
