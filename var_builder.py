@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-# In[1]:
-
-
+"""
 # Script to evaluate citation delay
 # Backward citation - citation made by a patent
 # Forward citation - citation received by a patent
 
 # Renato Kogeyama
+
+
+# Oct 22, 2020
+# The original script requires more than 32 GB RAM
+# Changing from pd to dd (dask dataframe)
 
 # Aug 19, 2020
 # Included gzip
@@ -65,71 +67,49 @@
 # the Chicago Historical Society.
 
 
-# In[2]:
+"""
 
 
 import pandas as pd
 import numpy as np
 #import matplotlib.pyplot as plt
 import gzip
-
+import dask.dataframe as dd
 
 citation_df = 'data/cleanuspatentcitation.csv.gz'
 patent= 'data/cleanpatent.csv.gz'
 dst='data/var_builder.csv.gz'
+report=[] #file to export report
 
 file_citation=gzip.open(citation_df, 'r')
-df = pd.read_csv(file_citation, usecols=['patent_id', 'citation_id', 'date'], dtype=object)
+df = dd.read_csv(file_citation, usecols=['patent_id', 'citation_id', 'date'], dtype=object)
 
 file_patent=gzip.open(patent, 'r')
-pt_df = pd.read_csv(file_patent, usecols=['id', 'date'],index_col=0, dtype=object)
+pt_df = dd.read_csv(file_patent, usecols=['id', 'date'],index_col=0, dtype=object)
 
+report.apppend("file citation head \n")
+report.apppend(df.head().to_latex())
+report.apppend("patent file head \n")
+report.append("pt_df.head()")
 
-# In[7]:
-df.head()
-
-# In[9]:
-pt_df.head()
-
-# In[10]:
 df=df.rename(columns = {'date':'citation_date'})
-df['citation_date']=pd.to_datetime(df['citation_date'], format="%Y-%m-%d", errors='coerce')
+df['citation_date']=dd.to_datetime(df['citation_date'], format="%Y-%m-%d", errors='coerce')
 df['citation_date'].apply[lambda x: np.datetime64(x)]
 
-
-# In[11]:
 # merge between patent data and citations on patent_id (citing)
 # merging on the citation dataset drops patents without citing
 # later i could standardize to make patent_id index and use join instead of merge
-df=pd.merge(df, pt_df, how='inner', left_on='patent_id', right_index=True)
+df=dd.merge(df, pt_df, how='inner', left_on='patent_id', right_index=True)
 
-
-
-
-# In[12]:
-
-
-df.info()
-
-
-# In[13]:
-
+report.apppend("Info after merging\n")
+report.append(df.info().to_latex())
 
 # date format to allow calculations
 df=df.rename(columns = {'date':'patent_date'})
 df['patent_date']=pd.to_datetime(df['patent_date'], format="%Y-%m-%d", errors='coerce') 
+
 #conversao de string para data
 # df['patent_date'].apply[lambda x: np.datetime64(x)]')
-
-
-# In[14]:
-
-
-# df.shape
-
-
-# In[15]:
-
 
 # if I do not drop nans, the script raises an error later when converting day interval into years
 # I could substitute with average instead of dropping, this way I do not lose the citation info
@@ -138,36 +118,15 @@ df['patent_date']=pd.to_datetime(df['patent_date'], format="%Y-%m-%d", errors='c
 
 # df=df.dropna()
 
-
-# In[16]:
-
-
-# df.shape
-
-
-# In[17]:
-
-
 # delay is the time interval between grant and citation
 df['cit_delay']=df['patent_date'].sub(df['citation_date'], axis=0)
 # convert to date format
 df['cit_delay']=pd.to_timedelta(df['cit_delay'])
 
-
-# In[18]:
-
-
-df.sort_values('cit_delay').head()
-
-
-# In[19]:
-
-
-df.sort_values('cit_delay').tail()
-
-
-# In[20]:
-
+report.apppend("head\n")
+report.apppend(df.sort_values('cit_delay').head())
+report.apppend("tail \n")
+report.apppend(df.sort_values('cit_delay').tail())
 
 # def convert_to_delta(x):
 #     try:
@@ -175,8 +134,6 @@ df.sort_values('cit_delay').tail()
 #     except:
 #         return np.nan
 
-
-# In[21]:
 
 
 # convert to interval in years
@@ -191,45 +148,20 @@ df['cit_delay']=pd.to_timedelta(df['cit_delay']).dt.components.days/365
 # does not work")
 
 
-# In[22]:
+report.apppend("describe\n")
+report.apppend(df.describe())
 
+report.apppend("head\n")
+report.apppend(df.head())
 
-df.describe()
-
-
-# In[23]:
-
-
-df.head()
-
-
-# In[24]:
-
-
-get_ipython().run_cell_magic('time', '', 'df.hist()')
-
-
-# In[25]:
-
+#get_ipython().run_cell_magic('time', '', 'df.hist()')
 
 #Check outliers
-df[df["cit_delay"]>df["cit_delay"].quantile(0.15)].sort_values(by=['cit_delay'], ascending=True)
+report.apppend("Check cit delay outliers - 0.15 quantile")
+report.apppend(df[df["cit_delay"]>df["cit_delay"].quantile(0.15)].sort_values(by=['cit_delay'], ascending=True))
 
-
-# In[26]:
-
-
-df.head()
-
-
-# In[27]:
-
-
-df[df["cit_delay"]<df["cit_delay"].quantile(0.85)].sort_values(by=['cit_delay'], ascending=False)
-
-
-# In[28]:
-
+report.apppend("Check cit delay outliers -0.85 quantile")
+report.apppend(df[df["cit_delay"]<df["cit_delay"].quantile(0.85)].sort_values(by=['cit_delay'], ascending=False))
 
 df.to_csv(dst, compression='gzip')
 
