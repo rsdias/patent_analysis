@@ -13,5 +13,6 @@ first_patent = pd.to_datetime('1790-06-30', format="%Y-%m-%d") #helps us to iden
 for chunk in df:
     chunk['patent_id']=chunk['patent_id'].apply(cleaning_patent)
     chunk.date.replace({'-00':'-01'}, regex=True, inplace=True)
-    chunk['date']=pd.to_datetime(chunk['date'], format="%Y-%m-%d", errors='coerce') 
+    chunk['date']=pd.to_datetime(chunk['date'], format="%Y-%m-%d", errors='coerce', infer_datetime_format=True)
+    chunk.dropna(subset=['date'])
     chunk.to_csv(dst, mode='a', compression='gzip')
