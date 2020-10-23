@@ -82,10 +82,11 @@ dst='data/var_builder.csv.gz'
 report=[] #file to export report
 
 #file_citation=gzip.open(citation_df, 'r')
-df = dd.read_csv(citation_df, compression='gzip', usecols=['patent_id', 'citation_id', 'date'], dtype=object).set_index('patent_id')
-
+df = dd.read_csv(citation_df, compression='gzip', usecols=['patent_id', 'citation_id', 'date'], parse_dates=['date']).set_index('patent_id')
+df.info()
 #file_patent=gzip.open(patent, 'r')
-pt_df = dd.read_csv(patent, compression='gzip', usecols=['id', 'date'],dtype=object).set_index('id')
+pt_df = dd.read_csv(patent, compression='gzip', usecols=['id', 'date'], parse_dates=['date']).set_index('id')
+
 
 report.append("file citation head \n")
 report.append(df.head().to_latex())
@@ -93,8 +94,8 @@ report.append("patent file head \n")
 report.append("pt_df.head()")
 
 df=df.rename(columns = {'date':'citation_date'})
-df['citation_date']=dd.to_datetime(df['citation_date'], format="%Y-%m-%d", errors='coerce')
-df['citation_date'].apply([lambda x: np.datetime64(x)])
+#df['citation_date']=dd.to_datetime(df['citation_date'], format="%Y-%m-%d", errors='coerce')
+#df['citation_date'].apply([lambda x: np.datetime64(x)])
 
 # merge between patent data and citations on patent_id (citing)
 # merging on the citation dataset drops patents without citing
@@ -106,7 +107,7 @@ df=dd.merge(df, pt_df, how='inner')
 
 # date format to allow calculations
 df=df.rename(columns = {'date':'patent_date'})
-df['patent_date']=pd.to_datetime(df['patent_date'], format="%Y-%m-%d", errors='coerce') 
+#df['patent_date']=pd.to_datetime(df['patent_date'], format="%Y-%m-%d", errors='coerce') 
 
 #conversao de string para data
 # df['patent_date'].apply[lambda x: np.datetime64(x)]')
