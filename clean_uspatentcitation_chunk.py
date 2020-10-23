@@ -4,7 +4,7 @@ import pandas as pd
 import re
 import csv
 
-dst='data/cleanuspatentcitation_chunks.csv.gz'
+dst='data/cleanuspatentcitation.csv.gz'
 file="data/uspatentcitation.tsv.zip"
 df=pd.read_csv(file, compression='zip', sep="\t", chunksize=10000, error_bad_lines=False, encoding="utf-8")
 cleaning_patent=lambda x:re.sub('([^a-zA-Z0-9]+)', "", x)
@@ -14,5 +14,5 @@ for chunk in df:
     chunk['patent_id']=chunk['patent_id'].apply(cleaning_patent)
     chunk.date.replace({'-00':'-01'}, regex=True, inplace=True)
     chunk['date']=pd.to_datetime(chunk['date'], format="%Y-%m-%d", errors='coerce', infer_datetime_format=True)
-    chunk.dropna(subset=['date'])
+    chunk.dropna(subset=['date'], inplace=True)
     chunk.to_csv(dst, mode='a', compression='gzip')
