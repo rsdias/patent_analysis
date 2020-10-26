@@ -4,6 +4,7 @@ import pandas as pd
 import re
 import csv
 import dask.dataframe as dd
+from dask.delayed import delayed
 
 file_list=["data/uspatentcitation.tsv.zip"]
 dst='data/cleanuspatentcitation.csv.gz'
