@@ -75,6 +75,7 @@ import numpy as np
 #import matplotlib.pyplot as plt
 import gzip
 import dask.dataframe as dd
+from dask.delayed import delayed
 
 citation_df = 'data/cleanuspatentcitation.csv.gz'
 #citation_df = 'data/cleanuspatentcitation_chunks.csv'
@@ -90,10 +91,11 @@ report=[] #file to export report
 
 
 dtype={'patent_id':object, 'citation_id':object}
-df = dd.read_csv(citation_df, compression='gzip', usecols=['patent_id', 'citation_id', 'date'], dtype=dtype, parse_dates=['date']).set_index('patent_id')
-df.info()
-#file_patent=gzip.open(patent, 'r')
-pt_df = dd.read_csv(patent, compression='gzip', usecols=['id', 'date'], dtype={'id':object}).set_index('id')
+ddf=delayed(pd.read_csv)(citation_df, compression='gzip', usecols=['patent_id', 'citation_id', 'date'], dtype=dtype,d parse_dates='date')
+pt_ddf = delayed(pd.read_csv)(patent, compression='gzip', usecols=['id', 'date'], dtype={'id':object}, parse_dates='date').set_index('id')
+
+df = dd.from_delayed(ddf)
+pt_df = dd.from_delayed(pt_ddf)
 
 
 report.append("file citation head \n")
