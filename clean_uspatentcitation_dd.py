@@ -43,17 +43,19 @@ def date_within_boundaries(df):
 file_list=glob.glob("parquet/uspatentcitation*")
 dst='data/cleanuspatentcitation.parquet.gz'
 
-df=dd.read_csv(file, compression='zip', sep="\t", error_bad_lines=False, encoding="utf-8", usecols=['patent_id', 'citation_id', 'date'])
-cleaning_patent=lambda x:re.sub('([^a-zA-Z0-9]+)', "", x)
-# first_patent = datetime.date(1790, 7, 31)
 first_patent = pd.to_datetime('1790-06-30', format="%Y-%m-%d") #helps us to identify citations with problems - small change from the actual first patent's grant date because one of the citations for n1 seems to be right
-df['patent_id']=df['patent_id'].apply(cleaning_patent)
-correct_date=lambda x:re.sub('-00', "-01", x)
-df['date']=df['date'].apply(correct_date)
-df['date']=pd.to_datetime(df['date'], format="%Y-%m-%d", errors='coerce', infer_datetime_format=True)
-df.dropna(subset=['date'], inplace=True)
-df.info()
-df.summary()
-df=df.compute(num_workers=8)
-df.set_index('patent_id').to_parquet(dst, compression='gzip')
+# first_patent = datetime.date(1790, 7, 31)
 
+
+df=dd.read_csv(file, compression='zip', sep="\t", error_bad_lines=False, encoding="utf-8", usecols=['patent_id', 'citation_id', 'date'], dtype=object)
+def cleaning(df): 
+    cleaning_patent=lambda x:re.sub('([^a-zA-Z0-9]+)', "", x)
+    df['patent_id']=df['patent_id'].apply(cleaning_patent)
+    correct_date=lambda x:re.sub('-00', "-01", x)
+    df['date']=df['date'].apply(correct_date)
+    #df['date']=pd.to_datetime(df['date'], format="%Y-%m-%d", errors='coerce', infer_datetime_format=True)
+    #df.dropna(subset=['date'], inplace=True)
+    df.to_csv(dst, mode='w', compression='gzip', encoding='utf-8')
+
+result=cleaning(df)
+result=result.compute()
