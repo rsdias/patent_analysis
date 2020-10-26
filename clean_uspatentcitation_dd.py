@@ -43,7 +43,8 @@ def date_within_boundaries(df):
 file_list=glob.glob("parquet/uspatentcitation*")
 dst='data/cleanuspatentcitation.parquet.gz'
 
-# This is the date of the first patent ever granted, so patents with grant dates previous to these should be wrong
+df=dd.read_csv(file, compression='zip', sep="\t", error_bad_lines=False, encoding="utf-8", usecols=['patent_id', 'citation_id', 'date'])
+cleaning_patent=lambda x:re.sub('([^a-zA-Z0-9]+)', "", x)
 # first_patent = datetime.date(1790, 7, 31)
 # small change from the actual first patent's grant date because one of the citations for n1 seems to be right
 # first_patent = pd.to_datetime('1790-06-30', format="%Y-%m-%d") 
