@@ -76,5 +76,6 @@ for chunk in df:
     chunk['num_claims']=pd.to_numeric(chunk['num_claims'], errors='coerce')
     chunk.describe(include='all')
     #df['num_claims'].hist()
+    chunk.dropna(inplace=True)
     #df.dtypes
     chunk.set_index('id').to_csv(dst, mode='a', compression='gzip')
