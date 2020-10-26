@@ -91,8 +91,8 @@ report=[] #file to export report
 
 
 dtype={'patent_id':object, 'citation_id':object}
-ddf=delayed(pd.read_csv)(citation_df, compression='gzip', usecols=['patent_id', 'citation_id', 'date'], dtype=dtype, parse_dates='date')
-pt_ddf = delayed(pd.read_csv)(patent, compression='gzip', usecols=['id', 'date'], dtype={'id':object}, parse_dates='date').set_index('id')
+ddf=delayed(pd.read_csv)(citation_df, compression='gzip', usecols=['patent_id', 'citation_id', 'date'], dtype=dtype, parse_dates=['date'])
+pt_ddf = delayed(pd.read_csv)(patent, compression='gzip', usecols=['id', 'date'], dtype={'id':object}, parse_dates=['date']).set_index('id')
 
 df = dd.from_delayed(ddf)
 pt_df = dd.from_delayed(pt_ddf)
