@@ -76,12 +76,12 @@ import numpy as np
 import gzip
 import dask.dataframe as dd
 
-#citation_df = 'data/cleanuspatentcitation.csv.gz'
-citation_df = 'data/cleanuspatentcitation_chunks.csv'
-#patent= 'data/cleanpatent.csv.gz'
-patent= 'data/cleanpatent.csv'
-#dst='data/var_builder.csv.gz'
-dst='data/var_builder.csv'
+citation_df = 'data/cleanuspatentcitation.csv.gz'
+#citation_df = 'data/cleanuspatentcitation_chunks.csv'
+patent= 'data/cleanpatent.csv.gz'
+#patent= 'data/cleanpatent.csv'
+dst='data/var_builder.csv.gz'
+#dst='data/var_builder.csv'
 
 report=[] #file to export report
 
@@ -90,10 +90,10 @@ report=[] #file to export report
 
 
 dtype={'patent_id':object, 'citation_id':object}
-df = dd.read_csv(citation_df, usecols=['patent_id', 'citation_id', 'date'], dtype=dtype, parse_dates=['date']).set_index('patent_id')
+df = dd.read_csv(citation_df, compression='gzip', usecols=['patent_id', 'citation_id', 'date'], dtype=dtype, parse_dates=['date']).set_index('patent_id')
 df.info()
 #file_patent=gzip.open(patent, 'r')
-pt_df = dd.read_csv(patent, usecols=['id', 'date'], dtype={'id':object}).set_index('id')
+pt_df = dd.read_csv(patent, compression='gzip', usecols=['id', 'date'], dtype={'id':object}).set_index('id')
 
 
 report.append("file citation head \n")
