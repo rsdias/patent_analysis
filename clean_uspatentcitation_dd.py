@@ -58,5 +58,5 @@ def cleaning(df):
     df.to_csv(dst, mode='w', compression='gzip', encoding='utf-8')
 
 ddf = dd.from_delayed(df, meta={'patent_id':object, 'citation_id':object, 'date':object})
-result=cleaning(df)
+result=cleaning(ddf)
 result=result.compute()
