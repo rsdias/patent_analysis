@@ -59,7 +59,7 @@ df['date']=df['date'].apply(correct_date, meta=pd.Series(dtype='object', name='d
 #df['date']=pd.to_datetime(df['date'], format="%Y-%m-%d", errors='coerce', infer_datetime_format=True)
 #df.dropna(subset=['date'], inplace=True)
 
-df.to_csv(dst, mode='w', compression='gzip', encoding='utf-8')
+#result=client.persist(df)
+result=result.compute(num_workers=12)
 
-result=client.persist(df)
-#result=result.compute(num_workers=12)
+result.to_csv(dst, mode='w', compression='gzip', encoding='utf-8')
