@@ -45,9 +45,9 @@ dst='data/cleanuspatentcitation.parquet.gz'
 
 first_patent = pd.to_datetime('1790-06-30', format="%Y-%m-%d") #helps us to identify citations with problems - small change from the actual first patent's grant date because one of the citations for n1 seems to be right
 # first_patent = datetime.date(1790, 7, 31)
+dfs = [delayed(pd.read_csv)(f, compression='zip', usecols=['patent_id', 'citation_id', 'date'], dtype=object, sep="\t", error_bad_lines=False, encoding="utf-8") for f in file_list]
 
 
-df=dd.read_csv(file, compression='zip', sep="\t", error_bad_lines=False, encoding="utf-8", usecols=['patent_id', 'citation_id', 'date'], dtype=object)
 def cleaning(df): 
     cleaning_patent=lambda x:re.sub('([^a-zA-Z0-9]+)', "", x)
     df['patent_id']=df['patent_id'].apply(cleaning_patent)
@@ -57,5 +57,6 @@ def cleaning(df):
     #df.dropna(subset=['date'], inplace=True)
     df.to_csv(dst, mode='w', compression='gzip', encoding='utf-8')
 
+ddf = dd.from_delayed(dfs, meta={'patent_id':object, 'citation_id':object, 'date':object})
 result=cleaning(df)
 result=result.compute()
