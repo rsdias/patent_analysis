@@ -150,8 +150,4 @@ report.append(df.head())
 #report.append("Check cit delay outliers - 0.15 quantile")
 #report.append(df[df["cit_delay"]>df["cit_delay"].quantile(0.15)].sort_values(by=['cit_delay'], ascending=True))
 
-#report.append("Check cit delay outliers -0.85 quantile")
-#report.append(df[df["cit_delay"]<df["cit_delay"].quantile(0.85)].sort_values(by=['cit_delay'], ascending=False))
-#df.to_parquet(dst)
-
 report.to_latex(report_dst)
