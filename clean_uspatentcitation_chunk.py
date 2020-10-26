@@ -17,4 +17,4 @@ for chunk in df:
     chunk.date.replace({'-00':'-01'}, regex=True, inplace=True)
     chunk['date']=pd.to_datetime(chunk['date'], format="%Y-%m-%d", errors='coerce', infer_datetime_format=True)
     chunk.dropna(subset=['date'], inplace=True)
-    chunk.to_csv(dst, mode='w', compression='gzip', encoding='utf-8')
+    chunk.to_csv(dst, mode='a', compression='gzip', encoding='utf-8')
