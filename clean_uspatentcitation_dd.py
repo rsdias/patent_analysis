@@ -18,13 +18,14 @@ df = [delayed(pd.read_csv)(f, compression='zip', usecols=['patent_id', 'citation
 
 def cleaning(df): 
     cleaning_patent=lambda x:re.sub('([^a-zA-Z0-9]+)', "", x)
-    df['patent_id']=df['patent_id'].apply(cleaning_patent)
+    df['patent_id']=df['patent_id'].apply(cleaning_patent, meta={'patent_id':object})
     correct_date=lambda x:re.sub('-00', "-01", x)
-    df['date']=df['date'].apply(correct_date)
+    df['date']=df['date'].apply(correct_date, meta={'date':object})
     #df['date']=pd.to_datetime(df['date'], format="%Y-%m-%d", errors='coerce', infer_datetime_format=True)
     #df.dropna(subset=['date'], inplace=True)
     df.to_csv(dst, mode='w', compression='gzip', encoding='utf-8')
 
-ddf = dd.from_delayed(df, meta={'patent_id':object, 'citation_id':object, 'date':object})
+myTypes={'patent_id':object, 'citation_id':object, 'date':object}
+ddf = dd.from_delayed(df, meta=myTypes)
 result=cleaning(ddf)
-result=result.compute()
+result=result.compute(num_workers=12)
