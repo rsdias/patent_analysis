@@ -28,6 +28,6 @@ df['date']=df['date'].apply(correct_date, meta=pd.Series(dtype='object', name='d
 #df.dropna(subset=['date'], inplace=True)
 
 #result=client.persist(df)
-result=dd.compute(num_workers=8)
+result=df.compute(num_workers=8)
 
 result.to_csv(dst, mode='w', compression='gzip', encoding='utf-8')
