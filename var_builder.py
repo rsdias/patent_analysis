@@ -98,9 +98,17 @@ report=[] #file to export report
 df = dd.read_parquet(citation_df)
 pt_df = dd.read_parquet(patent)
 
+<<<<<<< HEAD
 # dtype={'patent_id':object, 'citation_id':object}
 #ddf=delayed(pd.read_csv)(citation_df, usecols=['patent_id', 'citation_id', 'date'], dtype=dtype, parse_dates=['date'])
 #pt_ddf = delayed(pd.read_csv)(patent, usecols=['id', 'date'], dtype={'id':object}, parse_dates=['date']).set_index('id')
+=======
+dtype={'patent_id':object, 'citation_id':object}
+df = dd.read_csv(citation_df, compression='gzip', usecols=['patent_id', 'citation_id', 'date'], dtype=dtype, parse_dates=['date']).set_index('patent_id')
+df.info()
+#file_patent=gzip.open(patent, 'r')
+pt_df = dd.read_csv(patent, compression='gzip', usecols=['id', 'date'], dtype={'id':object}).set_index('id')
+>>>>>>> updated var_builder to dask open gzip
 
 #df = dd.from_delayed(ddf)
 #pt_df = dd.from_delayed(pt_ddf)
