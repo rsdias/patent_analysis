@@ -51,7 +51,7 @@ import zipfile as zip
 # filename: name of the raw data file where patent information is parsed from
 
 src= 'data/patent.parquet'
-dst= 'data/cleanpatent.csv.gz'
+dst= 'data/cleanpatent_parquet/'
 
 cols=['id', 'num_claims', 'date', 'type', 'kind']
 
@@ -83,4 +83,4 @@ for chunk in df:
     chunk.describe(include='all')
     #df['num_claims'].hist()
     #df.dtypes
-    chunk.set_index('id').to_parquet(dst, mode='a')
+    chunk.set_index('id').to_parquet(dst)
