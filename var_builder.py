@@ -77,11 +77,11 @@ import gzip
 import dask.dataframe as dd
 from dask.delayed import delayed
 
-citation_df = 'data/cleanuspatentcitation.csv.gz'
-#citation_df = 'data/cleanuspatentcitation_chunks.csv'
+#citation_df = 'data/cleanuspatentcitation.csv.gz'
+citation_df = 'data/cleanuspatentcitation.csv'
 patent= 'data/cleanpatent.csv.gz'
 #patent= 'data/cleanpatent.csv'
-dst='data/var_builder.csv.gz'
+dst='data/var_builder.csv'
 #dst='data/var_builder.csv'
 
 report=[] #file to export report
@@ -91,8 +91,8 @@ report=[] #file to export report
 
 
 dtype={'patent_id':object, 'citation_id':object}
-ddf=delayed(pd.read_csv)(citation_df, compression='gzip', usecols=['patent_id', 'citation_id', 'date'], dtype=dtype, parse_dates=['date'])
-pt_ddf = delayed(pd.read_csv)(patent, compression='gzip', usecols=['id', 'date'], dtype={'id':object}, parse_dates=['date']).set_index('id')
+ddf=delayed(pd.read_csv)(citation_df, usecols=['patent_id', 'citation_id', 'date'], dtype=dtype, parse_dates=['date'])
+pt_ddf = delayed(pd.read_csv)(patent, usecols=['id', 'date'], dtype={'id':object}, parse_dates=['date']).set_index('id')
 
 df = dd.from_delayed(ddf)
 pt_df = dd.from_delayed(pt_ddf)
@@ -117,7 +117,7 @@ df=dd.merge(df, pt_df, how='inner')
 
 # date format to allow calculations
 df=df.rename(columns = {'date':'patent_date'})
-df['patent_date']=pd.to_datetime(df['patent_date'], format="%Y-%m-%d", errors='coerce') 
+df['patent_date']=dd.to_datetime(df['patent_date'], format="%Y-%m-%d", errors='coerce') 
 
 #conversao de string para data
 # df['patent_date'].apply[lambda x: np.datetime64(x)]')
