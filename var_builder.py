@@ -83,19 +83,21 @@ patent= 'data/cleanpatent.csv.gz'
 #patent= 'data/cleanpatent.csv'
 dst='data/var_builder.csv'
 #dst='data/var_builder.csv'
+report_dst='var_builder_report.tex'
 
 report=[] #file to export report
 
 #file_citation=gzip.open(citation_df, 'r')
-#df = dd.read_csv(citation_df, compression='gzip', usecols=['patent_id', 'citation_id', 'date'], parse_dates=['date']).set_index('patent_id')
+df = dd.read_csv(citation_df, compression='gzip', usecols=['patent_id', 'citation_id', 'date'], parse_dates=['date']).set_index('patent_id')
+pt_df = dd.read_csv(patent, usecols=['id', 'date'], dtype={'id':object}, parse_dates=['date']).set_index('id')
 
 
 dtype={'patent_id':object, 'citation_id':object}
-ddf=delayed(pd.read_csv)(citation_df, usecols=['patent_id', 'citation_id', 'date'], dtype=dtype, parse_dates=['date'])
-pt_ddf = delayed(pd.read_csv)(patent, usecols=['id', 'date'], dtype={'id':object}, parse_dates=['date']).set_index('id')
+#ddf=delayed(pd.read_csv)(citation_df, usecols=['patent_id', 'citation_id', 'date'], dtype=dtype, parse_dates=['date'])
+#pt_ddf = delayed(pd.read_csv)(patent, usecols=['id', 'date'], dtype={'id':object}, parse_dates=['date']).set_index('id')
 
-df = dd.from_delayed(ddf)
-pt_df = dd.from_delayed(pt_ddf)
+#df = dd.from_delayed(ddf)
+#pt_df = dd.from_delayed(pt_ddf)
 
 
 report.append("file citation head \n")
@@ -176,4 +178,4 @@ report.append(df[df["cit_delay"]<df["cit_delay"].quantile(0.85)].sort_values(by=
 
 #df.to_csv(dst, compression='gzip')
 df.to_csv(dst)
-
+report.to_latex(report_dst)
