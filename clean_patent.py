@@ -51,7 +51,7 @@ import zipfile as zip
 # filename: name of the raw data file where patent information is parsed from
 
 src= 'data/patent.parquet'
-dst= 'data/cleanpatent_parquet/'
+dst= 'data/cleanpatent.parquet'
 
 cols=['id', 'num_claims', 'date', 'type', 'kind']
 

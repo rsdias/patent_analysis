@@ -6,7 +6,7 @@ import csv
 import dask.dataframe as dd
 import multiprocessing
 
-dst='data/cleanuspatentcitation_parquet/'
+dst='data/cleanuspatentcitation.parquet'
 file="data/uspatentcitation.tsv.zip"
 df=pd.read_csv(file, compression='zip', sep="\t", encoding="utf-8")
 # first_patent = datetime.date(1790, 7, 31)
