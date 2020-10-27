@@ -20,7 +20,7 @@ ddata=dd.from_pandas(df, npartitions=4*multiprocessing.cpu_count()).map_partitio
 #df['date']=df['date'].swifter.apply(replace_zeroes)
 #df['date']=pd.to_datetime(chunk['date'], format="%Y-%m-%d", errors='coerce', infer_datetime_format=True)
 #df.dropna(subset=['date'], inplace=True)
-df.to_parquet(dst)
+ddata.to_parquet(dst)
     
 #result=clean(df)
 #result=result.compute(num_workers=4)
