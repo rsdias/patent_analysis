@@ -50,18 +50,24 @@ import zipfile as zip
 # num_claims:number of claims
 # filename: name of the raw data file where patent information is parsed from
 
-src= 'data/patent.tsv.zip'
+src= 'data/patent.parquet'
 dst= 'data/cleanpatent.csv.gz'
 
 cols=['id', 'num_claims', 'date', 'type', 'kind']
 
 file_name = "data/patent.tsv.zip"
-df = pd.read_csv(file_name, compression='zip', usecols=cols, delimiter="\t", quoting = csv.QUOTE_NONNUMERIC, dtype=object, chunksize=10000)
+df = pd.read_csv(file_name, compression='zip', usecols=cols, delimiter="\t", quoting = csv.QUOTE_NONNUMERIC, dtype=object, chunksize=1024*1024)
 # df = pd.read_csv(file_src, sep='\t', usecols=cols, error_bad_lines=False, dtype=object, quoting = csv.QUOTE_NONNUMERIC)
 
 #df.info()
 #df.dtypes
-# get_ipython().run_cell_magic('time', '', '# Keep this for reference!\n# As of Dec 31st, 2019, I compared the clean to the raw version of citation and patent ids\n\n# stripping non-desired characters but keeping the originals for later check - only three changes in citation_id\n# df[\'id\']=df[\'id\'].astype(object)\ncleaning_patent=lambda x:re.sub(\'([^a-zA-Z0-9]+)\', "", x)\ndf[\'id\']=df[\'id\'].astype(object).apply(cleaning_patent)')
+# Keep this for reference!
+# As of Dec 31st, 2019, I compared the clean to the raw version of citation and patent ids
+# stripping non-desired characters but keeping the originals for later check - only three changes in citation_id
+# df['id']=df['id'].astype(object)
+# cleaning_patent=lambda x:re.sub('([^a-zA-Z0-9]+)', "", x)
+# df['id']=df['id'].astype(object).apply(cleaning_patent)')
+
 for chunk in df:
     
     #df=df.astype(object)
@@ -77,4 +83,4 @@ for chunk in df:
     chunk.describe(include='all')
     #df['num_claims'].hist()
     #df.dtypes
-    chunk.set_index('id').to_csv(dst, mode='a', compression='gzip')
+    chunk.set_index('id').to_parquet(dst, mode='a')

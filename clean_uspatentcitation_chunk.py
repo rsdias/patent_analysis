@@ -4,10 +4,9 @@ import pandas as pd
 import re
 import csv
 import dask.dataframe as dd
-import swifter
 import multiprocessing
 
-dst='data/cleanuspatentcitation.csv.gz'
+dst='data/cleanuspatentcitation.parquet'
 file="data/uspatentcitation.tsv.zip"
 df=pd.read_csv(file, compression='zip', sep="\t", encoding="utf-8")
 # first_patent = datetime.date(1790, 7, 31)
@@ -21,7 +20,7 @@ ddata=dd.from_pandas(df, npartitions=4*multiprocessing.cpu_count()).map_partitio
 #df['date']=df['date'].swifter.apply(replace_zeroes)
 #df['date']=pd.to_datetime(chunk['date'], format="%Y-%m-%d", errors='coerce', infer_datetime_format=True)
 #df.dropna(subset=['date'], inplace=True)
-df.to_csv(dst, mode='w', compression='gzip')
+df.to_parquet(dst)
     
 #result=clean(df)
 #result=result.compute(num_workers=4)
