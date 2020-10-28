@@ -13,3 +13,4 @@ __pycache__
 slurm-1516137.out
 .out
 .zip
+parquet
