@@ -76,23 +76,24 @@ import numpy as np
 import gzip
 import dask.dataframe as dd
 from dask.delayed import delayed
+import datetime
 
 #citation_df = 'data/cleanuspatentcitation.csv.gz'
-citation_df = 'data/cleanuspatentcitation.csv'
-patent= 'data/cleanpatent.csv.gz'
+citation_df = 'data/cleanuspatentcitation.parquet.gz'
+patent= 'data/cleanpatent.parquet.gz'
 #patent= 'data/cleanpatent.csv'
-dst='data/var_builder.csv'
+dst='data/var_builder.parquet'
 #dst='data/var_builder.csv'
 report_dst='var_builder_report.tex'
 
 report=[] #file to export report
 
 #file_citation=gzip.open(citation_df, 'r')
-df = dd.read_csv(citation_df, compression='gzip', usecols=['patent_id', 'citation_id', 'date'], parse_dates=['date']).set_index('patent_id')
-pt_df = dd.read_csv(patent, usecols=['id', 'date'], dtype={'id':object}, parse_dates=['date']).set_index('id')
+df = dd.read_parquet(citation_df, parse_dates=['date'])
+pt_df = dd.read_parquet(patent, parse_dates=['date']).set_index('id')
 
 
-dtype={'patent_id':object, 'citation_id':object}
+# dtype={'patent_id':object, 'citation_id':object}
 #ddf=delayed(pd.read_csv)(citation_df, usecols=['patent_id', 'citation_id', 'date'], dtype=dtype, parse_dates=['date'])
 #pt_ddf = delayed(pd.read_csv)(patent, usecols=['id', 'date'], dtype={'id':object}, parse_dates=['date']).set_index('id')
 
@@ -100,26 +101,33 @@ dtype={'patent_id':object, 'citation_id':object}
 #pt_df = dd.from_delayed(pt_ddf)
 
 
-report.append("file citation head \n")
-report.append(df.head().to_latex())
-report.append("patent file head \n")
-report.append("pt_df.head()")
+# report.append("file citation head \n")
+# report.append(df.head().to_latex())
+# report.append("patent file head \n")
+# report.append("pt_df.head()")
 
 df=df.rename(columns = {'date':'citation_date'})
-df['citation_date']=dd.to_datetime(df['citation_date'], format="%Y-%m-%d", errors='coerce')
+#df['citation_date']=dd.to_datetime(df['citation_date'], format="%Y-%m-%d", errors='coerce')
 #df['citation_date'].apply([lambda x: np.datetime64(x)])
 
 # merge between patent data and citations on patent_id (citing)
 # merging on the citation dataset drops patents without citing
 # later i could standardize to make patent_id index and use join instead of merge
-df=dd.merge(df, pt_df, how='inner')
+df = df.set_index('patent_id').persist()
+df=df.merge(pt_df, how='inner', left_index=True)
 
 #report.append("Info after merging\n")
 #report.append(df.info().to_latex())
 
+# meta = ('citation_date', 'np.datetime64[D]')
+# df.citation_date.map_partitions(pd.to_datetime, meta=meta)
+
 # date format to allow calculations
 df=df.rename(columns = {'date':'patent_date'})
-df['patent_date']=dd.to_datetime(df['patent_date'], format="%Y-%m-%d", errors='coerce') 
+# meta = ('patent_date', 'np.datetime64[D]')
+# df.patent_date.map_partitions(pd.to_datetime, meta=meta)
+
+# df['patent_date']=dd.to_datetime(df['patent_date'], format="%Y-%m-%d", errors='coerce') 
 
 #conversao de string para data
 # df['patent_date'].apply[lambda x: np.datetime64(x)]')
@@ -132,14 +140,14 @@ df['patent_date']=dd.to_datetime(df['patent_date'], format="%Y-%m-%d", errors='c
 # df=df.dropna()
 
 # delay is the time interval between grant and citation
-df['cit_delay']=df['patent_date'].sub(df['citation_date'], axis=0)
+# df['cit_delay']=df['patent_date'].sub(df['citation_date'], axis=0)
 # convert to date format
-df['cit_delay']=pd.to_timedelta(df['cit_delay'])
+# df['cit_delay']=pd.to_timedelta(df['cit_delay'])
 
-report.append("head\n")
-report.append(df.sort_values('cit_delay').head())
-report.append("tail \n")
-report.append(df.sort_values('cit_delay').tail())
+# report.append("head\n")
+# report.append(df.sort_values('cit_delay').head())
+# report.append("tail \n")
+# report.append(df.sort_values('cit_delay').tail())
 
 # def convert_to_delta(x):
 #     try:
@@ -155,27 +163,27 @@ report.append(df.sort_values('cit_delay').tail())
 # change to numpy
 # https://stackoverflow.com/questions/52274356/conversion-of-a-timedelta-to-int-very-slow-in-python
 # this takes 40min
-df['cit_delay']=pd.to_timedelta(df['cit_delay']).dt.components.days/365
+# df['cit_delay']=pd.to_timedelta(df['cit_delay']).dt.components.days/365
 # lets try this alternativE
 # df['cit_delay']=df['cit_delay'].apply(lambda x: convert_to_delta(x)
 # does not work")
 
 
-report.append("describe\n")
-report.append(df.describe())
+# report.append("describe\n")
+# report.append(df.describe())
 
-report.append("head\n")
-report.append(df.head())
+# report.append("head\n")
+# report.append(df.head())
 
 #get_ipython().run_cell_magic('time', '', 'df.hist()')
 
 #Check outliers
-report.append("Check cit delay outliers - 0.15 quantile")
-report.append(df[df["cit_delay"]>df["cit_delay"].quantile(0.15)].sort_values(by=['cit_delay'], ascending=True))
+# report.append("Check cit delay outliers - 0.15 quantile")
+# report.append(df[df["cit_delay"]>df["cit_delay"].quantile(0.15)].sort_values(by=['cit_delay'], ascending=True))
 
-report.append("Check cit delay outliers -0.85 quantile")
-report.append(df[df["cit_delay"]<df["cit_delay"].quantile(0.85)].sort_values(by=['cit_delay'], ascending=False))
+# report.append("Check cit delay outliers -0.85 quantile")
+# report.append(df[df["cit_delay"]<df["cit_delay"].quantile(0.85)].sort_values(by=['cit_delay'], ascending=False))
 
-#df.to_csv(dst, compression='gzip')
-df.to_csv(dst)
-report.to_latex(report_dst)
+df=df.compute(num_workers=8)
+df.to_parquet(dst)
+# report.to_latex(report_dst)
