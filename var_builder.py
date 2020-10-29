@@ -114,7 +114,7 @@ df=df.rename(columns = {'date':'citation_date'})
 # merging on the citation dataset drops patents without citing
 # later i could standardize to make patent_id index and use join instead of merge
 df = df.set_index('patent_id').persist()
-df=df.merge(pt_df, how='inner', left_index=True)
+df=df.merge(pt_df, how='inner', left_index=True, right_index=True)
 
 #report.append("Info after merging\n")
 #report.append(df.info().to_latex())
