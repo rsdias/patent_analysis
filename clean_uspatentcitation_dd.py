@@ -11,7 +11,7 @@ from fastparquet import ParquetFile
 def clean_field(df):
     cleaning_patent=lambda x:re.sub('([^a-zA-Z0-9]+)', "", x)
     df.dropna(inplace=True)
-    df['patent_id']=df['patent_id'].apply(cleaning_patent, meta=pd.Series(dtype='object', name='patent_id'))
+    df['patent_id']=df['patent_id'].apply(cleaning_patent)
 #     df[['patent_id']]=df[['patent_id']].apply(cleaning_patent)
     return df
 
