@@ -1,0 +1,231 @@
+Traceback (most recent call last):
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/dask/dataframe/utils.py", line 173, in raise_on_meta_error
+    yield
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/dask/dataframe/core.py", line 5125, in _emulate
+    return func(*_extract_meta(args, True), **_extract_meta(kwargs, True))
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/pandas/core/ops/__init__.py", line 570, in flex_wrapper
+    return self._binop(other, op, level=level, fill_value=fill_value)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/pandas/core/series.py", line 2618, in _binop
+    result = func(this_vals, other_vals)
+TypeError: unsupported operand type(s) for -: 'str' and 'str'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "var_builder.py", line 135, in <module>
+    df['cit_delay']=df['patent_date'].sub(df['citation_date'], axis=0)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/dask/dataframe/core.py", line 3109, in meth
+    meta = _emulate(op, self, other, axis=axis, fill_value=fill_value)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/dask/dataframe/core.py", line 5125, in _emulate
+    return func(*_extract_meta(args, True), **_extract_meta(kwargs, True))
+  File "/home/renato/anaconda3/lib/python3.8/contextlib.py", line 131, in __exit__
+    self.gen.throw(type, value, traceback)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/dask/dataframe/utils.py", line 194, in raise_on_meta_error
+    raise ValueError(msg) from e
+ValueError: Metadata inference failed in `sub`.
+
+Original error is below:
+------------------------
+TypeError("unsupported operand type(s) for -: 'str' and 'str'")
+
+Traceback:
+---------
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/dask/dataframe/utils.py", line 173, in raise_on_meta_error
+    yield
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/dask/dataframe/core.py", line 5125, in _emulate
+    return func(*_extract_meta(args, True), **_extract_meta(kwargs, True))
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/pandas/core/ops/__init__.py", line 570, in flex_wrapper
+    return self._binop(other, op, level=level, fill_value=fill_value)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/pandas/core/series.py", line 2618, in _binop
+    result = func(this_vals, other_vals)
+
+Traceback (most recent call last):
+  File "var_builder.py", line 121, in <module>
+    df.citation_date.map_partitions(pd.to_datetime, meta=meta)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/dask/dataframe/core.py", line 642, in map_partitions
+    return map_partitions(func, self, *args, **kwargs)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/dask/dataframe/core.py", line 5177, in map_partitions
+    meta = make_meta(meta, index=meta_index)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/dask/utils.py", line 507, in __call__
+    return meth(arg, *args, **kwargs)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/dask/dataframe/utils.py", line 338, in make_meta_object
+    return _empty_series(x[0], x[1], index=index)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/dask/dataframe/utils.py", line 282, in _empty_series
+    return pd.Series([], dtype=dtype, name=name, index=index)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/pandas/core/series.py", line 220, in __init__
+    dtype = self._validate_dtype(dtype)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/pandas/core/generic.py", line 259, in _validate_dtype
+    dtype = pandas_dtype(dtype)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/pandas/core/dtypes/common.py", line 1889, in pandas_dtype
+    raise TypeError(f"dtype '{dtype}' not understood")
+TypeError: dtype '<class 'pandas._libs.tslibs.timestamps.Timestamp'>' not understood
+Traceback (most recent call last):
+  File "var_builder.py", line 121, in <module>
+    df.citation_date.map_partitions(pd.to_pydatetime, meta=meta)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/pandas/__init__.py", line 263, in __getattr__
+    raise AttributeError(f"module 'pandas' has no attribute '{name}'")
+AttributeError: module 'pandas' has no attribute 'to_pydatetime'
+Traceback (most recent call last):
+  File "var_builder.py", line 121, in <module>
+    df.citation_date.map_partitions(pd.dt.to_pydatetime, meta=meta)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/pandas/__init__.py", line 263, in __getattr__
+    raise AttributeError(f"module 'pandas' has no attribute '{name}'")
+AttributeError: module 'pandas' has no attribute 'dt'
+Traceback (most recent call last):
+  File "var_builder.py", line 121, in <module>
+    df.citation_date.map_partitions(dd.to_datetime, meta=meta)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/dask/dataframe/core.py", line 642, in map_partitions
+    return map_partitions(func, self, *args, **kwargs)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/dask/dataframe/core.py", line 5177, in map_partitions
+    meta = make_meta(meta, index=meta_index)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/dask/utils.py", line 507, in __call__
+    return meth(arg, *args, **kwargs)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/dask/dataframe/utils.py", line 338, in make_meta_object
+    return _empty_series(x[0], x[1], index=index)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/dask/dataframe/utils.py", line 282, in _empty_series
+    return pd.Series([], dtype=dtype, name=name, index=index)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/pandas/core/series.py", line 220, in __init__
+    dtype = self._validate_dtype(dtype)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/pandas/core/generic.py", line 259, in _validate_dtype
+    dtype = pandas_dtype(dtype)
+  File "/home/renato/anaconda3/lib/python3.8/site-packages/pandas/core/dtypes/common.py", line 1889, in pandas_dtype
+    raise TypeError(f"dtype '{dtype}' not understood")
+TypeError: dtype '<class 'pandas._libs.tslibs.timestamps.Timestamp'>' not understood
+[I 16:00:29.896 NotebookApp] JupyterLab extension loaded from /home/renato/anaconda3/lib/python3.8/site-packages/jupyterlab
+[I 16:00:29.905 NotebookApp] JupyterLab application directory is /home/renato/anaconda3/share/jupyter/lab
+[I 16:00:29.910 NotebookApp] Serving notebooks from local directory: /home/renato/RESEARCH/patent_analysis
+[I 16:00:29.910 NotebookApp] The Jupyter Notebook is running at:
+[I 16:00:29.910 NotebookApp] http://localhost:8888/?token=e58f4562edf601e66dcea05cbbe9170ad7cd242e50895845
+[I 16:00:29.910 NotebookApp]  or http://127.0.0.1:8888/?token=e58f4562edf601e66dcea05cbbe9170ad7cd242e50895845
+[I 16:00:29.910 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[W 16:00:29.961 NotebookApp] No web browser found: could not locate runnable browser.
+[C 16:00:29.961 NotebookApp] 
+    
+    To access the notebook, open this file in a browser:
+        file:///home/renato/.local/share/jupyter/runtime/nbserver-3195-open.html
+    Or copy and paste one of these URLs:
+        http://localhost:8888/?token=e58f4562edf601e66dcea05cbbe9170ad7cd242e50895845
+     or http://127.0.0.1:8888/?token=e58f4562edf601e66dcea05cbbe9170ad7cd242e50895845
+[W 16:00:56.826 NotebookApp] 404 GET /api/contents/RESEARCH/patent_analysis/var_builder.py?content=0&_=1603995501617 (127.0.0.1): No such file or directory: RESEARCH/patent_analysis/var_builder.py
+[W 16:00:56.826 NotebookApp] No such file or directory: RESEARCH/patent_analysis/var_builder.py
+[W 16:00:56.827 NotebookApp] 404 GET /api/contents/RESEARCH/patent_analysis/var_builder.py?content=0&_=1603995501617 (127.0.0.1) 2.32ms referer=http://localhost:8080/edit/RESEARCH/patent_analysis/var_builder.py
+[I 16:00:56.963 NotebookApp] Uploading file to /RESEARCH/patent_analysis/var_builder.py
+[E 16:00:56.963 NotebookApp] Error while saving file: RESEARCH/patent_analysis/var_builder.py [Errno 2] No such file or directory: '/home/renato/RESEARCH/patent_analysis/RESEARCH/patent_analysis/var_builder.py'
+    Traceback (most recent call last):
+      File "/home/renato/anaconda3/lib/python3.8/site-packages/notebook/services/contents/filemanager.py", line 473, in save
+        self._save_file(os_path, model['content'], model.get('format'))
+      File "/home/renato/anaconda3/lib/python3.8/site-packages/notebook/services/contents/fileio.py", line 340, in _save_file
+        with self.atomic_writing(os_path, text=False) as f:
+      File "/home/renato/anaconda3/lib/python3.8/contextlib.py", line 113, in __enter__
+        return next(self.gen)
+      File "/home/renato/anaconda3/lib/python3.8/site-packages/notebook/services/contents/fileio.py", line 210, in atomic_writing
+        with atomic_writing(os_path, *args, log=self.log, **kwargs) as f:
+      File "/home/renato/anaconda3/lib/python3.8/contextlib.py", line 113, in __enter__
+        return next(self.gen)
+      File "/home/renato/anaconda3/lib/python3.8/site-packages/notebook/services/contents/fileio.py", line 107, in atomic_writing
+        fileobj = io.open(path, 'wb', **kwargs)
+    FileNotFoundError: [Errno 2] No such file or directory: '/home/renato/RESEARCH/patent_analysis/RESEARCH/patent_analysis/var_builder.py'
+[W 16:00:57.015 NotebookApp] 500 PUT /api/contents/RESEARCH/patent_analysis/var_builder.py (127.0.0.1): Unexpected error while saving file: RESEARCH/patent_analysis/var_builder.py [Errno 2] No such file or directory: '/home/renato/RESEARCH/patent_analysis/RESEARCH/patent_analysis/var_builder.py'
+[W 16:00:57.015 NotebookApp] Unexpected error while saving file: RESEARCH/patent_analysis/var_builder.py [Errno 2] No such file or directory: '/home/renato/RESEARCH/patent_analysis/RESEARCH/patent_analysis/var_builder.py'
+[E 16:00:57.015 NotebookApp] {
+      "Host": "localhost:8080",
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:81.0) Gecko/20100101 Firefox/81.0",
+      "Accept": "application/json, text/javascript, */*; q=0.01",
+      "Accept-Language": "en-US,en;q=0.5",
+      "Accept-Encoding": "gzip, deflate",
+      "Content-Type": "application/json",
+      "X-Xsrftoken": "2|94322795|9b744c6c8443ddb7fe8a96900e6941bd|1602879623",
+      "X-Requested-With": "XMLHttpRequest",
+      "Content-Length": "6536",
+      "Origin": "http://localhost:8080",
+      "Dnt": "1",
+      "Connection": "keep-alive",
+      "Referer": "http://localhost:8080/edit/RESEARCH/patent_analysis/var_builder.py",
+      "Cookie": "_xsrf=2|94322795|9b744c6c8443ddb7fe8a96900e6941bd|1602879623; username-localhost-8889=\"2|1:0|10:1602880293|23:username-localhost-8889|44:ZTk0ZjZlMjBjNmE2NDBlN2E3MzY4NzZiNjcyMGExOWI=|c8e7b5827ac161b9b1bf5693eff5020dc0ff1c3041668a70337f594353019564\"; username-localhost-8888=\"2|1:0|10:1603199253|23:username-localhost-8888|44:ZTM4ODI4NTE4NzljNGRhYjg1NzEyZGYyM2Y4ZTE2MGU=|2c39263755d5ff95b3fe6816fe188c8144c17e122238d8b9124912c41a0eb93a\"; username-localhost-8080=\"2|1:0|10:1603888623|23:username-localhost-8080|44:ZDZmM2RhZmVlMjI2NDg3ZDkwN2EwOWY4NjRhMjMxYzY=|67f005c42871523e09257b8463cad5385acf0ed6228ef2a92a8340b3e377a94d\""
+    }
+[E 16:00:57.016 NotebookApp] 500 PUT /api/contents/RESEARCH/patent_analysis/var_builder.py (127.0.0.1) 53.76ms referer=http://localhost:8080/edit/RESEARCH/patent_analysis/var_builder.py
+[W 16:01:48.267 NotebookApp] 404 GET /api/contents/RESEARCH/patent_analysis/var_builder.py?content=0&_=1603995501618 (127.0.0.1): No such file or directory: RESEARCH/patent_analysis/var_builder.py
+[W 16:01:48.267 NotebookApp] No such file or directory: RESEARCH/patent_analysis/var_builder.py
+[W 16:01:48.267 NotebookApp] 404 GET /api/contents/RESEARCH/patent_analysis/var_builder.py?content=0&_=1603995501618 (127.0.0.1) 1.65ms referer=http://localhost:8080/edit/RESEARCH/patent_analysis/var_builder.py
+[I 16:01:48.300 NotebookApp] Uploading file to /RESEARCH/patent_analysis/var_builder.py
+[E 16:01:48.300 NotebookApp] Error while saving file: RESEARCH/patent_analysis/var_builder.py [Errno 2] No such file or directory: '/home/renato/RESEARCH/patent_analysis/RESEARCH/patent_analysis/var_builder.py'
+    Traceback (most recent call last):
+      File "/home/renato/anaconda3/lib/python3.8/site-packages/notebook/services/contents/filemanager.py", line 473, in save
+        self._save_file(os_path, model['content'], model.get('format'))
+      File "/home/renato/anaconda3/lib/python3.8/site-packages/notebook/services/contents/fileio.py", line 340, in _save_file
+        with self.atomic_writing(os_path, text=False) as f:
+      File "/home/renato/anaconda3/lib/python3.8/contextlib.py", line 113, in __enter__
+        return next(self.gen)
+      File "/home/renato/anaconda3/lib/python3.8/site-packages/notebook/services/contents/fileio.py", line 210, in atomic_writing
+        with atomic_writing(os_path, *args, log=self.log, **kwargs) as f:
+      File "/home/renato/anaconda3/lib/python3.8/contextlib.py", line 113, in __enter__
+        return next(self.gen)
+      File "/home/renato/anaconda3/lib/python3.8/site-packages/notebook/services/contents/fileio.py", line 107, in atomic_writing
+        fileobj = io.open(path, 'wb', **kwargs)
+    FileNotFoundError: [Errno 2] No such file or directory: '/home/renato/RESEARCH/patent_analysis/RESEARCH/patent_analysis/var_builder.py'
+[W 16:01:48.300 NotebookApp] 500 PUT /api/contents/RESEARCH/patent_analysis/var_builder.py (127.0.0.1): Unexpected error while saving file: RESEARCH/patent_analysis/var_builder.py [Errno 2] No such file or directory: '/home/renato/RESEARCH/patent_analysis/RESEARCH/patent_analysis/var_builder.py'
+[W 16:01:48.300 NotebookApp] Unexpected error while saving file: RESEARCH/patent_analysis/var_builder.py [Errno 2] No such file or directory: '/home/renato/RESEARCH/patent_analysis/RESEARCH/patent_analysis/var_builder.py'
+[E 16:01:48.301 NotebookApp] {
+      "Host": "localhost:8080",
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:81.0) Gecko/20100101 Firefox/81.0",
+      "Accept": "application/json, text/javascript, */*; q=0.01",
+      "Accept-Language": "en-US,en;q=0.5",
+      "Accept-Encoding": "gzip, deflate",
+      "Content-Type": "application/json",
+      "X-Xsrftoken": "2|94322795|9b744c6c8443ddb7fe8a96900e6941bd|1602879623",
+      "X-Requested-With": "XMLHttpRequest",
+      "Content-Length": "6536",
+      "Origin": "http://localhost:8080",
+      "Dnt": "1",
+      "Connection": "keep-alive",
+      "Referer": "http://localhost:8080/edit/RESEARCH/patent_analysis/var_builder.py",
+      "Cookie": "_xsrf=2|94322795|9b744c6c8443ddb7fe8a96900e6941bd|1602879623; username-localhost-8889=\"2|1:0|10:1602880293|23:username-localhost-8889|44:ZTk0ZjZlMjBjNmE2NDBlN2E3MzY4NzZiNjcyMGExOWI=|c8e7b5827ac161b9b1bf5693eff5020dc0ff1c3041668a70337f594353019564\"; username-localhost-8888=\"2|1:0|10:1603199253|23:username-localhost-8888|44:ZTM4ODI4NTE4NzljNGRhYjg1NzEyZGYyM2Y4ZTE2MGU=|2c39263755d5ff95b3fe6816fe188c8144c17e122238d8b9124912c41a0eb93a\"; username-localhost-8080=\"2|1:0|10:1603888623|23:username-localhost-8080|44:ZDZmM2RhZmVlMjI2NDg3ZDkwN2EwOWY4NjRhMjMxYzY=|67f005c42871523e09257b8463cad5385acf0ed6228ef2a92a8340b3e377a94d\""
+    }
+[E 16:01:48.301 NotebookApp] 500 PUT /api/contents/RESEARCH/patent_analysis/var_builder.py (127.0.0.1) 2.28ms referer=http://localhost:8080/edit/RESEARCH/patent_analysis/var_builder.py
+[W 16:01:51.942 NotebookApp] 404 GET /api/contents/RESEARCH/patent_analysis/var_builder.py?content=0&_=1603995501619 (127.0.0.1): No such file or directory: RESEARCH/patent_analysis/var_builder.py
+[W 16:01:51.942 NotebookApp] No such file or directory: RESEARCH/patent_analysis/var_builder.py
+[W 16:01:51.942 NotebookApp] 404 GET /api/contents/RESEARCH/patent_analysis/var_builder.py?content=0&_=1603995501619 (127.0.0.1) 1.61ms referer=http://localhost:8080/edit/RESEARCH/patent_analysis/var_builder.py
+[I 16:01:52.078 NotebookApp] Uploading file to /RESEARCH/patent_analysis/var_builder.py
+[E 16:01:52.078 NotebookApp] Error while saving file: RESEARCH/patent_analysis/var_builder.py [Errno 2] No such file or directory: '/home/renato/RESEARCH/patent_analysis/RESEARCH/patent_analysis/var_builder.py'
+    Traceback (most recent call last):
+      File "/home/renato/anaconda3/lib/python3.8/site-packages/notebook/services/contents/filemanager.py", line 473, in save
+        self._save_file(os_path, model['content'], model.get('format'))
+      File "/home/renato/anaconda3/lib/python3.8/site-packages/notebook/services/contents/fileio.py", line 340, in _save_file
+        with self.atomic_writing(os_path, text=False) as f:
+      File "/home/renato/anaconda3/lib/python3.8/contextlib.py", line 113, in __enter__
+        return next(self.gen)
+      File "/home/renato/anaconda3/lib/python3.8/site-packages/notebook/services/contents/fileio.py", line 210, in atomic_writing
+        with atomic_writing(os_path, *args, log=self.log, **kwargs) as f:
+      File "/home/renato/anaconda3/lib/python3.8/contextlib.py", line 113, in __enter__
+        return next(self.gen)
+      File "/home/renato/anaconda3/lib/python3.8/site-packages/notebook/services/contents/fileio.py", line 107, in atomic_writing
+        fileobj = io.open(path, 'wb', **kwargs)
+    FileNotFoundError: [Errno 2] No such file or directory: '/home/renato/RESEARCH/patent_analysis/RESEARCH/patent_analysis/var_builder.py'
+[W 16:01:52.079 NotebookApp] 500 PUT /api/contents/RESEARCH/patent_analysis/var_builder.py (127.0.0.1): Unexpected error while saving file: RESEARCH/patent_analysis/var_builder.py [Errno 2] No such file or directory: '/home/renato/RESEARCH/patent_analysis/RESEARCH/patent_analysis/var_builder.py'
+[W 16:01:52.079 NotebookApp] Unexpected error while saving file: RESEARCH/patent_analysis/var_builder.py [Errno 2] No such file or directory: '/home/renato/RESEARCH/patent_analysis/RESEARCH/patent_analysis/var_builder.py'
+[E 16:01:52.080 NotebookApp] {
+      "Host": "localhost:8080",
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:81.0) Gecko/20100101 Firefox/81.0",
+      "Accept": "application/json, text/javascript, */*; q=0.01",
+      "Accept-Language": "en-US,en;q=0.5",
+      "Accept-Encoding": "gzip, deflate",
+      "Content-Type": "application/json",
+      "X-Xsrftoken": "2|94322795|9b744c6c8443ddb7fe8a96900e6941bd|1602879623",
+      "X-Requested-With": "XMLHttpRequest",
+      "Content-Length": "6536",
+      "Origin": "http://localhost:8080",
+      "Dnt": "1",
+      "Connection": "keep-alive",
+      "Referer": "http://localhost:8080/edit/RESEARCH/patent_analysis/var_builder.py",
+      "Cookie": "_xsrf=2|94322795|9b744c6c8443ddb7fe8a96900e6941bd|1602879623; username-localhost-8889=\"2|1:0|10:1602880293|23:username-localhost-8889|44:ZTk0ZjZlMjBjNmE2NDBlN2E3MzY4NzZiNjcyMGExOWI=|c8e7b5827ac161b9b1bf5693eff5020dc0ff1c3041668a70337f594353019564\"; username-localhost-8888=\"2|1:0|10:1603199253|23:username-localhost-8888|44:ZTM4ODI4NTE4NzljNGRhYjg1NzEyZGYyM2Y4ZTE2MGU=|2c39263755d5ff95b3fe6816fe188c8144c17e122238d8b9124912c41a0eb93a\"; username-localhost-8080=\"2|1:0|10:1603888623|23:username-localhost-8080|44:ZDZmM2RhZmVlMjI2NDg3ZDkwN2EwOWY4NjRhMjMxYzY=|67f005c42871523e09257b8463cad5385acf0ed6228ef2a92a8340b3e377a94d\""
+    }
+[E 16:01:52.080 NotebookApp] 500 PUT /api/contents/RESEARCH/patent_analysis/var_builder.py (127.0.0.1) 2.55ms referer=http://localhost:8080/edit/RESEARCH/patent_analysis/var_builder.py
+[W 16:02:05.136 NotebookApp] 404 GET /api/contents/RESEARCH/patent_analysis?type=directory&_=1603985603418 (127.0.0.1): No such file or directory: RESEARCH/patent_analysis
+[W 16:02:05.136 NotebookApp] No such file or directory: RESEARCH/patent_analysis
+[W 16:02:05.137 NotebookApp] 404 GET /api/contents/RESEARCH/patent_analysis?type=directory&_=1603985603418 (127.0.0.1) 1.50ms referer=http://localhost:8080/tree/RESEARCH/patent_analysis
+[W 16:02:05.750 NotebookApp] 404 GET /tree/RESEARCH/patent_analysis (127.0.0.1) 185.32ms referer=None
+[I 16:02:18.197 NotebookApp] 302 GET / (127.0.0.1) 0.67ms
+[I 16:02:58.091 NotebookApp] Saving file at /var_builder.py
+[I 16:03:44.849 NotebookApp] Saving file at /var_builder.py
+[I 16:05:35.803 NotebookApp] Saving file at /var_builder.py
+[I 16:10:44.629 NotebookApp] Saving file at /var_builder.py

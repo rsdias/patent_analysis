@@ -12,14 +12,14 @@ def clean_field(df):
     cleaning_patent=lambda x:re.sub('([^a-zA-Z0-9]+)', "", x)
     df.dropna(inplace=True)
     df['patent_id']=df['patent_id'].apply(cleaning_patent)
-#     df[['patent_id']]=df[['patent_id']].apply(cleaning_patent)
     return df
 
 file_list=glob.glob("parquet/uspatentcitation*")
 dst='data/cleanuspatentcitation.parquet.gz'
 
-#helps us to identify citations with problems - small change from the actual first patent's grant date because one of the citations for n1 seems to be right
+# This is the date of the first patent ever granted, so patents with grant dates previous to these should be wrong
 # first_patent = datetime.date(1790, 7, 31)
+# small change from the actual first patent's grant date because one of the citations for n1 seems to be right
 # first_patent = pd.to_datetime('1790-06-30', format="%Y-%m-%d") 
 
 dfs = [delayed(pd.read_parquet)(f) for f in file_list]
