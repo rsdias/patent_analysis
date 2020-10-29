@@ -229,3 +229,21 @@ TypeError: dtype '<class 'pandas._libs.tslibs.timestamps.Timestamp'>' not unders
 [I 16:03:44.849 NotebookApp] Saving file at /var_builder.py
 [I 16:05:35.803 NotebookApp] Saving file at /var_builder.py
 [I 16:10:44.629 NotebookApp] Saving file at /var_builder.py
+Traceback (most recent call last):
+  File "var_builder.py", line 117, in <module>
+    df=df.merge(pt_df, how='inner', left_index=True)
+  File "/home/ubuntu/anaconda3/lib/python3.7/site-packages/dask/dataframe/core.py", line 3906, in merge
+    shuffle=shuffle,
+  File "/home/ubuntu/anaconda3/lib/python3.7/site-packages/dask/dataframe/multi.py", line 493, in merge
+    indicator=indicator,
+  File "/home/ubuntu/anaconda3/lib/python3.7/site-packages/dask/dataframe/multi.py", line 324, in single_partition_join
+    meta = left._meta_nonempty.merge(right._meta_nonempty, **kwargs)
+  File "/home/ubuntu/anaconda3/lib/python3.7/site-packages/pandas/core/frame.py", line 7297, in merge
+    validate=validate,
+  File "/home/ubuntu/anaconda3/lib/python3.7/site-packages/pandas/core/reshape/merge.py", line 86, in merge
+    validate=validate,
+  File "/home/ubuntu/anaconda3/lib/python3.7/site-packages/pandas/core/reshape/merge.py", line 620, in __init__
+    self._validate_specification()
+  File "/home/ubuntu/anaconda3/lib/python3.7/site-packages/pandas/core/reshape/merge.py", line 1183, in _validate_specification
+    raise MergeError("Must pass right_on or right_index=True")
+pandas.errors.MergeError: Must pass right_on or right_index=True
