@@ -14,6 +14,11 @@ def clean_field(df):
     df['patent_id']=df['patent_id'].apply(cleaning_patent)
     return df
 
+def correct_date(df):
+    correct_date=lambda x:re.sub('-00', "-01", x)
+    df['date']=df['date'].apply(correct_date, meta=pd.Series(dtype='object', name='date'))
+    return df
+
 file_list=glob.glob("parquet/uspatentcitation*")
 dst='data/cleanuspatentcitation.parquet.gz'
 
@@ -28,11 +33,9 @@ myTypes={'patent_id':str, 'citation_id':str, 'date':object}
 df = dd.from_delayed(dfs, meta=myTypes)
 
 df=delayed(clean_field)(df)
+df=delayed(correct_date)(df)
 
-correct_date=lambda x:re.sub('-00', "-01", x)
-df['date']=df['date'].apply(correct_date, meta=pd.Series(dtype='object', name='date'))
-
-df['date']=pd.to_datetime(df['date'], format="%Y-%m-%d", errors='coerce', infer_datetime_format=True)
+df['date']=dd.to_datetime(df['date'], format="%Y-%m-%d", errors='coerce', infer_datetime_format=True)
 df.dropna(subset=['date'], inplace=True)
 
 #result=client.persist(df)
