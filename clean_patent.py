@@ -60,7 +60,7 @@ def clean_patent(df):
     #df.dtypes
     return df
 
-src= 'parquet/patent000.parquet.gz'
+src= 'parquet/patent_000.parquet.gz'
 dst= 'data/cleanpatent.parquet.gz'
 df = dd.read_parquet(src)
 
