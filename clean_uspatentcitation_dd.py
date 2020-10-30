@@ -16,7 +16,7 @@ def clean_field(df):
 
 def correct_date(df):
     correct_date=lambda x:re.sub('-00', "-01", x)
-    df['date']=df['date'].apply(correct_date, meta=pd.Series(dtype='object', name='date'))
+    df['date']=df['date'].apply(correct_date, meta=pd.Series(dtype=str, name='date'))
     return df
 
 file_list=glob.glob("parquet/uspatentcitation*")
