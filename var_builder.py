@@ -116,10 +116,10 @@ pt_df = dd.read_parquet(patent, parse_dates=['date']).set_index('id')
 #df = dd.from_delayed(ddf)
 #pt_df = dd.from_delayed(pt_ddf)
 
-# report.append("file citation head \n")
-# report.append(df.head().to_latex())
-# report.append("patent file head \n")
-# report.append("pt_df.head()")
+report.append("file citation head \n")
+report.append(df.head().to_latex())
+report.append("patent file head \n")
+report.append("pt_df.head()")
 
 df=df.rename(columns = {'date':'citation_date'})
 
@@ -129,8 +129,8 @@ df=df.rename(columns = {'date':'citation_date'})
 # df = df.set_index('patent_id').persist()
 df=df.merge(pt_df, how='inner', left_index=True, right_index=True)
 
-#report.append("Info after merging\n")
-#report.append(df.info().to_latex())
+report.append("Info after merging\n")
+report.append(df.info().to_latex())
 
 # date format to allow calculations
 df=df.rename(columns = {'date':'patent_date'})
@@ -143,10 +143,10 @@ df=df.rename(columns = {'date':'patent_date'})
 # df=df.dropna()
 
 
-# report.append("head\n")
-# report.append(df.sort_values('cit_delay').head())
-# report.append("tail \n")
-# report.append(df.sort_values('cit_delay').tail())
+report.append("head\n")
+report.append(df.sort_values('cit_delay').head())
+report.append("tail \n")
+report.append(df.sort_values('cit_delay').tail())
 
 # def convert_to_delta(x):
 #     try:
@@ -155,21 +155,21 @@ df=df.rename(columns = {'date':'patent_date'})
 #         return np.nan
 
 
-# report.append("describe\n")
-# report.append(df.describe())
+report.append("describe\n")
+report.append(df.describe())
 
-# report.append("head\n")
-# report.append(df.head())
+report.append("head\n")
+report.append(df.head())
 
 #get_ipython().run_cell_magic('time', '', 'df.hist()')
 
 #Check outliers
-# report.append("Check cit delay outliers - 0.15 quantile")
-# report.append(df[df["cit_delay"]>df["cit_delay"].quantile(0.15)].sort_values(by=['cit_delay'], ascending=True))
+report.append("Check cit delay outliers - 0.15 quantile")
+report.append(df[df["cit_delay"]>df["cit_delay"].quantile(0.15)].sort_values(by=['cit_delay'], ascending=True))
 
-# report.append("Check cit delay outliers -0.85 quantile")
-# report.append(df[df["cit_delay"]<df["cit_delay"].quantile(0.85)].sort_values(by=['cit_delay'], ascending=False))
+report.append("Check cit delay outliers -0.85 quantile")
+report.append(df[df["cit_delay"]<df["cit_delay"].quantile(0.85)].sort_values(by=['cit_delay'], ascending=False))
 df=df.compute(num_workers=8)
 df.to_parquet(dst)
 
-# report.to_latex(report_dst)
+report.to_latex(report_dst)
