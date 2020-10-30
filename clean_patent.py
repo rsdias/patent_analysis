@@ -72,5 +72,7 @@ df = dd.read_parquet(src)
 # df[\id\]=df[\id\].astype(object)
 
 df=delayed(clean_patent)(df)
+print(df.info)
 df=df.compute(num_workers=8)
+print(df.info)
 df.to_parquet(dst, compression='gzip')
