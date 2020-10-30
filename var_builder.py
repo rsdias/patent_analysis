@@ -129,8 +129,8 @@ df=df.rename(columns = {'date':'citation_date'})
 # df = df.set_index('patent_id').persist()
 df=df.merge(pt_df, how='inner', left_index=True, right_index=True)
 
-report.append("Info after merging\n")
-report.append(df.info().to_latex())
+# report.append("Info after merging\n")
+# report.append(df.info().to_latex())
 
 # date format to allow calculations
 df=df.rename(columns = {'date':'patent_date'})
