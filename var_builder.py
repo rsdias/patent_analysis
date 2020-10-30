@@ -78,20 +78,36 @@ import dask.dataframe as dd
 from dask.delayed import delayed
 import datetime
 
-#citation_df = 'data/cleanuspatentcitation.csv.gz'
+def convert_and_subtract_dates(df):
+    #conversao de string para data
+    #df['citation_date']=dd.to_datetime(df['citation_date'], format="%Y-%m-%d", errors='coerce')
+    #df['patent_date']=dd.to_datetime(df['patent_date'], format="%Y-%m-%d", errors='coerce') 
+    df['citation_date']=df['citation_date'].apply([lambda x: np.datetime64(x)])
+    df['citation_date']=df['patent_date'].apply([lambda x: np.datetime64(x)])
+    # delay is the time interval between grant and citation
+    df['cit_delay']=df['patent_date'].sub(df['citation_date'], axis=0)
+    # convert to date interval format
+    df['cit_delay']=pd.to_timedelta(df['cit_delay'])  
+    # convert to interval in years
+    df['cit_delay']=df['cit_delay'].dt.days/360
+    # this is the may offensor of performance
+    # change to numpy
+    # https://stackoverflow.com/questions/52274356/conversion-of-a-timedelta-to-int-very-slow-in-python
+    # this takes 40min
+    # df['cit_delay']=pd.to_timedelta(df['cit_delay']).dt.components.days/365
+    # lets try this alternativE
+    # df['cit_delay']=df['cit_delay'].apply(lambda x: convert_to_delta(x)
+    # does not work")
+
 citation_df = 'data/cleanuspatentcitation.parquet.gz'
 patent= 'data/cleanpatent.parquet.gz'
-#patent= 'data/cleanpatent.csv'
-dst='data/var_builder.parquet'
-#dst='data/var_builder.csv'
+dst='data/var_builder.parquet.gz'
 report_dst='var_builder_report.tex'
 
 report=[] #file to export report
 
-#file_citation=gzip.open(citation_df, 'r')
-df = dd.read_parquet(citation_df, parse_dates=['date'])
+df = dd.read_parquet(citation_df, parse_dates=['date']).set_index('patent_id')
 pt_df = dd.read_parquet(patent, parse_dates=['date']).set_index('id')
-
 
 # dtype={'patent_id':object, 'citation_id':object}
 #ddf=delayed(pd.read_csv)(citation_df, usecols=['patent_id', 'citation_id', 'date'], dtype=dtype, parse_dates=['date'])
@@ -100,37 +116,24 @@ pt_df = dd.read_parquet(patent, parse_dates=['date']).set_index('id')
 #df = dd.from_delayed(ddf)
 #pt_df = dd.from_delayed(pt_ddf)
 
-
 # report.append("file citation head \n")
 # report.append(df.head().to_latex())
 # report.append("patent file head \n")
 # report.append("pt_df.head()")
 
 df=df.rename(columns = {'date':'citation_date'})
-#df['citation_date']=dd.to_datetime(df['citation_date'], format="%Y-%m-%d", errors='coerce')
-#df['citation_date'].apply([lambda x: np.datetime64(x)])
 
 # merge between patent data and citations on patent_id (citing)
 # merging on the citation dataset drops patents without citing
 # later i could standardize to make patent_id index and use join instead of merge
-df = df.set_index('patent_id').persist()
+# df = df.set_index('patent_id').persist()
 df=df.merge(pt_df, how='inner', left_index=True, right_index=True)
 
 #report.append("Info after merging\n")
 #report.append(df.info().to_latex())
 
-# meta = ('citation_date', 'np.datetime64[D]')
-# df.citation_date.map_partitions(pd.to_datetime, meta=meta)
-
 # date format to allow calculations
 df=df.rename(columns = {'date':'patent_date'})
-# meta = ('patent_date', 'np.datetime64[D]')
-# df.patent_date.map_partitions(pd.to_datetime, meta=meta)
-
-# df['patent_date']=dd.to_datetime(df['patent_date'], format="%Y-%m-%d", errors='coerce') 
-
-#conversao de string para data
-# df['patent_date'].apply[lambda x: np.datetime64(x)]')
 
 # if I do not drop nans, the script raises an error later when converting day interval into years
 # I could substitute with average instead of dropping, this way I do not lose the citation info
@@ -139,10 +142,6 @@ df=df.rename(columns = {'date':'patent_date'})
 
 # df=df.dropna()
 
-# delay is the time interval between grant and citation
-# df['cit_delay']=df['patent_date'].sub(df['citation_date'], axis=0)
-# convert to date format
-# df['cit_delay']=pd.to_timedelta(df['cit_delay'])
 
 # report.append("head\n")
 # report.append(df.sort_values('cit_delay').head())
@@ -154,19 +153,6 @@ df=df.rename(columns = {'date':'patent_date'})
 #         return x/np.timedelta64(1, 'Y')
 #     except:
 #         return np.nan
-
-
-
-# convert to interval in years
-# df['cit_delay']=df['cit_delay'].dt.days/360
-# this is the may offensor of performance
-# change to numpy
-# https://stackoverflow.com/questions/52274356/conversion-of-a-timedelta-to-int-very-slow-in-python
-# this takes 40min
-# df['cit_delay']=pd.to_timedelta(df['cit_delay']).dt.components.days/365
-# lets try this alternativE
-# df['cit_delay']=df['cit_delay'].apply(lambda x: convert_to_delta(x)
-# does not work")
 
 
 # report.append("describe\n")
@@ -183,7 +169,7 @@ df=df.rename(columns = {'date':'patent_date'})
 
 # report.append("Check cit delay outliers -0.85 quantile")
 # report.append(df[df["cit_delay"]<df["cit_delay"].quantile(0.85)].sort_values(by=['cit_delay'], ascending=False))
-df.to_parquet(dst)
 df=df.compute(num_workers=8)
+df.to_parquet(dst)
 
 # report.to_latex(report_dst)
