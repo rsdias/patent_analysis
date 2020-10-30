@@ -1,6 +1,13 @@
+"""
+Sao Paulo, October 30th, 2020
+This script reads parquet uspatentcitation files, drops rows with errors on patent and date fields.
+This cleaning aims to avoid later processing problems.
+
+This script should offer a report on the dropped rows.
+Alternatively, it could generate a flag indicating rows with errors.
+
+"""
 import pandas as pd
-#import zipfile
-#import gzip
 import re
 import csv
 import dask.dataframe as dd
