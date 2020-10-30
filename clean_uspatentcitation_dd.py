@@ -29,13 +29,13 @@ df = dd.from_delayed(dfs, meta=myTypes)
 
 df=delayed(clean_field)(df)
 
-#correct_date=lambda x:re.sub('-00', "-01", x)
-#df['date']=df['date'].apply(correct_date, meta=pd.Series(dtype='object', name='date'))
+correct_date=lambda x:re.sub('-00', "-01", x)
+df['date']=df['date'].apply(correct_date, meta=pd.Series(dtype='object', name='date'))
 
-#df['date']=pd.to_datetime(df['date'], format="%Y-%m-%d", errors='coerce', infer_datetime_format=True)
-#df.dropna(subset=['date'], inplace=True)
+df['date']=pd.to_datetime(df['date'], format="%Y-%m-%d", errors='coerce', infer_datetime_format=True)
+df.dropna(subset=['date'], inplace=True)
 
 #result=client.persist(df)
 df=df.compute(num_workers=8)
-
 df.to_parquet(dst, compression='gzip')
+

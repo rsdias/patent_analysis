@@ -183,7 +183,7 @@ df=df.rename(columns = {'date':'patent_date'})
 
 # report.append("Check cit delay outliers -0.85 quantile")
 # report.append(df[df["cit_delay"]<df["cit_delay"].quantile(0.85)].sort_values(by=['cit_delay'], ascending=False))
-
-df=df.compute(num_workers=8)
 df.to_parquet(dst)
+df=df.compute(num_workers=8)
+
 # report.to_latex(report_dst)
