@@ -19,6 +19,10 @@ def correct_date(df):
     df['date']=df['date'].apply(correct_date)
     return df
 
+def convert_todatetime(df):
+    df['date']=dd.to_datetime(df['date'], format="%Y-%m-%d", errors='coerce')
+    return df
+    
 file_list=glob.glob("parquet/uspatentcitation*")
 dst='data/cleanuspatentcitation.parquet.gz'
 
@@ -34,8 +38,8 @@ df = dd.from_delayed(dfs, meta=myTypes)
 
 df=delayed(clean_field)(df)
 df=delayed(correct_date)(df)
+df=delayed(convert_todatetime)(df)
 
-df['date']=dd.to_datetime(df['date'], format="%Y-%m-%d", errors='coerce', infer_datetime_format=True)
 df.dropna(subset=['date'], inplace=True)
 
 #result=client.persist(df)
