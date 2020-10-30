@@ -51,5 +51,5 @@ df.dropna(subset=['date'], inplace=True)
 
 #result=client.persist(df)
 df=df.compute(num_workers=8)
-df.to_parquet(dst, compression='gzip')
+df.set_index('patent_id').to_parquet(dst, compression='gzip')
 
