@@ -144,9 +144,9 @@ df=df.rename(columns = {'date':'patent_date'})
 
 
 report.append("head\n")
-report.append(df.sort_values('cit_delay').head())
+report.append(df.nlargest(15, 'cit_delay'))
 report.append("tail \n")
-report.append(df.sort_values('cit_delay').tail())
+report.append(df.nsmallest(15, 'cit_delay'))
 
 # def convert_to_delta(x):
 #     try:
