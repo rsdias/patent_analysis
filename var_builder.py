@@ -107,7 +107,7 @@ report_dst='var_builder_report.tex'
 report=[] #file to export report
 
 df = dd.read_parquet(citation_df, parse_dates=['date']).set_index('patent_id')
-pt_df = dd.read_parquet(patent, parse_dates=['date']).set_index('id')
+pt_df = dd.read_parquet(patent, parse_dates=['date'])
 
 # dtype={'patent_id':object, 'citation_id':object}
 #ddf=delayed(pd.read_csv)(citation_df, usecols=['patent_id', 'citation_id', 'date'], dtype=dtype, parse_dates=['date'])
@@ -142,6 +142,7 @@ df=df.rename(columns = {'date':'patent_date'})
 
 # df=df.dropna()
 
+df=df.compute(num_workers=8)
 
 report.append("head\n")
 report.append(df.nlargest(15, 'cit_delay'))
@@ -169,7 +170,6 @@ report.append(df[df["cit_delay"]>df["cit_delay"].quantile(0.15)].sort_values(by=
 
 report.append("Check cit delay outliers -0.85 quantile")
 report.append(df[df["cit_delay"]<df["cit_delay"].quantile(0.85)].sort_values(by=['cit_delay'], ascending=False))
-df=df.compute(num_workers=8)
 df.to_parquet(dst)
 
 report.to_latex(report_dst)
