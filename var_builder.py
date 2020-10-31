@@ -80,24 +80,12 @@ import datetime
 
 def convert_and_subtract_dates(df):
     #conversao de string para data
-    #df['citation_date']=dd.to_datetime(df['citation_date'], format="%Y-%m-%d", errors='coerce')
-    #df['patent_date']=dd.to_datetime(df['patent_date'], format="%Y-%m-%d", errors='coerce') 
-    df['citation_date']=df['citation_date'].apply([lambda x: np.datetime64(x)])
-    df['citation_date']=df['patent_date'].apply([lambda x: np.datetime64(x)])
+    df["citation_date"] = df["citation_date"].astype("M8[us]")
+    df["patent_date"] = df["patent_date"].astype("M8[us]")
+
     # delay is the time interval between grant and citation
-    df['cit_delay']=df['patent_date'].sub(df['citation_date'], axis=0)
-    # convert to date interval format
-    df['cit_delay']=pd.to_timedelta(df['cit_delay'])  
-    # convert to interval in years
-    df['cit_delay']=df['cit_delay'].dt.days/360
-    # this is the may offensor of performance
-    # change to numpy
-    # https://stackoverflow.com/questions/52274356/conversion-of-a-timedelta-to-int-very-slow-in-python
-    # this takes 40min
-    # df['cit_delay']=pd.to_timedelta(df['cit_delay']).dt.components.days/365
-    # lets try this alternativE
-    # df['cit_delay']=df['cit_delay'].apply(lambda x: convert_to_delta(x)
-    # does not work")
+    # following https://stackoverflow.com/questions/55395387/converting-a-dask-column-to-a-date-and-applying-a-lambda-function?rq=1
+    df=df.assign(cit_delay=df["patent_date"].year - df["citation_date"].year)
 
 citation_df = 'data/cleanuspatentcitation.parquet.gz'
 patent= 'data/cleanpatent.parquet.gz'
