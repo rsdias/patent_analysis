@@ -85,7 +85,7 @@ def convert_and_subtract_dates(df):
 
     # delay is the time interval between grant and citation
     # following https://stackoverflow.com/questions/55395387/converting-a-dask-column-to-a-date-and-applying-a-lambda-function?rq=1
-    df=df.assign(cit_delay=df["patent_date"].year - df["citation_date"].year)
+    df=df.assign(cit_delay=df["patent_date"].dt.year - df["citation_date"].dt.year)
 
 citation_df = 'data/cleanuspatentcitation.parquet.gz'
 patent= 'data/cleanpatent.parquet.gz'
