@@ -141,7 +141,7 @@ df=df.rename(columns = {'date':'patent_date'})
 # For this reason, at this point, I'll keep the NAN and circumvent the issues as they arise
 
 # df=df.dropna()
-
+df=convert_and_subtract_dates(df)
 df=df.compute(num_workers=8)
 
 report.append("head\n")
