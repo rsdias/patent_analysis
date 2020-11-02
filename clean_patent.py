@@ -68,7 +68,7 @@ def date_within_boundaries(df):
     #pd.Timestamp.min: Timestamp('1677-09-21 00:12:43.145225')
     df['date']=df['date'].apply((lambda x: x if x > datetime.datetime('1677-09-21') else np.nan)
     #pd.Timestamp.max: Timestamp('2262-04-11 23:47:16.854775807')
-    df['date']=df['date'].apply((lambda x: x if x < datetime.datetime.now() else np.nan)
+    df['date']=df['date'].apply([lambda x: x if x < datetime.datetime.now() else np.nan])
     return df
 
 
