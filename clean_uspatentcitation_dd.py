@@ -34,7 +34,7 @@ def date_within_boundaries(df):
     # Avoid TimeStamp limitations:
     # https://stackoverflow.com/questions/50265288/how-to-work-around-python-pandas-dataframes-out-of-bounds-nanosecond-timestamp
     # out-of-bounds timestamps will be replaced by np.nan
-    df=df.where(df["date"].astype("M8[us]"), np.nan) 
+    df['date']=pd.to_datetime(df['date'], errors='coerce')
     return df
     
 file_list=glob.glob("parquet/uspatentcitation*")
