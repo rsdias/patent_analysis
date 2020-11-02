@@ -30,6 +30,13 @@ def convert_todatetime(df):
     df['date']=dd.to_datetime(df['date'], format="%Y-%m-%d", errors='coerce')
     return df
     
+def date_within_boundaries(df):
+    # Avoid TimeStamp limitations:
+    # https://stackoverflow.com/questions/50265288/how-to-work-around-python-pandas-dataframes-out-of-bounds-nanosecond-timestamp
+    # out-of-bounds timestamps will be replaced by np.nan
+    df=df.where(df["date"].astype("M8[us]"), np.nan) 
+    return df
+    
 file_list=glob.glob("parquet/uspatentcitation*")
 dst='data/cleanuspatentcitation.parquet.gz'
 
@@ -49,7 +56,6 @@ df=delayed(convert_todatetime)(df)
 
 df.dropna(subset=['date'], inplace=True)
 
-#result=client.persist(df)
 df=df.compute(num_workers=8)
 df.set_index('patent_id').to_parquet(dst, compression='gzip')
 
