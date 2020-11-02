@@ -101,4 +101,4 @@ df.set_index('id').to_parquet(dst, compression='gzip')
 #pd.Timestamp.max: Timestamp('2262-04-11 23:47:16.854775807')
 with open(report_dst, 'a') as f:
     f.write(datetime.now() + "\n")
-    f.writelines([str(x) + "\n" for x in report)
+    f.writelines([str(x) + "\n" for x in report])
