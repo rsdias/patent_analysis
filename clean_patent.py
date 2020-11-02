@@ -64,10 +64,11 @@ def clean_patent(df):
 def date_within_boundaries(df):
     # Avoid TimeStamp limitations:
     # https://stackoverflow.com/questions/50265288/how-to-work-around-python-pandas-dataframes-out-of-bounds-nanosecond-timestamp
-    # out-of-bounds timestamps will be replaced by np.nan
-    # df=df.where(df["date"].astype("M8[us]"), other=np.nan) 
     df['date']=pd.to_datetime(df['date'], errors='coerce')
-    # date_time_obj = datetime.datetime.strptime(x, '%Y-%m-%d')
+    #pd.Timestamp.min: Timestamp('1677-09-21 00:12:43.145225')
+    df['date']=df['date'].apply((lambda x: x if x > datetime.datetime('1677-09-21') else np.nan)
+    #pd.Timestamp.max: Timestamp('2262-04-11 23:47:16.854775807')
+    df['date']=df['date'].apply((lambda x: x if x < datetime.datetime.now() else np.nan)
     return df
 
 
@@ -104,8 +105,6 @@ report.append(df.tail())
 
 df.set_index('id').to_parquet(dst, compression='gzip')
 
-#pd.Timestamp.min: Timestamp('1677-09-21 00:12:43.145225')
-#pd.Timestamp.max: Timestamp('2262-04-11 23:47:16.854775807')
 with open(report_dst, 'a') as f:
     f.write(str(datetime.datetime.now()) + "\n")
     f.writelines([str(x) + "\n" for x in report])
