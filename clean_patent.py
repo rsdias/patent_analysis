@@ -86,7 +86,7 @@ report=[] #file to export report
 # df[\id\]=df[\id\].astype(object)
 
 df=delayed(clean_patent)(df)
-df=delayed(date_within_boundaries)(df)
+# df=delayed(date_within_boundaries)(df)
 df=df.compute(num_workers=8)
 
 report.append("Dataframe info with NAN \n")
@@ -94,6 +94,10 @@ report.append(df.info())
 df.dropna(inplace=True)
 report.append("Dataframe info without NAN \n")
 report.append(df.info())
+report.append("HEAD \n")
+report.append(df.head())
+report.append("TAIL \n")
+report.append(df.tail())
 
 df.set_index('id').to_parquet(dst, compression='gzip')
 
