@@ -70,6 +70,7 @@ def date_within_boundaries(df):
     # date_time_obj = datetime.datetime.strptime(x, '%Y-%m-%d')
     return df
 
+
 src= 'parquet/patent_000.parquet.gz'
 dst= 'data/cleanpatent.parquet.gz'
 df = dd.read_parquet(src)
@@ -77,7 +78,7 @@ report_dst='clean_patent.tex'
 
 report=[] #file to export report
 
-#df.info()
+#df.info()  
 #df.dtypes
 # Keep this for reference!\n
 # As of Dec 31st, 2019, I compared the clean to the raw version of citation and patent ids
@@ -89,12 +90,13 @@ df=delayed(date_within_boundaries)(df)
 df=df.compute(num_workers=8)
 
 report.append("Dataframe info with NAN \n")
-report.append(df.info().to_latex())
+report.append(df.info())
 df.dropna(inplace=True)
 report.append("Dataframe info without NAN \n")
-report.append(df.info().to_latex())
+report.append(df.info())
 
 df.set_index('id').to_parquet(dst, compression='gzip')
 
 #pd.Timestamp.min: Timestamp('1677-09-21 00:12:43.145225')
 #pd.Timestamp.max: Timestamp('2262-04-11 23:47:16.854775807')
+report.to_latex(report_dst)
