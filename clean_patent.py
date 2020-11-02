@@ -89,6 +89,9 @@ df=delayed(clean_patent)(df)
 # df=delayed(date_within_boundaries)(df)
 df=df.compute(num_workers=8)
 
+report.append("Dataframe Description \n")
+report.append(df.describe())
+
 report.append("Dataframe info with NAN \n")
 report.append(df.info())
 df.dropna(inplace=True)
