@@ -65,7 +65,7 @@ def date_within_boundaries(df):
     # https://stackoverflow.com/questions/50265288/how-to-work-around-python-pandas-dataframes-out-of-bounds-nanosecond-timestamp
     # out-of-bounds timestamps will be replaced by np.nan
     # df=df.where(df["date"].astype("M8[us]"), other=np.nan) 
-    df['date']=df['date'].applymap(lambda x: x.astype("M8[us]") if x.astype("M8[us]") else np.nan)   
+    df['date']=df['date'].map(lambda x: x.astype("M8[us]") if x.astype("M8[us]") else np.nan)   
     return df
 
 src= 'parquet/patent_000.parquet.gz'
