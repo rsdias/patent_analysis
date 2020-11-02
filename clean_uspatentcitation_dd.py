@@ -35,6 +35,11 @@ def date_within_boundaries(df):
     # https://stackoverflow.com/questions/50265288/how-to-work-around-python-pandas-dataframes-out-of-bounds-nanosecond-timestamp
     # out-of-bounds timestamps will be replaced by np.nan
     df['date']=pd.to_datetime(df['date'], errors='coerce')
+    #pd.Timestamp.min: Timestamp('1677-09-21 00:12:43.145225')
+    df['date']=df['date'].apply(lambda x: x if x > datetime.datetime('1677-09-21') else np.nan)
+    #pd.Timestamp.max: Timestamp('2262-04-11 23:47:16.854775807')
+    df['date']=df['date'].apply(lambda x: x if x < datetime.datetime.now() else np.nan)
+
     return df
     
 file_list=glob.glob("parquet/uspatentcitation*")
@@ -53,9 +58,11 @@ df = dd.from_delayed(dfs, meta=myTypes)
 df=delayed(clean_field)(df)
 df=delayed(correct_date)(df)
 df=delayed(convert_todatetime)(df)
-
+df.info()
+df.summary()
 df.dropna(subset=['date'], inplace=True)
-
+df.info()
+df.summary()
 df=df.compute(num_workers=8)
 df.set_index('patent_id').to_parquet(dst, compression='gzip')
 
