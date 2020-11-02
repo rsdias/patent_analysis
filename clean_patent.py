@@ -59,10 +59,20 @@ def clean_patent(df):
     #df['num_claims'].hist()
     #df.dtypes
     return df
+    
+def date_within_boundaries(df):
+    # Avoid TimeStamp limitations:
+    # https://stackoverflow.com/questions/50265288/how-to-work-around-python-pandas-dataframes-out-of-bounds-nanosecond-timestamp
+    # out-of-bounds timestamps will be replaced by np.nan
+    df=df.where(df["date"].astype("M8[us]"), np.nan) 
+    return df
 
 src= 'parquet/patent_000.parquet.gz'
 dst= 'data/cleanpatent.parquet.gz'
 df = dd.read_parquet(src)
+report_dst='clean_patent.tex'
+
+report=[] #file to export report
 
 #df.info()
 #df.dtypes
@@ -72,7 +82,13 @@ df = dd.read_parquet(src)
 # df[\id\]=df[\id\].astype(object)
 
 df=delayed(clean_patent)(df)
-print(df.info)
+df=delayed(date_within_boundaries)(df)
 df=df.compute(num_workers=8)
-print(df.info)
+
+report.append("Dataframe info with NAN \n")
+report.append(df.info().to_latex())
+df.dropna(inplace=True)
+report.append("Dataframe info without NAN \n")
+report.append(df.info().to_latex())
+
 df.set_index('id').to_parquet(dst, compression='gzip')
