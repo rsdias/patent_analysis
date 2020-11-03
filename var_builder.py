@@ -95,7 +95,7 @@ report_dst='var_builder_report.tex'
 
 report=[] #file to export report
 
-df = dd.read_parquet(citation_df, parse_dates=['date']).set_index('patent_id')
+df = dd.read_parquet(citation_df, parse_dates=['date'])
 pt_df = dd.read_parquet(patent, parse_dates=['date'])
 
 # dtype={'patent_id':object, 'citation_id':object}
