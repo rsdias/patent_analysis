@@ -1,5 +1,8 @@
 """
 Script to convert zip files to parquet
+Oct 2020
+
+Next:export parquet with index
 """
    
 import pandas as pd
