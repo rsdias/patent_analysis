@@ -80,12 +80,12 @@ import datetime
 
 def convert_and_subtract_dates(df):
     #conversao de string para data
-    df["citation_date"] = df["citation_date"].astype("M8[us]")
-    df["patent_date"] = df["patent_date"].astype("M8[us]")
+    df["citation_date"] = df["citation_date"].astype(int)
+    df["patent_date"] = df["patent_date"].astype(int)
 
     # delay is the time interval between grant and citation
     # following https://stackoverflow.com/questions/55395387/converting-a-dask-column-to-a-date-and-applying-a-lambda-function?rq=1
-    df=df.assign(cit_delay=df["patent_date"].dt.year - df["citation_date"].dt.year)
+    df=df.assign(cit_delay=df["patent_date"] - df["citation_date"])
     return df
     
 citation_df = 'data/cleanuspatentcitation.parquet.gz'
@@ -95,8 +95,8 @@ report_dst='var_builder_report.tex'
 
 report=[] #file to export report
 
-df = dd.read_parquet(citation_df, parse_dates=['date'])
-pt_df = dd.read_parquet(patent, parse_dates=['date'])
+df = dd.read_parquet(citation_df)
+pt_df = dd.read_parquet(patent)
 
 # dtype={'patent_id':object, 'citation_id':object}
 #ddf=delayed(pd.read_csv)(citation_df, usecols=['patent_id', 'citation_id', 'date'], dtype=dtype, parse_dates=['date'])
@@ -138,13 +138,6 @@ report.append(df.nlargest(15, 'cit_delay'))
 report.append("tail \n")
 report.append(df.nsmallest(15, 'cit_delay'))
 
-# def convert_to_delta(x):
-#     try:
-#         return x/np.timedelta64(1, 'Y')
-#     except:
-#         return np.nan
-
-
 report.append("describe\n")
 report.append(df.describe())
 
@@ -154,11 +147,11 @@ report.append(df.head())
 #get_ipython().run_cell_magic('time', '', 'df.hist()')
 
 #Check outliers
-report.append("Check cit delay outliers - 0.15 quantile")
-report.append(df[df["cit_delay"]>df["cit_delay"].quantile(0.15)].sort_values(by=['cit_delay'], ascending=True))
+#report.append("Check cit delay outliers - 0.15 quantile")
+#report.append(df[df["cit_delay"]>df["cit_delay"].quantile(0.15)].sort_values(by=['cit_delay'], ascending=True))
 
-report.append("Check cit delay outliers -0.85 quantile")
-report.append(df[df["cit_delay"]<df["cit_delay"].quantile(0.85)].sort_values(by=['cit_delay'], ascending=False))
-df.to_parquet(dst)
+#report.append("Check cit delay outliers -0.85 quantile")
+#report.append(df[df["cit_delay"]<df["cit_delay"].quantile(0.85)].sort_values(by=['cit_delay'], ascending=False))
+#df.to_parquet(dst)
 
 report.to_latex(report_dst)
