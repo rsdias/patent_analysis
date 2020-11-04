@@ -33,13 +33,11 @@ def convert_todatetime(df):
 def date_within_boundaries(df):
     # Avoid TimeStamp limitations:
     # https://stackoverflow.com/questions/50265288/how-to-work-around-python-pandas-dataframes-out-of-bounds-nanosecond-timestamp
-    # out-of-bounds timestamps will be replaced by np.nan
-    df['date']=pd.to_datetime(df['date'], errors='coerce')
+    df['date']=df['date'].str[:4].astype(int)
     #pd.Timestamp.min: Timestamp('1677-09-21 00:12:43.145225')
-    df['date']=df['date'].apply(lambda x: x if x > datetime.datetime('1677-09-21') else np.nan)
+    df['date']=df['date'].apply(lambda x: x if x > 1677 else np.nan)
     #pd.Timestamp.max: Timestamp('2262-04-11 23:47:16.854775807')
-    df['date']=df['date'].apply(lambda x: x if x < datetime.datetime.now() else np.nan)
-
+    df['date']=df['date'].apply(lambda x: x if x < 2021 else np.nan)
     return df
     
 file_list=glob.glob("parquet/uspatentcitation*")
