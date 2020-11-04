@@ -15,3 +15,4 @@ slurm-1516137.out
 .zip
 parquet
 .tex
+dask-worker-space/
