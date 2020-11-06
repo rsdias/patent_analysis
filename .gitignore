@@ -16,3 +16,4 @@ slurm-1516137.out
 parquet
 .tex
 dask-worker-space/
+parquet/
