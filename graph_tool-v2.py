@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 # Script to calculate centrality of patent citation (WORKING)
 
@@ -31,7 +32,7 @@ import gzip
 #dst='data/centralit_noselfcit.csv'
 
 src='data/uspatclean_selfcit.csv'
-dst='data/centrality_pagerank_selfcit.csv'
+dst='data/centrality_pagerank.csv'
 
 #file_pat=gzip.open(src, 'r')
 
@@ -40,9 +41,9 @@ g=gt.Graph()
 
 
 
-with open(src, 'rb') as csvfile:
+with open(src, 'r') as csvfile:
     
-    list_of_edges = csv.reader(csvfile, delimiter=',')
+    list_of_edges = csv.reader(csvfile, delimiter=',', lineterminator='\n')
 
     vertices = {}
 
